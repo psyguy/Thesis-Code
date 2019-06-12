@@ -43,7 +43,8 @@ source(paste0(path.to.functions_my,"/functions_my.R"))
 # making a S4 class -------------------------------------------------------
 
 brain <- setClass("brain",
-                    slots = list(birthday = "character",
+                    slots = list(name = "character",
+                                 birthday = "character",
                                  age = "list",
                                  starting_values = "list", # activities
                                  parameters = "list", # num_nodes, num_edges
