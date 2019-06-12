@@ -19,7 +19,6 @@ trial_grow <- function(
                        parameters =  list(n_nodes = 100,
                                           n_edges = 0,
                                           eps = 0.2,
-                                          freq_snapshot = 200,
                                           seed = -99),
                        n_updates = 1, # number of heartupdates per rewireupdates of notes
                        n_rewires = 1, # number of rewirings of the network
