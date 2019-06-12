@@ -156,22 +156,3 @@ heartbeat_rewire <- function(a, m) {
   m %>% return()
 }
   
-  {
-  x.start <- input$x.tot %>% tail(1)
-  conn.start <- input$connectivity.matrix
-  
-  x.end <- x.start %>% GongvLeeuwen2004_logistic(conn.start)
-  conn.end <- my_rewire(x.end, conn.start)
-  
-  g <-
-    igraph::graph_from_adjacency_matrix(conn.end, mode = "undirected")
-  ClCoef <- igraph::transitivity(g)
-  
-  output <- list(
-    x.tot = rbind(input$x.tot, x.end),
-    clustering.coefficient = c(input$clustering.coefficient, ClCoef),
-    connectivity.matrix = conn.end
-  )
-  class(output) <- append(class(output), "GongvLeeuwen2004")
-  output %>% return()
-}
