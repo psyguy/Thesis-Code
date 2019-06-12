@@ -31,12 +31,13 @@ mini_logistic <- function(x, a = 1.7) {
 # saves a backup of variables ---------------------------------------------
 
 save_vars <- function(list.of.vars = NULL,
+                      envir = parent.frame(),
                       prefix = "StatusQuo",
                       path = "data") {
   mine_gsub <- function(x, pat, rep)
     gsub(pat, rep, x)
   
-  # if(is.null(list.of.vars)) list.of.vars <- ls() # setdiff(ls(), lsf.str())
+  if(is.null(list.of.vars)) list.of.vars <- ls(envir = envir) # setdiff(ls(), lsf.str())
   
   date_time <- Sys.time() %>%
     mine_gsub(" ", "_") %>%
@@ -142,4 +143,68 @@ my_clustceof <- function(m) {
   m3 <- m2 %*% m
   
   tr(m3) / (sum(m2) - tr(m2))
+}
+
+
+give_name <- function(num = 1, seed = -99, gender = "b"){
+  
+  set.seed(seed)
+  
+  firstnames_male <- c("Adrien","Alexander","Alexandre","Alexis","Anthony","Antoine",
+                       "Arnaud","Arne","Arno","Arthur","Axel","Benjamin","Bram","Brent",
+                       "Bryan","Clement","Corentin","Cyril","Cédric","Daan","David",
+                       "Dorian","Dries","Dylan","Elias","Florian","Gilles","Guillaume",
+                       "Hugo","Jarne","Jason","Jasper","Jens","Jonas","Jonathan","Jordan",
+                       "Jordy","Julien","Justin","Jeremy","Kevin","Kobe","Lars","Lennert",
+                       "Liam","Logan","Louis","Loic","Luca","Lucas","Lukas","Maarten",
+                       "Martin","Mathias","Mathieu","Matthias","Maxim","Maxime","Mehdi",
+                       "Michiel","Milan","Mohamed","Nathan","Nick","Nicolas","Niels","Noah",
+                       "Olivier","Pierre","Pieter","Quentin","Quinten","Robbe","Robin",
+                       "Romain","Ruben","Ryan","Sam","Samuel","Sander","Seppe","Simon",
+                       "Stef","Stijn","Sebastien","Thibault","Thibaut","Thomas","Theo",
+                       "Tibo","Tim","Tom","Tristan","Valentin","Victor","Vincent","Ward",
+                       "William","Wout","Yannick")
+  
+  firstnames_female <- c("Alexandra","Alexia","Alice","Alicia","Aline","Amandine",
+                         "Amber","Amelie","Anaïs","Anke","Anna","Anouk","Audrey",
+                         "Aurélie","Axelle","Bo","Britt","Camille","Caro","Caroline",
+                         "Charlotte","Chiara","Chloe","Clara","Celia","Celine",
+                         "Delphine","Eline","Elisa","Elise","Ellen","Elodie","Emilie",
+                         "Emma","Estelle","Eva","Fanny","Febe","Femke","Fien","Fiona",
+                         "Fleur","Florence","Hannah","Hanne","Imane","Ine","Ines",
+                         "Ines","Jade","Jana","Jessica","Jolien","Julie","Juliette",
+                         "Justine","Kaat","Kato","Kelly","Lara","Laura","Laure",
+                         "Lauren","Lien","Lies","Lisa","Lise","Lore","Lotte","Louise",
+                         "Lucie","Luna","Lea","Manon","Margaux","Margot","Marie",
+                         "Marine","Marthe","Melissa","Morgane","Melanie","Nina","Noa",
+                         "Noemie","Oceane","Ophelie","Pauline","Rania","Sara","Sarah",
+                         "Silke","Sofie","Sophie","Valentine","Victoria","Yana",
+                         "Yasmine","Zoe")
+  
+  lastnames <- c("Adam","Aerts","Baert","Bauwens","Beckers","Bertrand","Bogaert",
+                 "Bogaerts","Bosmans","Carlier","Charlier","Christiaens","Claes",
+                 "Claessens","Claeys","Cools","Coppens","Cornelis","De Backer",
+                 "De Clercq","De Cock","De Meyer","De Pauw","De Ridder","De Smedt",
+                 "De Smet","De Vos","De Wilde","Declercq","Denis","Deprez","Desmet",
+                 "Devos","Dubois","Dumont","Dupont","Evrard","Fontaine","François",
+                 "Geerts","Goossens","Gerard","Hendrickx","Hermans","Jacobs","Jansen",
+                 "Janssen","Janssens","Lambert","Lambrechts","Laurent","Lauwers",
+                 "Leclercq","Lejeune","Lemaire","Lemmens","Lenaerts","Leroy","Maes",
+                 "Martens","Martin","Mathieu","Mertens","Michel","Michiels","Moens",
+                 "Noel","Pauwels","Peeters","Petit","Pieters","Renard","Segers",
+                 "Simon","Simons","Smet","Smets","Stevens","Thomas","Thys",
+                 "Timmermans","Van Damme","Van De Velde","Van Den Broeck","Van Dyck",
+                 "Vandenberghe","Verbeke","Verheyen","Verhoeven","Verlinden",
+                 "Vermeersch","Vermeiren","Vermeulen","Verschueren","Verstraete",
+                 "Verstraeten","Wauters","Willems","Wouters","Wuyts")
+  
+  f_n <- firstnames_male %>% c(firstnames_female)
+  if(gender=="m") f_n <- firstnames_male
+  if(gender=="f") f_n <- firstnames_female
+  
+  f_n <- f_n %>% sample(num)
+  l_n <- lastnames %>% sample(num)
+  
+  paste(f_n, l_n) %>% return()
+  
 }
