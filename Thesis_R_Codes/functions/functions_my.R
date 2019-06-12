@@ -97,23 +97,22 @@ swap_edges <- function(connectivity.matrix,
 
 # my small rewiring function ----------------------------------------------
 
-my_rewire <- function(x.input, conn) {
-  distances <- x.input %>% tail(1) %>% my_coherenceD()
+my_rewire <- function(a, m) {
+  distances <- a %>% tail(1) %>% my_coherenceD()
   
-  i_ <- sample.int(ncol(conn), 1)
+  i_ <- sample.int(ncol(m), 1)
   d_ <- distances[, i_]
   
   j_1 <- which.min(d_)
   j_2 <- which.max(d_)
   
-  # if(!conn[i_,j_1]) conn %>% return()
-  conn <- conn %>% swap_edges(
+  m <- m %>% swap_edges(
     from.1 = i_,
     to.1 = j_1,
     from.2 = i_,
     to.2 = j_2
   )
-  conn %>% return()
+  m %>% return()
   
 }
 
