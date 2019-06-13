@@ -31,16 +31,19 @@ outcomes_decent <- outcomes %>%
 # making Hellrigel's brain
 case_params <- outcomes_decent[1,]
 case_params[1,] <- NA
-case_params$name <- "Stefan Hellrigel 2Xedges"
+case_params$name <- NULL#"Stefan Hellrigel 2Xedges"
 case_params$eps <- 0.3
 case_params$num_nodes <- 300
-case_params$num_edges <- 5200*2
-case_params$seed <- -99
+case_params$num_edges <- 5200
+case_params$seed <- 10
 
 parameters =  list(n_nodes = case_params$num_nodes,
                    n_edges = case_params$num_edges,
                    eps = case_params$eps,
-                   seed = case_params$seed)
+                   seed = case_params$seed,
+                   lower_bound_starting = 0,
+                   global_minmax = FALSE,
+                   blind_swap = FALSE)
 
 # brain_case <- NULL
 for(days in 1:50){

@@ -25,7 +25,7 @@ rm(list.of.packages, new.packages, tmp)
 # mini functions ----------------------------------------------------------
 
 mini_logistic <- function(x, a = 1.7) {
-  1 - a * (x ^ 2)/2
+  1 - a * (x ^ 2)
 }
 
 # saves a backup of variables ---------------------------------------------
@@ -56,7 +56,7 @@ save_vars <- function(list.of.vars = NULL,
 # to make random graphs of certain size and #links -------------------------
 
 make_random_graph <- function(size = 5,
-                              num.links = 10,
+                              num.links = 8,
                               distribution = "binary",
                               parameters = c(0, 1),
                               seed = rnorm(1)) {
@@ -97,21 +97,39 @@ swap_edges <- function(connectivity.matrix,
 
 # my small rewiring function ----------------------------------------------
 
-my_rewire <- function(a, m) {
+my_rewire <- function(a, m, global_minmax = FALSE, blind_swap = FALSE) {
   distances <- a %>% tail(1) %>% my_coherenceD()
   
-  i_ <- sample.int(ncol(m), 1)
-  d_ <- distances[, i_]
-  
+  i_1 <- sample.int(ncol(m), 1) -> i_2
+  d_ <- distances[, i_1]
   j_1 <- which.min(d_)
   j_2 <- which.max(d_)
   
-  m <- m %>% swap_edges(
-    from.1 = i_,
-    to.1 = j_1,
-    from.2 = i_,
-    to.2 = j_2
-  )
+  if(global_minmax){
+    ind_min <- which(distances == min(distances, na.rm=T),
+                     arr.ind = TRUE)[1,]
+    ind_max <- which(distances == max(distances, na.rm=T),
+                     arr.ind = TRUE)[1,]
+    
+    i_1 <- ind_min[1]
+    j_1 <- ind_min[2]
+    
+    i_2 <- ind_max[1]
+    j_2 <- ind_max[2]
+  }
+  
+  if(blind_swap){
+    m <- m %>% swap_edges(
+      from.1 = i_1,
+      to.1 = j_1,
+      from.2 = i_2,
+      to.2 = j_2)
+    m %>% return()
+  }
+  
+  m[i_1,j_1] <- m[j_1,i_1] <- 0
+  m[i_2,j_2] <- m[j_2,i_2] <- 1
+  
   m %>% return()
   
 }

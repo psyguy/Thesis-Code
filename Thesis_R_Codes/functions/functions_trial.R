@@ -19,7 +19,10 @@ trial_grow <- function(
                        parameters =  list(n_nodes = 100,
                                           n_edges = 0,
                                           eps = 0.2,
-                                          seed = -99),
+                                          seed = -99,
+                                          lower_bound_starting = -1,
+                                          global_minmax = FALSE,
+                                          blind_swap = FALSE),
                        n_updates = 1, # number of heartupdates per rewireupdates of notes
                        n_rewires = 1, # number of rewirings of the network
                        freq_snapshot = 200, # frequency of saving connectivity matrices in the brain
@@ -47,7 +50,9 @@ trial_grow <- function(
     m <- make_random_graph(size = parameters$n_nodes,
                            num.links = parameters$n_edges,
                            seed = parameters$seed)
-    a <- parameters$n_nodes %>% runif(0, 1) %>% t()
+    a <- parameters$n_nodes %>%
+      runif(parameters$lower_bound_starting, 1) %>%
+      t()
     
     cl <-  m %>% my_clustceof()
     
@@ -109,7 +114,10 @@ trial_grow <- function(
     new.rewires <- new.rewires + 1
     
     # rewiring and new clustering coefficient
-    new.m <- my_rewire(new.a, new.m)
+    new.m <- my_rewire(new.a,
+                       new.m,
+                       global_minmax = brain_growing@parameters$global_minmax,
+                       blind_swap = brain_growing@parameters$blind_swap)
     new.c <- new.m %>% my_clustceof()
     
     # adding activities and clustering coefficient to the history
