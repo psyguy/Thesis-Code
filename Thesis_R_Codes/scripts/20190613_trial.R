@@ -35,14 +35,14 @@ case_params$name <- NULL#"Stefan Hellrigel 2Xedges"
 case_params$eps <- 0.3
 case_params$num_nodes <- 300
 case_params$num_edges <- 5200
-case_params$seed <- 10
+case_params$seed <- 1741
 
 parameters =  list(n_nodes = case_params$num_nodes,
                    n_edges = case_params$num_edges,
                    eps = case_params$eps,
                    seed = case_params$seed,
                    lower_bound_starting = 0,
-                   global_minmax = FALSE,
+                   global_minmax = TRUE,
                    blind_swap = FALSE)
 
 # brain_case <- NULL
@@ -60,23 +60,23 @@ for(days in 1:50){
                                                            brain_case@age$rewires %/% 1000,
                                                            "days."))
 }
-
-save_vars(prefix = paste0("brain_",
+# save_vars()
+save_vars(list.of.vars = "brain_case",
+          prefix = paste0("brain_",
                           brain_case@name,
-                          "_eps",
-                          brain_case@parameters$eps,
-                          "_nedges",
-                          brain_case@parameters$n_edges))
+                          "_",
+                          brain_case@parameters$n_edges,
+                          "edges"))
 
 
 
 # looking at the activations ----------------------------------------------
 
-tmp_seq <- seq(1, 8991, 10)
+tmp_seq <- seq(1, brain_case@age$rewires, 20)
 
 sbs_h <- (brain_case@history$activities[tmp_seq,])
 
-sbs_h[,21] %>% plot()
+sbs_h[,201] %>% plot()
 
 sbs_h %>% gplots::heatmap.2(dendrogram = 'none',
                             Rowv = FALSE,
@@ -91,7 +91,9 @@ sbs_h %>% gplots::heatmap.2(dendrogram = 'none',
                             main = paste(brain_case@name,
                                          "\n with",
                                          brain_case@parameters$n_edges,
-                                         "edges \n after 9000 rewirings")
+                                         "edges \n after",
+                                         brain_case@age$rewires-1,
+                                         "rewirings")
 )
 
 Sys.time()
