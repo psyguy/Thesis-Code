@@ -1,0 +1,94 @@
+# Notes -------------------------------------------------------------------
+
+#
+#   
+#   at each heartbeat nodes are updated (logistic functions)
+#   and every minute the rewiring takes place
+#   now brains have names, and eps = .3 (instead of .8!)
+#
+#
+#
+#
+#
+
+
+# init --------------------------------------------------------------------
+
+rm(list = ls())
+
+source("./functions/functions_trial.R")
+load("./data/outcomes_20190612_1952.RData")
+load("./data/brain_aging_20190612_1955.RData")
+
+outcomes_decent <- outcomes %>%
+  filter(mean_variance>.1) %>%
+  arrange(coef.clustering_normalized) %>% 
+  tail(10)
+
+# case_name <- "Emma Segers"
+# case_params <- outcomes_decent %>% filter(name == case_name)
+
+# making Hellrigel's brain
+case_params <- outcomes_decent[1,]
+case_params[1,] <- NA
+case_params$name <- "Stefan Hellrigel 2Xedges"
+case_params$eps <- 0.3
+case_params$num_nodes <- 300
+case_params$num_edges <- 5200*2
+case_params$seed <- -99
+
+parameters =  list(n_nodes = case_params$num_nodes,
+                   n_edges = case_params$num_edges,
+                   eps = case_params$eps,
+                   seed = case_params$seed)
+
+# brain_case <- NULL
+for(days in 1:50){
+  brain_case <- trial_grow(parameters =  parameters,
+                           n_rewires = 1000,
+                           n_updates = 20,
+                           freq_snapshot = 200,
+                           name = case_params$name,
+                           brain_younger = brain_case,
+                           quiet = FALSE)
+  
+  brain_case@history$coef.clustering %>% plot(main = paste(brain_case@name,
+                                                           "at",
+                                                           brain_case@age$rewires %/% 1000,
+                                                           "days."))
+}
+
+save_vars(prefix = paste0("brain_",
+                          brain_case@name,
+                          "_eps",
+                          brain_case@parameters$eps,
+                          "_nedges",
+                          brain_case@parameters$n_edges))
+
+
+
+# looking at the activations ----------------------------------------------
+
+tmp_seq <- seq(1, 8991, 10)
+
+sbs_h <- (brain_case@history$activities[tmp_seq,])
+
+sbs_h[,21] %>% plot()
+
+sbs_h %>% gplots::heatmap.2(dendrogram = 'none',
+                            Rowv = FALSE,
+                            Colv = FALSE,
+                            margins = c(1, 1),
+                            col = colorRampPalette(c("white","yellow","orange","red"))(n = 299),#brewer.pal(name = "RdBu"),
+                            # key = FALSE,
+                            # density.info = "none",
+                            trace = 'none',
+                            xlab = "nodes",
+                            ylab = "rewirings",
+                            main = paste(brain_case@name,
+                                         "\n with",
+                                         brain_case@parameters$n_edges,
+                                         "edges \n after 9000 rewirings")
+)
+
+Sys.time()

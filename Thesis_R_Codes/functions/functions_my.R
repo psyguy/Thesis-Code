@@ -25,7 +25,7 @@ rm(list.of.packages, new.packages, tmp)
 # mini functions ----------------------------------------------------------
 
 mini_logistic <- function(x, a = 1.7) {
-  1 - a * (x ^ 2)
+  1 - a * (x ^ 2)/2
 }
 
 # saves a backup of variables ---------------------------------------------

@@ -33,11 +33,11 @@ brain_case <- trial_grow(parameters =  list(n_nodes = case_params$num_nodes,
                                           n_edges = case_params$num_edges,
                                           eps = case_params$eps,
                                           seed = case_params$seed),
-n_rewires = 2000,
+n_rewires = 100,
 n_updates = 20,
 freq_snapshot = 200,
 name = case_params$name,
-save_brain = TRUE,
+save_brain = FALSE,
 quiet = FALSE)
 
 save_vars() #"brain_case", prefix = "brain_case")

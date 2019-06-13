@@ -47,7 +47,7 @@ trial_grow <- function(
     m <- make_random_graph(size = parameters$n_nodes,
                            num.links = parameters$n_edges,
                            seed = parameters$seed)
-    a <- parameters$n_nodes %>% runif(-1, 1) %>% t()
+    a <- parameters$n_nodes %>% runif(0, 1) %>% t()
     
     cl <-  m %>% my_clustceof()
     
@@ -93,6 +93,7 @@ trial_grow <- function(
 
   
   time_start <- Sys.time()
+  new.a <- now.a
   new.m <- now.m
   new.updates <- now.updates
   new.rewires <- now.rewires
@@ -100,8 +101,7 @@ trial_grow <- function(
   for(r in 1:n_rewires) {
     # updating nodes for n_update times
     for(u in 1:n_updates) {
-      new.a <- trial_logistic(now.a, now.m, eps)
-      his.a <- his.a %>% rbind(new.a)
+      new.a <- trial_logistic(new.a, new.m, eps)
     }
     
     # incrementing age
@@ -112,14 +112,15 @@ trial_grow <- function(
     new.m <- my_rewire(new.a, new.m)
     new.c <- new.m %>% my_clustceof()
     
-    # adding clustering coefficient to the history
+    # adding activities and clustering coefficient to the history
+    his.a <- his.a %>% rbind(new.a)
     his.c <- his.c %>% c(new.c)
     
     # saving the snapshot
     if(!(new.rewires %% freq_snapshot)) his.m[[new.rewires]] <- new.m
     
-    if(!quiet) print(paste(brain_growing@name, "is now",
-                           new.updates, "updates and",
+    if(!quiet & !(new.rewires %% 100)) print(paste(brain_growing@name, "is now",
+                           # new.updates, "updates and",
                            new.rewires, "rewires old."))
   }
   
@@ -280,3 +281,141 @@ trial_logistic <- function(a, m, eps) {
 #   toy_brain %>% return()
 #   
 #   }
+
+
+# a unified function to grow (update+rewire) ------------------------------
+# 
+# trial_grow_20190612 <- function(
+#   parameters =  list(n_nodes = 100,
+#                      n_edges = 0,
+#                      eps = 0.2,
+#                      seed = -99),
+#   n_updates = 1, # number of heartupdates per rewireupdates of notes
+#   n_rewires = 1, # number of rewirings of the network
+#   freq_snapshot = 200, # frequency of saving connectivity matrices in the brain
+#   brain_younger = NULL,
+#   save_brain = FALSE,
+#   name = NULL,
+#   quiet = FALSE){
+#   
+#   
+#   brain_growing <- brain_younger
+#   
+#   
+#   # making a brain if there is no younger brain to continue growing ---------
+#   
+#   if (is.null(brain_growing)) {
+#     
+#     if(!parameters$n_edges){
+#       parameters$n_edges <- round(1.5 * 2 * log(parameters$n_nodes) * (parameters$n_nodes - 1))
+#     }
+#     if(parameters$seed == 0 | parameters$seed == -99){
+#       if(parameters$seed == -99) set.seed(-99)
+#       parameters$seed <- 1000 * round(rnorm(1),3) %>% abs()
+#     }
+#     
+#     m <- make_random_graph(size = parameters$n_nodes,
+#                            num.links = parameters$n_edges,
+#                            seed = parameters$seed)
+#     a <- parameters$n_nodes %>% runif(-1, 1) %>% t()
+#     
+#     cl <-  m %>% my_clustceof()
+#     
+#     l <- list(
+#       activities = a,
+#       mat.connectivity = list(m),
+#       coef.clustering = cl
+#     )
+#     
+#     # giving the brain a name if not already specified
+#     if(is.null(name)) name <- give_name(num = 1, seed = parameters$seed)
+#     
+#     brain_growing <- new(
+#       "brain",
+#       name = name,
+#       birthday = as.character(Sys.time()),
+#       age = list(updates = 1, rewires = 1),
+#       starting_values = l,
+#       parameters = parameters,
+#       history = l,
+#       now = l
+#     )
+#   }
+#   
+#   # writing the update and rewire again together here -----------------------
+#   
+#   
+#   # extracting values of now
+#   m.l <- brain_growing@now$mat.connectivity -> now.m
+#   if(is.list(m.l)) now.m <- m.l[[length(m.l)]]
+#   now.a <- brain_growing@now$activities
+#   now.c <- brain_growing@now$coef.clustering
+#   eps <- brain_growing@parameters$eps
+#   
+#   now.updates <- brain_growing@age$updates
+#   now.rewires <- brain_growing@age$rewires
+#   
+#   
+#   # extracting historical values
+#   his.a <- brain_growing@history$activities
+#   his.c <- brain_growing@history$coef.clustering
+#   his.m <- brain_growing@history$mat.connectivity
+#   
+#   
+#   time_start <- Sys.time()
+#   new.a <- now.a
+#   new.m <- now.m
+#   new.updates <- now.updates
+#   new.rewires <- now.rewires
+#   
+#   for(r in 1:n_rewires) {
+#     # updating nodes for n_update times
+#     for(u in 1:n_updates) {
+#       new.a <- trial_logistic(new.a, new.m, eps)
+#       his.a <- his.a %>% rbind(new.a)
+#     }
+#     
+#     # incrementing age
+#     new.updates <- new.updates + n_updates
+#     new.rewires <- new.rewires + 1
+#     
+#     # rewiring and new clustering coefficient
+#     new.m <- my_rewire(new.a, new.m)
+#     new.c <- new.m %>% my_clustceof()
+#     
+#     # adding clustering coefficient to the history
+#     his.c <- his.c %>% c(new.c)
+#     
+#     # saving the snapshot
+#     if(!(new.rewires %% freq_snapshot)) his.m[[new.rewires]] <- new.m
+#     
+#     if(!quiet) print(paste(brain_growing@name, "is now",
+#                            new.updates, "updates and",
+#                            new.rewires, "rewires old."))
+#   }
+#   
+#   # updating the brain
+#   ## age
+#   brain_growing@age$updates <- new.updates
+#   brain_growing@age$rewires <- new.rewires
+#   
+#   ## history
+#   brain_growing@history$activities <- his.a
+#   brain_growing@history$mat.connectivity <- his.m
+#   brain_growing@history$coef.clustering <- his.c
+#   
+#   ## now
+#   brain_growing@now$activities <- new.a
+#   brain_growing@now$mat.connectivity <- new.m
+#   brain_growing@now$coef.clustering <- new.c
+#   
+#   (time_taken <- Sys.time() - time_start) %>% paste("for", brain_growing@name) %>%
+#     print()
+#   
+#   if(save_brain) save_vars("brain_growing", prefix = paste0("vat_", brain_growing@name))
+#   
+#   brain_growing %>% return()
+#   
+# }
+# 
+
