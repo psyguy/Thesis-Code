@@ -141,7 +141,7 @@ trial_grow <- function(
   (time_taken <- Sys.time() - time_start) %>% paste("for", brain_growing@name) %>%
     print()
 
-  if(save_brain) save_vars(prefix = paste0("vat_", brain_growing@name))
+  if(save_brain) save_vars("brain_growing", prefix = paste0("vat_", brain_growing@name))
   
   brain_growing %>% return()
   
