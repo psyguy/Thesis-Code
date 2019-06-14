@@ -32,21 +32,21 @@ outcomes_decent <- outcomes %>%
 case_params <- outcomes_decent[1,]
 case_params[1,] <- NA
 case_params$name <- NULL#"Stefan Hellrigel 2Xedges"
-case_params$eps <- 0.3
+case_params$eps <- 0.8
 case_params$num_nodes <- 300
 case_params$num_edges <- 5200
-case_params$seed <- 1741
+case_params$seed <- 1159
 
 parameters =  list(n_nodes = case_params$num_nodes,
                    n_edges = case_params$num_edges,
                    eps = case_params$eps,
                    seed = case_params$seed,
                    lower_bound_starting = 0,
-                   global_minmax = TRUE,
+                   global_minmax = FALSE,
                    blind_swap = FALSE)
 
 # brain_case <- NULL
-for(days in 1:50){
+for(days in 1:10){
   brain_case <- trial_grow(parameters =  parameters,
                            n_rewires = 1000,
                            n_updates = 20,
@@ -59,6 +59,33 @@ for(days in 1:50){
                                                            "at",
                                                            brain_case@age$rewires %/% 1000,
                                                            "days."))
+  
+  
+  tmp_seq <- seq(1, brain_case@age$rewires, 10)
+  
+  sbs_h <- (brain_case@history$activities[tmp_seq,])
+  
+  sbs_h[,12] %>% plot()
+  
+  sbs_h %>% gplots::heatmap.2(dendrogram = 'none',
+                              Rowv = FALSE,
+                              Colv = FALSE,
+                              margins = c(1, 1),
+                              col = colorRampPalette(c("white","yellow","orange","red"))(n = 299),#brewer.pal(name = "RdBu"),
+                              # key = FALSE,
+                              # density.info = "none",
+                              trace = 'none',
+                              xlab = "nodes",
+                              ylab = "rewirings",
+                              main = paste(brain_case@name,
+                                           "\n with",
+                                           brain_case@parameters$n_edges,
+                                           "edges \n after",
+                                           brain_case@age$rewires-1,
+                                           "rewirings")
+  )
+  
+  
 }
 # save_vars()
 save_vars(list.of.vars = "brain_case",
@@ -71,29 +98,8 @@ save_vars(list.of.vars = "brain_case",
 
 
 # looking at the activations ----------------------------------------------
-
-tmp_seq <- seq(1, brain_case@age$rewires, 20)
-
-sbs_h <- (brain_case@history$activities[tmp_seq,])
-
-sbs_h[,201] %>% plot()
-
-sbs_h %>% gplots::heatmap.2(dendrogram = 'none',
-                            Rowv = FALSE,
-                            Colv = FALSE,
-                            margins = c(1, 1),
-                            col = colorRampPalette(c("white","yellow","orange","red"))(n = 299),#brewer.pal(name = "RdBu"),
-                            # key = FALSE,
-                            # density.info = "none",
-                            trace = 'none',
-                            xlab = "nodes",
-                            ylab = "rewirings",
-                            main = paste(brain_case@name,
-                                         "\n with",
-                                         brain_case@parameters$n_edges,
-                                         "edges \n after",
-                                         brain_case@age$rewires-1,
-                                         "rewirings")
-)
+brain_case@name
+brain_case@age$rewires
+brain_case@parameters
 
 Sys.time()
