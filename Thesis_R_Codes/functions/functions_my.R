@@ -24,7 +24,7 @@ rm(list.of.packages, new.packages, tmp)
 
 # mini functions ----------------------------------------------------------
 
-mini_logistic <- function(x, a = 1.7) {
+mini_logistic <- function(x, a = 1.7/2) {
   1 - a * (x ^ 2)
 }
 
@@ -169,7 +169,7 @@ give_name <- function(num = 1, seed = -99, gender = "b"){
   
   firstnames_male <- c("Adrien","Alexander","Alexandre","Alexis","Anthony","Antoine",
                        "Arnaud","Arne","Arno","Arthur","Axel","Benjamin","Bram","Brent",
-                       "Bryan","Clement","Corentin","Cyril","Cédric","Daan","David",
+                       "Bryan","Clement","Corentin","Cyril","Cedric","Daan","David",
                        "Dorian","Dries","Dylan","Elias","Florian","Gilles","Guillaume",
                        "Hugo","Jarne","Jason","Jasper","Jens","Jonas","Jonathan","Jordan",
                        "Jordy","Julien","Justin","Jeremy","Kevin","Kobe","Lars","Lennert",
@@ -184,7 +184,7 @@ give_name <- function(num = 1, seed = -99, gender = "b"){
   
   firstnames_female <- c("Alexandra","Alexia","Alice","Alicia","Aline","Amandine",
                          "Amber","Amelie","Anaïs","Anke","Anna","Anouk","Audrey",
-                         "Aurélie","Axelle","Bo","Britt","Camille","Caro","Caroline",
+                         "Aurelie","Axelle","Bo","Britt","Camille","Caro","Caroline",
                          "Charlotte","Chiara","Chloe","Clara","Celia","Celine",
                          "Delphine","Eline","Elisa","Elise","Ellen","Elodie","Emilie",
                          "Emma","Estelle","Eva","Fanny","Febe","Femke","Fien","Fiona",

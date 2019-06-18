@@ -98,3 +98,48 @@ ggsave("brain_parameters.png")
 
 
 save_vars(list.of.vars = c("parameters_df", "coefs_all"), prefix = "9brains")
+
+
+# plotting connectivity matrix --------------------------------------------
+
+m_now <- brain_case@starting_values$mat.connectivity[[1]]
+seriated <- m_now %>% seriate()
+pimage(m_now, seriated)
+
+
+# Implementing Ilias' code - didn't work :( -------------------------------
+
+A <- m_now
+deg <- m_now %>% rowSums()
+
+# if there is a degree 0, in the inversion it stays 0
+deg2 <- 1/sqrt(deg)
+deg2[deg==0] <- 0
+
+
+deginv <- deg2# %>% t() #%>% c(0)
+L = diag(length(deg2)) - ((A %*% deginv) %*% t(deginv))  # Get the normalized Laplacian
+
+# decompose the matrix to its eigenvectors/eigenvalues
+# eigval, eigvec = np.linalg.eigh(L)
+
+e <- L %>% eigen(symmetric = TRUE)
+
+x <- e$values %>% sort(index.return=TRUE)
+x$x %>% tail()
+
+# takes second eigenvalue. The first is trivial solution. Next way to take more than one eigenvectors and do clustering
+x <- e$vectors[2,] %>% sort(index.return=TRUE)
+b <- A[x$ix,]
+b <- b[,x$ix]
+pimage(b)
+
+
+# look at logistic --------------------------------------------------------
+
+x <- seq(0,1, by=.01)
+x^2 %>% plot()
+x %>% mini_logistic(a=2.7) %>% plot(x=x,
+                                       type = "l",
+                                       xlim = c(0,1),
+                                       ylim = c(-1,1))
