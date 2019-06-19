@@ -17,13 +17,13 @@
 rm(list = ls())
 
 source("./functions/functions_trial.R")
-load("./data/outcomes_20190612_1952.RData")
-load("./data/brain_aging_20190612_1955.RData")
+# load("./data/outcomes_20190612_1952.RData")
+# load("./data/brain_aging_20190612_1955.RData")
 
-outcomes_decent <- outcomes %>%
-  filter(mean_variance>.1) %>%
-  arrange(coef.clustering_normalized) %>% 
-  tail(10)
+# outcomes_decent <- outcomes %>%
+#   filter(mean_variance>.1) %>%
+#   arrange(coef.clustering_normalized) %>% 
+#   tail(10)
 
 # case_name <- "Emma Segers"
 # case_params <- outcomes_decent %>% filter(name == case_name)
@@ -32,10 +32,10 @@ outcomes_decent <- outcomes %>%
 # case_params <- outcomes_decent[1,]
 # case_params[1,] <- NA
 vat_name <- NULL#"Stefan Hellrigel 2Xedges"
-vat_eps <- 0.3
+vat_eps <- 0.5
 vat_num_nodes <- 300
 vat_num_edges <- 5200
-vat_seed <- 1420
+vat_seed <- 1818
 
 parameters =  list(n_nodes = vat_num_nodes,
                    n_edges = vat_num_edges,

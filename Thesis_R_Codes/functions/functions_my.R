@@ -24,7 +24,7 @@ rm(list.of.packages, new.packages, tmp)
 
 # mini functions ----------------------------------------------------------
 
-mini_logistic <- function(x, a = 1.7/2) {
+mini_logistic <- function(x, a = 1.7) {
   1 - a * (x ^ 2)
 }
 
@@ -102,8 +102,18 @@ my_rewire <- function(a, m, global_minmax = FALSE, blind_swap = FALSE) {
   
   i_1 <- sample.int(ncol(m), 1) -> i_2
   d_ <- distances[, i_1]
-  j_1 <- which.min(d_)
-  j_2 <- which.max(d_)
+  m_ <- m[, i_1]
+  
+  m_d_ <- (1 - m_)*d_
+  m_d_[m_d_==0|is.na(m_d_)] <- 99
+
+  j_connected_maxdist <- (m_*d_) %>% which.max() -> j_1
+  j_disconnected_mindist <- m_d_ %>% which.min() -> j_2
+
+  ## my wrong Way of doing it before 2019-06-19
+  # j_1 <- which.min(d_)
+  # j_2 <- which.max(d_)
+  
   
   if(global_minmax){
     ind_min <- which(distances == min(distances, na.rm=T),
@@ -126,7 +136,7 @@ my_rewire <- function(a, m, global_minmax = FALSE, blind_swap = FALSE) {
       to.2 = j_2)
     m %>% return()
   }
-  
+
   m[i_1,j_1] <- m[j_1,i_1] <- 0
   m[i_2,j_2] <- m[j_2,i_2] <- 1
   

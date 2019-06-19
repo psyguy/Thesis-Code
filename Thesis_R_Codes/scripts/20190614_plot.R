@@ -7,6 +7,7 @@ source("./functions/functions_netmeas.R")
 
 library(ggplot2)
 library(reshape)
+library(gridExtra)
 
 
 # data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
@@ -15,12 +16,27 @@ library(reshape)
 
 
 
+# diameter, path length, modularity ---------------------------------------
+
+m <- brain_case@now$mat.connectivity
+
+g <- m %>% graph_from_adjacency_matrix()
+
+diam <- g %>% diameter(directed = FALSE, unconnected = TRUE)
+
+path_length <- g %>% average.path.length(unconnected = TRUE)
+
+modularity_walktrap <- -0
+g %>% cluster_edge_betweenness() %>% modularity()
+
+wtc <- cluster_walktrap(g)
+modularity(wtc)
+# modularity(g, membership(wtc))
 
 
 
 
-
-# for loop over all brain cases -------------------------------------------
+l# for loop over all brain cases -------------------------------------------
 
 
 sampled.path <- "./data/"
@@ -46,7 +62,7 @@ for(sampled in sampled.names){
   # Molten$variable %>% str()
 
   # data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
-  Molten <- melt(data, id.vars = "rewires")
+  Molten <- reshape::melt(data, id.vars = "rewires")
 
   ggplot(Molten,
          aes(x = rewires,
@@ -85,7 +101,11 @@ ggsave("coef.smallworld.png")
 
 # saving the parameters ---------------------------------------------------
 
-parameters_df <- coefs_all %>% filter(rewiring == 200) %>% arrange(name) %>% select(1:5)
+parameters_df <- coefs_all %>%
+  filter(rewiring == 200) %>%
+  arrange(name) %>%
+  unique() %>% 
+  select(1:5)
 
 
 # --- Graph 1 : If you want ONLY the table in your image :
@@ -143,3 +163,4 @@ x %>% mini_logistic(a=2.7) %>% plot(x=x,
                                        type = "l",
                                        xlim = c(0,1),
                                        ylim = c(-1,1))
+
