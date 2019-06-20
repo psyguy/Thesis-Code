@@ -21,22 +21,17 @@ source("./functions/functions_trial.R")
 vat_name <- NULL
 vat_num_nodes <- 300
 vat_num_edges <- 5200
-vat_seed <- 2018
-partitions <- list(l_eps = c(0.3, 0.4, 0.5),
-                   r_eps = c(1, 0, 0),
-                   l_a = c(1.4, 1.7, 2),
-                   r_a = c(0, 0, 1)
-                   )
+vat_seed <- 2000
+partitions <- list(eps = "0.3x.1, 0.4x.8, 0.5x.1",
+                   a = "1.4x.4, 1.7x.2, 2x.4")
 
-vat_eps <- make_paramvect(l_ = partitions$l_eps,
-                          r_ = partitions$r_eps,
+vat_eps <- make_paramvect(s = partitions$eps,
                           n = vat_num_nodes,
                           seed = vat_seed)
 
-vat_a <- make_paramvect(l_ = partitions$l_a,
-                        r_ = partitions$r_a,
+vat_a <- make_paramvect(s = partitions$a,
                         n = vat_num_nodes,
-                        seed = vat_seed)
+                        seed = vat_seed + 1)
 
 parameters =  list(n_nodes = vat_num_nodes,
                    n_edges = vat_num_edges,
@@ -62,32 +57,6 @@ for(days in 1:10){
                                                            "at",
                                                            brain_case@age$rewires %/% 1000,
                                                            "days."))
-  
-  # 
-  # tmp_seq <- seq(1, brain_case@age$rewires, 10)
-  # 
-  # sbs_h <- (brain_case@history$activities[tmp_seq,])
-  # 
-  # sbs_h[,12] %>% plot()
-  # 
-  # sbs_h %>% gplots::heatmap.2(dendrogram = 'none',
-  #                             Rowv = FALSE,
-  #                             Colv = FALSE,
-  #                             margins = c(1, 1),
-  #                             col = colorRampPalette(c("white","yellow","orange","red"))(n = 299),#brewer.pal(name = "RdBu"),
-  #                             # key = FALSE,
-  #                             # density.info = "none",
-  #                             trace = 'none',
-  #                             xlab = "nodes",
-  #                             ylab = "rewirings",
-  #                             main = paste(brain_case@name,
-  #                                          "\n with",
-  #                                          brain_case@parameters$n_edges,
-  #                                          "edges \n after",
-  #                                          brain_case@age$rewires-1,
-  #                                          "rewirings")
-  #                             )
-  
   
 }
 

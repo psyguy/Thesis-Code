@@ -159,20 +159,24 @@ my_coherenceD <- function(x.input) {
 }
 
 
-# make paramete vectors ---------------------------------------------------
+# make parameter vector ---------------------------------------------------
 
-make_paramvect <- function(l_ = c(0.3, 0.4, 0.5),
-                           r_ = c(0.2, 0.8, 0.0),
+make_paramvect <- function(s = "0.3x1, 0.4x0, 0.5x0",
                            n = 300,
                            seed = -99){
-  if(length(l_) != length(r_)) stop("Vectors are not of the same length.")
-  if(sum(r_)!=1) stop("Ratios do not add to 1.")
+  s <- gsub(" ", "", s)
+  p_ <-  (s %>% strsplit(","))[[1]]
   
-  v_ <- l_ %>% rep(n*r_)
+  v_ <- c()
+  for(p in p_){
+    l_r_ <- strsplit(p, "x")[[1]] %>% as.numeric()
+    v_ <- v_ %>% c(rep(l_r_[1], l_r_[2]*n))
+  }
   set.seed(seed)
   sample(v_) %>% return()
-  
 }
+
+
 
 # clustering coeeficient (transitivity) -----------------------------------
 
@@ -253,3 +257,20 @@ give_name <- function(num = 1, seed = -99, gender = "b"){
   paste(f_n, l_n) %>% return()
   
 }
+
+
+# make paramete vectors - old ---------------------------------------------------
+
+# make_paramvect_old <- function(l_ = c(0.3, 0.4, 0.5),
+#                            r_ = c(0.2, 0.8, 0.0),
+#                            n = 300,
+#                            seed = -99){
+#   if(length(l_) != length(r_)) stop("Vectors are not of the same length.")
+#   if(sum(r_)!=1) stop("Ratios do not add to 1.")
+#   
+#   v_ <- l_ %>% rep(n*r_)
+#   set.seed(seed)
+#   sample(v_) %>% return()
+#   
+# }
+
