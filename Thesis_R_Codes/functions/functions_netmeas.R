@@ -32,22 +32,36 @@ netmeas_efficiency <- function(m){
 netmeas_coefs <- function(b,
                           limit = 10000,
                           freq_snapshot = 200){
-  
   h_ <- b@history
+  m_0 <- h_$mat.connectivity[[1]]
   c_0 <- h_$coef.clustering[[1]]
-  e_0 <- h_$mat.connectivity[[1]] %>% netmeas_efficiency()
+  e_0 <- m_0 %>% netmeas_efficiency()
+  g_0 <- m_0 %>% graph_from_adjacency_matrix(mode = "undirected")
+  modu_0 <- g_0 %>% cluster_fast_greedy() %>% modularity()
+  pl_0 <- g_0 %>% average.path.length(unconnected = TRUE)
   f <- freq_snapshot
-  
   t_ <- seq(f, length(h_$coef.clustering), f)[1:(limit/f)]
   l_ <- t_ %>% length()
   
   c_ <- c()
   e_ <- c()
+  modu_ <- c()
+  pl_ <- c()
   
   for(t in t_){
+    m_i <- h_$mat.connectivity[[t]]
+    g_i <- m_i %>% graph_from_adjacency_matrix(mode = "undirected")
+    
     c_ <- c_ %>% c(h_$coef.clustering[[t]])
-    e_i <- h_$mat.connectivity[[t]] %>% netmeas_efficiency()
+    e_i <- m_i %>% netmeas_efficiency()
     e_ <- e_ %>% c(e_i)
+    
+    modu_i <- g_i %>% cluster_fast_greedy() %>% modularity()
+    modu_ <- modu_ %>% c(modu_i)
+    
+    pl_i <- g_i %>% average.path.length(unconnected = TRUE)
+    pl_ <- pl_ %>% c(pl_i)
+    
   }
   
   s_ <- c_*e_/(c_0*e_0)
@@ -61,6 +75,8 @@ netmeas_coefs <- function(b,
   coef.clustering <- c_/c_0
   coef.efficiency <- e_/e_0
   coef.smallworld <- s_
+  coef.modularity <- modu_#/modu_0
+  coef.avgpathlength <- pl_#/pl_0
   rewiring <- t_
   
   coefs <- cbind(
@@ -72,10 +88,12 @@ netmeas_coefs <- function(b,
     rewiring,
     coef.clustering,
     coef.efficiency,
-    coef.smallworld
+    coef.smallworld,
+    coef.modularity,
+    coef.avgpathlength
   ) %>% as.data.frame()
   
-  coefs[6:9] <- lapply(coefs[6:9], function(x) as.numeric(as.character(x)))
+  coefs[6:ncol(coefs)] <- lapply(coefs[6:ncol(coefs)], function(x) as.numeric(as.character(x)))
   
   coefs %>% return()
 }

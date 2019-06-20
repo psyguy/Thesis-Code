@@ -18,25 +18,45 @@ library(gridExtra)
 
 # diameter, path length, modularity ---------------------------------------
 
-m <- brain_case@now$mat.connectivity
+# m <- brain_case@now$mat.connectivity
+# starting_values$mat.connectivity[[1]]
+# 
+# 
+# 
+# g <- m %>% graph_from_adjacency_matrix(mode = "undirected")
+# 
+# 
+# ## cluster_fast_greedy gives better modularity values and is faster
+# 
+# t <- Sys.time()
+# # g %>% cluster_fast_greedy() %>% modularity()
+# g %>% cluster_walktrap() %>% modularity()
+# Sys.time() - t
+# 
+# # g %>% cluster_edge_betweenness() %>% modularity()
+# g %>% cluster_infomap() %>% modularity()
+# g %>% cluster_label_prop() %>% modularity()
+# g %>% cluster_walktrap() %>% modularity()
+# 
+# 
+# 
+# cl %>% modularity()
+# 
+# 
+# 
+# diam <- g %>% diameter(directed = FALSE, unconnected = TRUE)
+# 
+# path_length <- g %>% average.path.length(unconnected = TRUE)
+# 
+# modularity_walktrap <- -0
+# g %>% cluster_edge_betweenness() %>% modularity()
+# 
+# wtc <- cluster_walktrap(g)
+# modularity(wtc)
+# # modularity(g, membership(wtc))
+# 
 
-g <- m %>% graph_from_adjacency_matrix()
-
-diam <- g %>% diameter(directed = FALSE, unconnected = TRUE)
-
-path_length <- g %>% average.path.length(unconnected = TRUE)
-
-modularity_walktrap <- -0
-g %>% cluster_edge_betweenness() %>% modularity()
-
-wtc <- cluster_walktrap(g)
-modularity(wtc)
-# modularity(g, membership(wtc))
-
-
-
-
-l# for loop over all brain cases -------------------------------------------
+# for loop over all brain cases -------------------------------------------
 
 
 sampled.path <- "./data/"
@@ -55,15 +75,15 @@ for(sampled in sampled.names){
   sbs_h <- (brain_case@history$activities[rewires,1:300]) %>%
     as.data.frame()
 
-  # sbs_h[,12] %>% plot()
+  sbs_h[,12] %>% plot()
 
   data <- sbs_h %>% cbind(rewires)
-
+  
   # Molten$variable %>% str()
-
+  
   # data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
   Molten <- reshape::melt(data, id.vars = "rewires")
-
+  
   ggplot(Molten,
          aes(x = rewires,
              y = value,
@@ -90,20 +110,36 @@ coefs_all %>% ggplot(aes(x = rewiring,
                        geom_line(size = 2, alpha = 0.8) + 
                        ggtitle("Global Efficiency")
 ggsave("coef.efficiency.png")
-                     
+
 coefs_all %>% ggplot(aes(x = rewiring,
                          y = coef.smallworld,
                          colour = name)) +
-                       geom_line(size = 2, alpha = 0.8) + 
-                       ggtitle("Small World index")
+  geom_line(size = 2, alpha = 0.8) + 
+  ggtitle("Small World index")
 ggsave("coef.smallworld.png")
+
+coefs_all %>% ggplot(aes(x = rewiring,
+                         y = coef.modularity,
+                         colour = name)) +
+  geom_line(size = 2, alpha = 0.8) + 
+  ggtitle("Modularity (fast greedy clustering)")
+ggsave("coef.modularity.png")
+
+coefs_all %>% ggplot(aes(x = rewiring,
+                         y = coef.avgpathlength,
+                         colour = name)) +
+  geom_line(size = 2, alpha = 0.8) + 
+  ggtitle("Average path length")
+ggsave("coef.avgpathlength.png")
 
 
 # saving the parameters ---------------------------------------------------
 
+coefs_all$eps <- coefs_all$eps %>% as.character() %>% as.numeric()
+
 parameters_df <- coefs_all %>%
   filter(rewiring == 200) %>%
-  arrange(name) %>%
+  arrange(eps) %>%
   unique() %>% 
   select(1:5)
 

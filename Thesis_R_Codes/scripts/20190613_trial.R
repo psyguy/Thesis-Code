@@ -32,10 +32,10 @@ source("./functions/functions_trial.R")
 # case_params <- outcomes_decent[1,]
 # case_params[1,] <- NA
 vat_name <- NULL#"Stefan Hellrigel 2Xedges"
-vat_eps <- 0.5
+vat_eps <- 0.1
 vat_num_nodes <- 300
 vat_num_edges <- 5200
-vat_seed <- 1818
+vat_seed <- 1441
 
 parameters =  list(n_nodes = vat_num_nodes,
                    n_edges = vat_num_edges,
@@ -45,7 +45,7 @@ parameters =  list(n_nodes = vat_num_nodes,
                    global_minmax = FALSE,
                    blind_swap = FALSE)
 
-# brain_case <- NULL
+brain_case <- NULL
 for(days in 1:10){
   brain_case <- trial_grow(parameters =  parameters,
                            n_rewires = 1000,
