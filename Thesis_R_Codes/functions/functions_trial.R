@@ -19,6 +19,7 @@ trial_grow <- function(
                        parameters =  list(n_nodes = 100,
                                           n_edges = 0,
                                           eps = 0.2,
+                                          a = 1.7,
                                           seed = -99,
                                           lower_bound_starting = -1,
                                           global_minmax = FALSE,
@@ -86,6 +87,7 @@ trial_grow <- function(
   now.a <- brain_growing@now$activities
   now.c <- brain_growing@now$coef.clustering
   eps <- brain_growing@parameters$eps
+  a <- brain_growing@parameters$a
 
   now.updates <- brain_growing@age$updates
   now.rewires <- brain_growing@age$rewires
@@ -106,7 +108,8 @@ trial_grow <- function(
   for(r in 1:n_rewires) {
     # updating nodes for n_update times
     for(u in 1:n_updates) {
-      new.a <- trial_logistic(new.a, new.m, eps)
+      new.a <- trial_logistic(new.a, new.m,
+                              eps = eps, a_param = a)
     }
     
     # incrementing age
@@ -204,13 +207,13 @@ trial_summary <- function(aged_brain){
 
 # logistic update for trial -----------------------------------------------
 
-trial_logistic <- function(a, m, eps) {
+trial_logistic <- function(a, m, eps, a_param = 1.7) {
   # unit.vector allows to calculate M_i by multiplying it the connectivity matrix
   if(length(eps)==1) eps <- rep(eps, length(a))
   eps <- eps %>% as.matrix()
   unit.vector <- matrix(1, length(a), 1)
   M <- m %*% unit.vector
-  fx <- a %>% mini_logistic() %>% as.matrix() %>% t()
+  fx <- a %>% mini_logistic(a = a_param) %>% as.matrix() %>% t()
   (a_next <- (1 - eps)*fx + m %*% fx*eps / M) %>% t() %>% return()
   
 }

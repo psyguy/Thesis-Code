@@ -159,6 +159,21 @@ my_coherenceD <- function(x.input) {
 }
 
 
+# make paramete vectors ---------------------------------------------------
+
+make_paramvect <- function(l_ = c(0.3, 0.4, 0.5),
+                           r_ = c(0.2, 0.8, 0.0),
+                           n = 300,
+                           seed = -99){
+  if(length(l_) != length(r_)) stop("Vectors are not of the same length.")
+  if(sum(r_)!=1) stop("Ratios do not add to 1.")
+  
+  v_ <- l_ %>% rep(n*r_)
+  set.seed(seed)
+  sample(v_) %>% return()
+  
+}
+
 # clustering coeeficient (transitivity) -----------------------------------
 
 my_clustceof <- function(m) {

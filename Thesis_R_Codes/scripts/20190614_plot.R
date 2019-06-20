@@ -20,24 +20,24 @@ for(sampled in sampled.names){
   
   plot.title<- paste("Node activities of", brain_case@name)
 
-  sbs_h <- (brain_case@history$activities[rewires,1:300]) %>%
-    as.data.frame()
-
-  sbs_h[,12] %>% plot()
-
-  data <- sbs_h %>% cbind(rewires)
-  
-  # Molten$variable %>% str()
-  
-  # data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
-  Molten <- reshape::melt(data, id.vars = "rewires")
-  
-  ggplot(Molten,
-         aes(x = rewires,
-             y = value,
-             colour = variable)) +
-    geom_line(alpha = 0.5) + theme(legend.position="none") + ylim(-1, 1) + ggtitle(plot.title)
-  ggsave(paste0("activities.",brain_case@name,".png"), dpi = 500)
+  # sbs_h <- (brain_case@history$activities[rewires,1:300]) %>%
+  #   as.data.frame()
+  # 
+  # sbs_h[,12] %>% plot()
+  # 
+  # data <- sbs_h %>% cbind(rewires)
+  # 
+  # # Molten$variable %>% str()
+  # 
+  # # data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
+  # Molten <- reshape::melt(data, id.vars = "rewires")
+  # 
+  # ggplot(Molten,
+  #        aes(x = rewires,
+  #            y = value,
+  #            colour = variable)) +
+  #   geom_line(alpha = 0.5) + theme(legend.position="none") + ylim(-1, 1) + ggtitle(plot.title)
+  # ggsave(paste0("activities.",brain_case@name,".png"), dpi = 500)
 }
 Sys.time()-t
 
@@ -47,36 +47,41 @@ Sys.time()-t
 
 coefs_all %>% ggplot(aes(x = rewiring,
                          y = coef.clustering,
-                         colour = name)) +
-              geom_line(size = 2, alpha = 0.8) + 
+                         colour = name,
+                         linetype = eps)) +
+  geom_line(size = .5, alpha = 0.8) + 
               ggtitle("Clustering Coefficient")
 ggsave("coef.clustering.png")
 
 coefs_all %>% ggplot(aes(x = rewiring,
                          y = coef.efficiency,
-                         colour = name)) +
-                       geom_line(size = 2, alpha = 0.8) + 
+                         colour = name,
+                         linetype = eps)) +
+  geom_line(size = .5, alpha = 0.8) + 
                        ggtitle("Global Efficiency")
 ggsave("coef.efficiency.png")
 
 coefs_all %>% ggplot(aes(x = rewiring,
                          y = coef.smallworld,
-                         colour = name)) +
-  geom_line(size = 2, alpha = 0.8) + 
+                         colour = name,
+                         linetype = eps)) +
+  geom_line(size = .5, alpha = 0.8) + 
   ggtitle("Small World index")
 ggsave("coef.smallworld.png")
 
 coefs_all %>% ggplot(aes(x = rewiring,
                          y = coef.modularity,
-                         colour = name)) +
-  geom_line(size = 2, alpha = 0.8) + 
+                         colour = name,
+                         linetype = eps)) +
+  geom_line(size = .5, alpha = 0.8) + 
   ggtitle("Modularity (fast greedy clustering)")
 ggsave("coef.modularity.png")
 
 coefs_all %>% ggplot(aes(x = rewiring,
                          y = coef.avgpathlength,
-                         colour = name)) +
-  geom_line(size = 2, alpha = 0.8) + 
+                         colour = name,
+                         linetype = eps)) +
+  geom_line(size = .5, alpha = 0.8) + 
   ggtitle("Average path length")
 ggsave("coef.avgpathlength.png")
 
