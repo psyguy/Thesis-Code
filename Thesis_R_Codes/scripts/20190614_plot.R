@@ -3,58 +3,6 @@ rm(list = ls())
 source("./functions/functions_trial.R")
 source("./functions/functions_netmeas.R")
 
-# time series of nodes ----------------------------------------------------
-
-library(ggplot2)
-library(reshape)
-library(gridExtra)
-
-
-# data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
-# Molten <- melt(data, id.vars = "time")
-# ggplot(Molten, aes(x = time, y = value, colour = variable)) + geom_line()
-
-
-
-# diameter, path length, modularity ---------------------------------------
-
-# m <- brain_case@now$mat.connectivity
-# starting_values$mat.connectivity[[1]]
-# 
-# 
-# 
-# g <- m %>% graph_from_adjacency_matrix(mode = "undirected")
-# 
-# 
-# ## cluster_fast_greedy gives better modularity values and is faster
-# 
-# t <- Sys.time()
-# # g %>% cluster_fast_greedy() %>% modularity()
-# g %>% cluster_walktrap() %>% modularity()
-# Sys.time() - t
-# 
-# # g %>% cluster_edge_betweenness() %>% modularity()
-# g %>% cluster_infomap() %>% modularity()
-# g %>% cluster_label_prop() %>% modularity()
-# g %>% cluster_walktrap() %>% modularity()
-# 
-# 
-# 
-# cl %>% modularity()
-# 
-# 
-# 
-# diam <- g %>% diameter(directed = FALSE, unconnected = TRUE)
-# 
-# path_length <- g %>% average.path.length(unconnected = TRUE)
-# 
-# modularity_walktrap <- -0
-# g %>% cluster_edge_betweenness() %>% modularity()
-# 
-# wtc <- cluster_walktrap(g)
-# modularity(wtc)
-# # modularity(g, membership(wtc))
-# 
 
 # for loop over all brain cases -------------------------------------------
 
@@ -72,24 +20,24 @@ for(sampled in sampled.names){
   
   plot.title<- paste("Node activities of", brain_case@name)
 
-  sbs_h <- (brain_case@history$activities[rewires,1:300]) %>%
-    as.data.frame()
-
-  sbs_h[,12] %>% plot()
-
-  data <- sbs_h %>% cbind(rewires)
-  
-  # Molten$variable %>% str()
-  
-  # data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
-  Molten <- reshape::melt(data, id.vars = "rewires")
-  
-  ggplot(Molten,
-         aes(x = rewires,
-             y = value,
-             colour = variable)) +
-    geom_line(alpha = 0.5) + theme(legend.position="none") + ylim(-1, 1) + ggtitle(plot.title)
-  ggsave(paste0("activities.",brain_case@name,".png"), dpi = 500)
+  # sbs_h <- (brain_case@history$activities[rewires,1:300]) %>%
+  #   as.data.frame()
+  # 
+  # sbs_h[,12] %>% plot()
+  # 
+  # data <- sbs_h %>% cbind(rewires)
+  # 
+  # # Molten$variable %>% str()
+  # 
+  # # data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
+  # Molten <- reshape::melt(data, id.vars = "rewires")
+  # 
+  # ggplot(Molten,
+  #        aes(x = rewires,
+  #            y = value,
+  #            colour = variable)) +
+  #   geom_line(alpha = 0.5) + theme(legend.position="none") + ylim(-1, 1) + ggtitle(plot.title)
+  # ggsave(paste0("activities.",brain_case@name,".png"), dpi = 500)
 }
 Sys.time()-t
 

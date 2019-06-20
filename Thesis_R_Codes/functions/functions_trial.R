@@ -206,6 +206,8 @@ trial_summary <- function(aged_brain){
 
 trial_logistic <- function(a, m, eps) {
   # unit.vector allows to calculate M_i by multiplying it the connectivity matrix
+  if(length(eps)==1) eps <- rep(eps, length(a))
+  eps <- eps %>% as.matrix()
   unit.vector <- matrix(1, length(a), 1)
   M <- m %*% unit.vector
   fx <- a %>% mini_logistic() %>% as.matrix() %>% t()

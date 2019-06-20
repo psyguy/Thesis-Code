@@ -32,10 +32,10 @@ source("./functions/functions_trial.R")
 # case_params <- outcomes_decent[1,]
 # case_params[1,] <- NA
 vat_name <- NULL#"Stefan Hellrigel 2Xedges"
-vat_eps <- 0.1
+vat_eps <- rep(0.4,200) %>% c(rep(0.5, 100))
 vat_num_nodes <- 300
 vat_num_edges <- 5200
-vat_seed <- 1441
+vat_seed <- 1553
 
 parameters =  list(n_nodes = vat_num_nodes,
                    n_edges = vat_num_edges,
