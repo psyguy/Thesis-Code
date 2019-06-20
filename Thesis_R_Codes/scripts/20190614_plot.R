@@ -5,9 +5,9 @@ source("./functions/functions_netmeas.R")
 
 # time series of nodes ----------------------------------------------------
 
-library(ggplot2)
-library(reshape)
-library(gridExtra)
+# library(ggplot2)
+# library(reshape)
+# library(gridExtra)
 
 
 # data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
@@ -78,12 +78,12 @@ for(sampled in sampled.names){
   sbs_h[,12] %>% plot()
 
   data <- sbs_h %>% cbind(rewires)
-  
+
   # Molten$variable %>% str()
-  
+
   # data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
   Molten <- reshape::melt(data, id.vars = "rewires")
-  
+
   ggplot(Molten,
          aes(x = rewires,
              y = value,
