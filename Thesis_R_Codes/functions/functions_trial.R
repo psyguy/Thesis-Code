@@ -68,13 +68,13 @@ trial_grow <- function(
     # setting eps and a parameter vectors
     parameters$eps <- make_paramdist(alpha_beta = params.eps_a[1:2],
                                      range_param = c(0.3,0.5),
-                                     n = vat_num_nodes,
-                                     seed = vat_seed)
+                                     n = parameters$n_nodes,
+                                     seed = parameters$seed)
     
     parameters$a <- make_paramdist(alpha_beta = params.eps_a[3:4],
                                    range_param = c(1.4,2),
-                                   n = vat_num_nodes,
-                                   seed = vat_seed + 1)
+                                   n = parameters$n_nodes,
+                                   seed = parameters$seed + 1)
     
     l <- list(
       activities = a,
@@ -232,14 +232,14 @@ trial_summary <- function(aged_brain){
 make_brain.code <- function(p_ = NULL, name = NULL, b = NULL){
   # if(!is.null(b)) p_ <- b@parameters; name <- b@name
   
-  e_ <- p_$params.dist[1:2] %>% paste(collapse = "v")
-  a_ <- p_$params.dist[3:4] %>% paste(collapse = "v")
+  e_ <- p_$params.eps_a[1:2] %>% paste(collapse = "v")
+  a_ <- p_$params.eps_a[3:4] %>% paste(collapse = "v")
   r_ <- p_$round
   n_n <- p_$n_nodes/1000
   n_e <- p_$n_edges/1000
   
-  seed <- paste0(p_$params.dist[1:2],
-                 p_$params.dist[3:4],
+  seed <- paste0(p_$params.eps_a[1:2],
+                 p_$params.eps_a[3:4],
                  r_,
                  n_n,
                  n_e,
