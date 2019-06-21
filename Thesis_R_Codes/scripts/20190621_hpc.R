@@ -7,15 +7,34 @@ source("./functions/functions_partition.R")
 
 # making the parameter file -----------------------------------------------
 
+# levels_ <- c(0.5, 1, 1, 1, 2, 5)
+# levels.perm <- paste(rep(levels_, each = 6),
+#                rep(levels_, times = 6),
+#                sep = "x") %>% unique()
+# 
+# round_alphabeta <- c(1:2) %>%
+#   rep(each = 16) %>%
+#   paste(levels.perm, sep = "x") %>%
+#   as.data.frame()
+# 
+# write.table(round_alphabeta,"round_alphabeta.txt",
+#             row.names=FALSE,
+#             col.names=FALSE)
 
 
+# reading the round_alphabeta variable ------------------------------------
+
+# r_eps_a <- read.table("round_alphabeta.txt")[1,] %>% as.character()
+v1 <- gsub('"', '', r_eps_a)
+r_eps_a <-  (v1 %>% strsplit("x"))[[1]]
 
 # making some small brains ------------------------------------------------
 
 paste(r_a, r_eps) %>% print()
-brain_case <- partition_culture(row_eps = r_eps+1,
-                                row_a = r_a,
-                                final.age = 3)
+brain_case <- partition_culture(round = r_eps_a[1],
+                                row_eps = r_eps_a[2],
+                                row_a = r_eps_a[3],
+                                final.age = 50)
 save_vars(list.of.vars = "brain_case",
           prefix = paste(brain_case@parameters$brain.code, brain_case@name, sep = "_"))
 

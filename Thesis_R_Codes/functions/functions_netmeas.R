@@ -74,7 +74,7 @@ netmeas_coefs <- function(initial = NULL,
   
   name <- name #%>% rep(l_)
   seed <- parameters$seed #%>% rep(l_)
-  p_d <- parameters$params.dist
+  p_d <- parameters$params.eps_a
   alphabeta.eps <- paste0("(",p_d[1],", ",p_d[2],")")
   alphabeta.a <- paste0("(",p_d[3],", ",p_d[4],")")
 
