@@ -47,7 +47,9 @@ netmeas_coefs <- function(initial = NULL,
   # e_0 <- m_0 %>% netmeas_efficiency()
   
   if(!is.null(b)) initial <- b@initial -> now
-  m_0 <- initial$mat.connectivity[[1]] #h_$mat.connectivity[[t]]
+  
+  m_0 <- initial
+  if(is.list(initial)) m_0 <- initial$mat.connectivity[[1]]
   g_0 <- m_0 %>% graph_from_adjacency_matrix(mode = "undirected")
   
   c_0 <- m_0 %>% my_clustceof()
@@ -58,7 +60,8 @@ netmeas_coefs <- function(initial = NULL,
   
   l_ <- t_ %>% length()
 
-  m_ <- now$mat.connectivity[[1]] #h_$mat.connectivity[[t]]
+  m_ <- now#$mat.connectivity[[1]] #h_$mat.connectivity[[t]]
+  if(is.list(now)) m_ <- now$mat.connectivity[[1]]
   g_ <- m_ %>% graph_from_adjacency_matrix(mode = "undirected")
   
   c_ <- m_ %>% my_clustceof()

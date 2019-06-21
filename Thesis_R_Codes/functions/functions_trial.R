@@ -23,6 +23,7 @@ trial_grow <- function(
                                           n_nodes = 100,
                                           n_edges = 0,
                                           seed = -99,
+                                          round = 0,
                                           lower_bound_starting = 0,
                                           brain.code <- NULL,
                                           eps = NULL,
@@ -114,7 +115,7 @@ trial_grow <- function(
     
   # extracting historical values
   his.a <- brain_growing@history$activities
-  his.coefs <- brain_growing@history$coef.clustering
+  his.coefs <- brain_growing@history$coefficients
   his.m <- brain_growing@history$mat.connectivity
   
   time_start <- Sys.time()
@@ -143,7 +144,8 @@ trial_grow <- function(
     # saving the snapshot
     if(!(new.rewires %% freq_snapshot)){
       his.m[[new.rewires]] <- new.m
-      new.coefs <- netmeas_coefs(brain_growing@initial, brain_growing@now,
+      new.coefs <- netmeas_coefs(brain_growing@initial$mat.connectivity[[1]],
+                                 new.m,
                                  brain_growing@parameters,
                                  name = brain_growing@name,
                                  t_ = new.rewires)
@@ -163,12 +165,12 @@ trial_grow <- function(
   ## history
   brain_growing@history$activities <- his.a
   brain_growing@history$mat.connectivity <- his.m
-  brain_growing@history$coefficient <- his.coefs
+  brain_growing@history$coefficients <- his.coefs
   
   ## now
   brain_growing@now$activities <- new.a
   brain_growing@now$mat.connectivity <- new.m
-  brain_growing@now$coef.clustering <- new.coefs
+  brain_growing@now$coefficients <- new.coefs
   
   (time_taken <- Sys.time() - time_start) %>% paste("for", brain_growing@name) %>%
     print()

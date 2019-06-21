@@ -52,6 +52,7 @@ parameters =  list(params.eps_a = params.eps_a,
                    n_nodes = vat_num_nodes,
                    n_edges = vat_num_edges,
                    seed = vat_seed,
+                   round = round,
                    lower_bound_starting = 0,
                    brain.code <- "",
                    eps = vat_eps,
@@ -74,8 +75,8 @@ for(days in 1:1){
   #                     "days."))
   
 }
-
-save_vars(list.of.vars = "brain_case",
-          prefix = paste(brain_case@parameters$brain.code, brain_case@name, sep = "_"))
+# 
+# save_vars(list.of.vars = "brain_case",
+#           prefix = paste(brain_case@parameters$brain.code, brain_case@name, sep = "_"))
 
 
