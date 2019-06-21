@@ -32,10 +32,10 @@ vat_seed <- 2001
 row_eps <- 1
 row_a <- 2
 
-params.dist <- l_[row_eps,] %>% cbind(l_[row_a,]) %>%
+params.eps_a <- l_[row_eps,] %>% cbind(l_[row_a,]) %>%
   format(nsmall=1)
-colnames(params.dist) <- c("eps", "eps", "a", "a") %>%
-  paste(colnames(params.dist), sep = ".")
+colnames(params.eps_a) <- c("eps", "eps", "a", "a") %>%
+  paste(colnames(params.eps_a), sep = ".")
 
 
 vat_eps <- make_paramdist(alpha_beta = params.dist[1:2],
@@ -48,15 +48,15 @@ vat_a <- make_paramdist(alpha_beta = params.dist[3:4],
                         n = vat_num_nodes,
                         seed = vat_seed + 1)
 
-parameters =  list(n_nodes = vat_num_nodes,
+parameters =  list(params.eps_a = params.dist,
+                   round = round,
+                   n_nodes = vat_num_nodes,
                    n_edges = vat_num_edges,
-                   params.dist = params.dist,
-                   eps = vat_eps,
-                   a = vat_a,
                    seed = vat_seed,
                    lower_bound_starting = 0,
-                   global_minmax = FALSE,
-                   blind_swap = FALSE)
+                   brain.code <- "",
+                   eps = vat_eps,
+                   a = vat_a)
 
 brain_case <- NULL
 for(days in 1:5){
@@ -77,9 +77,6 @@ for(days in 1:5){
 }
 
 save_vars(list.of.vars = "brain_case",
-          prefix = paste0("brain_",
-                          brain_case@name,
-                          "_",
-                          brain_case@parameters$n_edges,
-                          "edges"))
+          prefix = paste(brain_case@parameters$brain.code, brain_case@name, sep = "_"))
+
 

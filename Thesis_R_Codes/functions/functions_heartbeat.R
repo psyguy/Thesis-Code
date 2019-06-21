@@ -46,8 +46,8 @@ brain <- setClass("brain",
                     slots = list(name = "character",
                                  birthday = "character",
                                  age = "list",
-                                 starting_values = "list", # activities
                                  parameters = "list", # num_nodes, num_edges
+                                 initial = "list", # activities
                                  history = "list", # activities, coef.clustering, connmatrix
                                  now = "list" # activities, coef.clustering, mat.connectivity
                                  ))
