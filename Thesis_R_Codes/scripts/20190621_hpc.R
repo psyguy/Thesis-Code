@@ -4,16 +4,19 @@ rm(list = ls())
 source("./functions/functions_netmeas.R")
 source("./functions/functions_partition.R")
 
+## read the HPC instructions here:
+## https://github.com/psyguy/Emotion-Dynamics-1/blob/master/ED%201%20-%20Codes/3.%20mirt-Model-Comp/correct_HPC-ready_May22/HPC%20readme.txt
+
 
 # making the parameter file -----------------------------------------------
 
 # levels_ <- c(0.5, 1, 1, 1, 2, 5)
-# levels.perm <- paste(rep(levels_, each = 6),
-#                rep(levels_, times = 6),
+# levels.perm <- paste(rep(levels_, each = length(levels_)),
+#                rep(levels_, times = length(levels_)),
 #                sep = "x") %>% unique()
 # 
-# round_alphabeta <- c(1:2) %>%
-#   rep(each = 16) %>%
+# round_alphabeta <- c(1:6) %>%
+#   rep(each = length(levels.perm)) %>%
 #   paste(levels.perm, sep = "x") %>%
 #   as.data.frame()
 # 
@@ -25,56 +28,23 @@ source("./functions/functions_partition.R")
 # reading the round_alphabeta variable ------------------------------------
 
 # r_eps_a <- read.table("round_alphabeta.txt")[1,] %>% as.character()
+
+#!/usr/bin/env Rscript
+
+Args <- commandArgs(TRUE)
+r_eps_a <- Args[1]
+
 v1 <- gsub('"', '', r_eps_a)
 r_eps_a <-  (v1 %>% strsplit("x"))[[1]]
 
 # making some small brains ------------------------------------------------
 
-paste(r_a, r_eps) %>% print()
+# paste(r_a, r_eps) %>% print()
 brain_case <- partition_culture(round = r_eps_a[1],
                                 row_eps = r_eps_a[2],
                                 row_a = r_eps_a[3],
-                                final.age = 50)
+                                final.age = 100)
 save_vars(list.of.vars = "brain_case",
           prefix = paste(brain_case@parameters$brain.code, brain_case@name, sep = "_"))
 
-
-# for loop over all brain cases -------------------------------------------
-
-
-sampled.path <- "./data/"
-sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
-
-coefs_all <- NULL
-# rewires <- seq(1, 10001, 5)
-t <- Sys.time()
-for(sampled in sampled.names){
-  load(paste(sampled.path, sampled, sep = ""))
-  brain_case@name %>% print()
-  coefs_all <- coefs_all %>%
-    rbind(brain_case@history$coefficients)
-}
-Sys.time()-t
-
-
-# plotting coefficients over time -----------------------------------------
-
-
-
-coefficient.name <- (coefs_all %>% colnames())[6:10]
-
-for(i in coefficient.name){
-  this.coefficient <- coefs_all %>% select(i, rewiring, alphabeta.a, alphabeta.eps)
-  colnames(this.coefficient)[1] <- "value"
-  # this.coefficient$value <- this.coefficient$value/co$value[1]
-  coef.plot <- this.coefficient %>% ggplot(aes(x = rewiring,
-                                               y = value,
-                                               colour = alphabeta.a,
-                                               linetype = alphabeta.eps)) +
-    geom_line(size = .75, alpha = 0.8) + 
-    # ggplot2::ylim(0,NA) + 
-    ggtitle(i)
-  coef.plot %>% print()
-  paste0(i, ".png") %>% ggsave()
-}
 
