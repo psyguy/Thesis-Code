@@ -29,20 +29,25 @@ netmeas_efficiency <- function(m){
 
 # calculating S, C, and E, and returning a df together with model  --------
 
-netmeas_coefs <- function(b,
+netmeas_coefs <- function(initial = NULL,
+                          now = NULL,
+                          parameters = NULL,
+                          name = NULL,
                           t_ = 0,
+                          b = NULL,
                           concise = TRUE,
                           limit = 10000,
                           freq_snapshot = 200){
-  h_ <- b@history
+  # h_ <- b@history
   # m_0 <- h_$mat.connectivity[[1]]
   # c_0 <- h_$coef.clustering[[1]]
   # g_0 <- m_0 %>% graph_from_adjacency_matrix(mode = "undirected")
   # modu_0 <- g_0 %>% cluster_fast_greedy() %>% modularity()
   # pl_0 <- g_0 %>% average.path.length(unconnected = TRUE)
   # e_0 <- m_0 %>% netmeas_efficiency()
-
-  m_0 <- b@initial$mat.connectivity[[1]] #h_$mat.connectivity[[t]]
+  
+  if(!is.null(b)) initial <- b@initial -> now
+  m_0 <- initial$mat.connectivity[[1]] #h_$mat.connectivity[[t]]
   g_0 <- m_0 %>% graph_from_adjacency_matrix(mode = "undirected")
   
   c_0 <- m_0 %>% my_clustceof()
@@ -53,7 +58,7 @@ netmeas_coefs <- function(b,
   
   l_ <- t_ %>% length()
 
-  m_ <- b@now$mat.connectivity[[1]] #h_$mat.connectivity[[t]]
+  m_ <- now$mat.connectivity[[1]] #h_$mat.connectivity[[t]]
   g_ <- m_ %>% graph_from_adjacency_matrix(mode = "undirected")
   
   c_ <- m_ %>% my_clustceof()
@@ -64,9 +69,9 @@ netmeas_coefs <- function(b,
     
   s_ <- c_*e_/(c_0*e_0)
   
-  name <- b@name #%>% rep(l_)
-  seed <- b@parameters$seed #%>% rep(l_)
-  p_d <- b@parameters$params.dist
+  name <- name #%>% rep(l_)
+  seed <- parameters$seed #%>% rep(l_)
+  p_d <- parameters$params.dist
   alphabeta.eps <- paste0("(",p_d[1],", ",p_d[2],")")
   alphabeta.a <- paste0("(",p_d[3],", ",p_d[4],")")
 

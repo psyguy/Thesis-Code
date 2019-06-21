@@ -65,12 +65,12 @@ trial_grow <- function(
     name <- bc_$name
     
     # setting eps and a parameter vectors
-    parameters$eps <- make_paramdist(alpha_beta = params.dist[1:2],
+    parameters$eps <- make_paramdist(alpha_beta = params.eps_a[1:2],
                                      range_param = c(0.3,0.5),
                                      n = vat_num_nodes,
                                      seed = vat_seed)
     
-    parameters$a <- make_paramdist(alpha_beta = params.dist[3:4],
+    parameters$a <- make_paramdist(alpha_beta = params.eps_a[3:4],
                                    range_param = c(1.4,2),
                                    n = vat_num_nodes,
                                    seed = vat_seed + 1)
@@ -93,7 +93,7 @@ trial_grow <- function(
       now = l
     )
     
-    brain_growing@initial$coefficients <- brain_growing %>% netmeas_coefs(t_ = 1)
+    brain_growing@initial$coefficients <- netmeas_coefs(b = brain_growing, t_ = 1)
     
   }
   
@@ -104,7 +104,7 @@ trial_grow <- function(
   m.l <- brain_growing@now$mat.connectivity -> now.m
   if(is.list(m.l)) now.m <- m.l[[length(m.l)]]
   now.a <- brain_growing@now$activities
-  now.c <- brain_growing@now$coef.clustering
+  # now.c <- brain_growing@now$coef.clustering
   eps <- brain_growing@parameters$eps
   a <- brain_growing@parameters$a
 
@@ -114,9 +114,8 @@ trial_grow <- function(
     
   # extracting historical values
   his.a <- brain_growing@history$activities
-  his.c <- brain_growing@history$coef.clustering
+  his.coefs <- brain_growing@history$coef.clustering
   his.m <- brain_growing@history$mat.connectivity
-
   
   time_start <- Sys.time()
   new.a <- now.a
@@ -135,19 +134,21 @@ trial_grow <- function(
     new.updates <- new.updates + n_updates
     new.rewires <- new.rewires + 1
     
-    # rewiring and new clustering coefficient
+    # rewiring
     new.m <- my_rewire(new.a,
-                       new.m,
-                       global_minmax = brain_growing@parameters$global_minmax,
-                       blind_swap = brain_growing@parameters$blind_swap)
-    new.c <- new.m %>% my_clustceof()
-    
+                       new.m)
     # adding activities and clustering coefficient to the history
     his.a <- his.a %>% rbind(new.a)
-    his.c <- his.c %>% c(new.c)
     
     # saving the snapshot
-    if(!(new.rewires %% freq_snapshot)) his.m[[new.rewires]] <- new.m
+    if(!(new.rewires %% freq_snapshot)){
+      his.m[[new.rewires]] <- new.m
+      new.coefs <- netmeas_coefs(brain_growing@initial, brain_growing@now,
+                                 brain_growing@parameters,
+                                 name = brain_growing@name,
+                                 t_ = new.rewires)
+      his.coefs <- his.coefs %>% rbind(new.coefs)
+      }
     
     if(!quiet & !(new.rewires %% 100)) print(paste(brain_growing@name, "is now",
                            # new.updates, "updates and",
@@ -162,12 +163,12 @@ trial_grow <- function(
   ## history
   brain_growing@history$activities <- his.a
   brain_growing@history$mat.connectivity <- his.m
-  brain_growing@history$coef.clustering <- his.c
+  brain_growing@history$coefficient <- his.coefs
   
   ## now
   brain_growing@now$activities <- new.a
   brain_growing@now$mat.connectivity <- new.m
-  brain_growing@now$coef.clustering <- new.c
+  brain_growing@now$coef.clustering <- new.coefs
   
   (time_taken <- Sys.time() - time_start) %>% paste("for", brain_growing@name) %>%
     print()
