@@ -18,12 +18,11 @@ source(paste0(path.to.functions_my,"/functions_heartbeat.R"))
 trial_grow <- function(
                        parameters =  list(n_nodes = 100,
                                           n_edges = 0,
-                                          eps = 0.2,
-                                          a = 1.7,
+                                          params.dist = c(0.5,0.5,1,2),
                                           seed = -99,
-                                          lower_bound_starting = -1,
-                                          global_minmax = FALSE,
-                                          blind_swap = FALSE),
+                                          lower_bound_starting = 0,
+                                          round = 0
+                                          ),
                        n_updates = 1, # number of heartupdates per rewireupdates of notes
                        n_rewires = 1, # number of rewirings of the network
                        freq_snapshot = 200, # frequency of saving connectivity matrices in the brain
@@ -38,7 +37,7 @@ trial_grow <- function(
   
 # making a brain if there is no younger brain to continue growing ---------
 
-  if (is.null(brain_growing)) {
+  if(is.null(brain_growing)){
     
     if(!parameters$n_edges){
       parameters$n_edges <- round(1.5 * 2 * log(parameters$n_nodes) * (parameters$n_nodes - 1))
@@ -63,8 +62,12 @@ trial_grow <- function(
       coef.clustering = cl
     )
     
-    # giving the brain a name if not already specified
-    if(is.null(name)) name <- give_name(num = 1, seed = parameters$seed)
+    # making the name and brain code
+    
+    bc_ <- make_braincode(parameters)
+    name <- bc_$name
+    parameters$brain_code <- bc_$braincode
+    parameters$seed <- bc_$seed
     
     brain_growing <- new(
       "brain",
@@ -204,6 +207,44 @@ trial_summary <- function(aged_brain){
   
 }
 
+
+# make a code for brain ---------------------------------------------------
+
+make_braincode <- function(p_ = NULL, name = NULL, b = NULL){
+  # if(!is.null(b)) p_ <- b@parameters; name <- b@name
+  
+  e_ <- p_$params.dist[1:2] %>% paste(collapse = "v")
+  a_ <- p_$params.dist[3:4] %>% paste(collapse = "v")
+  r_ <- p_$round
+  n_n <- p_$n_nodes/1000
+  n_e <- p_$n_edges/1000
+  
+  seed <- paste0(p_$params.dist[1:2],
+                 p_$params.dist[3:4],
+                 r_,
+                 n_n,
+                 n_e,
+                 collapse = "")
+  seed <- gsub("[0.]","",seed) %>% as.numeric()
+  seed <- seed %% .Machine$integer.max
+  
+  # bc_ brain code
+  bc_ <- paste0("eps-", e_,
+                   "_a-", a_,
+                   "_r-", r_)
+  # number of nodes and edges
+  n_e <- paste0("g-",
+                n_n,
+                # "k_",
+                "k-",
+                n_e,
+                "k")
+  
+  list(name = give_name(seed = seed),
+       braincode = paste(bc_, n_e, sep = "_"),
+       seed = seed) %>% return()
+  
+}
 
 # logistic update for trial -----------------------------------------------
 

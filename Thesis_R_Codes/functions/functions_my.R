@@ -13,6 +13,7 @@ list.of.packages <- c("tidyverse",
                       "seriation",
                       "igraph",
                       "ggplot2",
+                      "gplots",
                       "reshape",
                       "gridExtra")
 new.packages <-
@@ -159,6 +160,21 @@ my_coherenceD <- function(x.input) {
 }
 
 
+# make parameter distributions --------------------------------------------
+
+make_paramdist <- function(alpha_beta = c(2, 5),
+                           range_param = c(0.3, 0.5),
+                           n = 300,
+                           seed = -99){
+  alpha_beta <- alpha_beta %>% as.numeric()
+  range_param <- range_param %>% sort()
+  set.seed(seed)
+  v_ <- n %>% rbeta(alpha_beta[1], alpha_beta[2])
+  v_ <- v_*(range_param[2]-range_param[1]) + (range_param[1])
+  v_ %>% return()
+}
+
+
 # make parameter vector ---------------------------------------------------
 
 make_paramvect <- function(s = "0.3x1, 0.4x0, 0.5x0",
@@ -175,7 +191,6 @@ make_paramvect <- function(s = "0.3x1, 0.4x0, 0.5x0",
   set.seed(seed)
   sample(v_) %>% return()
 }
-
 
 
 # clustering coeeficient (transitivity) -----------------------------------

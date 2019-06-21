@@ -17,41 +17,41 @@
 rm(list = ls())
 
 source("./functions/functions_trial.R")
-# load("./data/outcomes_20190612_1952.RData")
-# load("./data/brain_aging_20190612_1955.RData")
+load("./data/outcomes_20190612_1952.RData")
+load("./data/brain_aging_20190612_1955.RData")
 
-# outcomes_decent <- outcomes %>%
-#   filter(mean_variance>.1) %>%
-#   arrange(coef.clustering_normalized) %>% 
-#   tail(10)
+outcomes_decent <- outcomes %>%
+  filter(mean_variance>.1) %>%
+  arrange(coef.clustering_normalized) %>% 
+  tail(10)
 
 # case_name <- "Emma Segers"
 # case_params <- outcomes_decent %>% filter(name == case_name)
 
 # making Hellrigel's brain
-# case_params <- outcomes_decent[1,]
-# case_params[1,] <- NA
-vat_name <- NULL#"Stefan Hellrigel 2Xedges"
-vat_eps <- rep(0.4,200) %>% c(rep(0.5, 100))
-vat_num_nodes <- 300
-vat_num_edges <- 5200
-vat_seed <- 1553
+case_params <- outcomes_decent[1,]
+case_params[1,] <- NA
+case_params$name <- NULL#"Stefan Hellrigel 2Xedges"
+case_params$eps <- 0.8
+case_params$num_nodes <- 300
+case_params$num_edges <- 5200
+case_params$seed <- 1159
 
-parameters =  list(n_nodes = vat_num_nodes,
-                   n_edges = vat_num_edges,
-                   eps = vat_eps,
-                   seed = vat_seed,
+parameters =  list(n_nodes = case_params$num_nodes,
+                   n_edges = case_params$num_edges,
+                   eps = case_params$eps,
+                   seed = case_params$seed,
                    lower_bound_starting = 0,
                    global_minmax = FALSE,
                    blind_swap = FALSE)
 
-brain_case <- NULL
+# brain_case <- NULL
 for(days in 1:10){
   brain_case <- trial_grow(parameters =  parameters,
                            n_rewires = 1000,
                            n_updates = 20,
                            freq_snapshot = 200,
-                           name = vat_name,
+                           name = case_params$name,
                            brain_younger = brain_case,
                            quiet = FALSE)
   
