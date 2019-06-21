@@ -47,38 +47,41 @@ Sys.time()-t
 
 coefs_all %>% ggplot(aes(x = rewiring,
                          y = coef.clustering,
-                         colour = name,
-                         linetype = name)) +
-              geom_line(size = 1, alpha = 0.8) + 
+                         colour = a,
+                         linetype = eps)) +
+  geom_line(size = .75, alpha = 0.8) +  
               ggtitle("Clustering Coefficient")
 ggsave("coef.clustering.png")
 
 coefs_all %>% ggplot(aes(x = rewiring,
                          y = coef.efficiency,
-                         colour = name)) +
-                       geom_line(size = 2, alpha = 0.8) + 
+                         colour = a,
+                         linetype = eps)) +
+  geom_line(size = .75, alpha = 0.8) + 
                        ggtitle("Global Efficiency")
 ggsave("coef.efficiency.png")
 
 coefs_all %>% ggplot(aes(x = rewiring,
                          y = coef.smallworld,
-                         colour = name)) +
-  geom_line(size = 2, alpha = 0.8) + 
+                         colour = a,
+                         linetype = eps)) +
+  geom_line(size = .75, alpha = 0.8) + 
   ggtitle("Small World index")
 ggsave("coef.smallworld.png")
 
 coefs_all %>% ggplot(aes(x = rewiring,
                          y = coef.modularity,
-                         colour = name)) +
-  geom_line(size = 2, alpha = 0.8) + 
+                         colour = a,
+                         linetype = eps)) +
+  geom_line(size = .75, alpha = 0.8) + 
   ggtitle("Modularity (fast greedy clustering)")
 ggsave("coef.modularity.png")
 
 coefs_all %>% ggplot(aes(x = rewiring,
                          y = coef.avgpathlength,
-                         colour = name,
+                         colour = a,
                          linetype = eps)) +
-  geom_line(size = .5, alpha = 0.8) + 
+  geom_line(size = .75, alpha = 0.8) + 
   ggtitle("Average path length")
 ggsave("coef.avgpathlength.png")
 

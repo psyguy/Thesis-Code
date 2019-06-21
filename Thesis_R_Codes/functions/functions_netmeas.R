@@ -68,7 +68,8 @@ netmeas_coefs <- function(b,
   
   name <- b@name %>% rep(l_)
   seed <- b@parameters$seed %>% rep(l_)
-  eps <- b@parameters$eps %>% rep(l_)
+  eps <- b@parameters$partitions$eps %>% rep(l_)
+  a <- b@parameters$partitions$a %>% rep(l_)
   global_minmax <- b@parameters$global_minmax %>% rep(l_)
   blind_swap <- b@parameters$blind_swap %>% rep(l_)
 
@@ -83,8 +84,9 @@ netmeas_coefs <- function(b,
     name,
     seed,
     eps,
-    global_minmax,
-    blind_swap,
+    a,
+    # global_minmax,
+    # blind_swap,
     rewiring,
     coef.clustering,
     coef.efficiency,
