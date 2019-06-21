@@ -26,19 +26,19 @@ partition_culture <- function(brain_case = NULL,
                               final.age = 10){
   
   if(!is.null(brain_case)){
-    if((brain_case@age$rewires-1) == final.age*1000) return(brain_case)
+    if((brain_case@age$rewires-1) >= final.age*1000) return(brain_case)
     }
   
   alpha <- c(0.5, 1, 1, 1, 2, 5)
   beta <- c(0.5, 1, 2, 5, 1, 1)
-  l_ <- data.frame(alpha,beta)
+  alphbet <- data.frame(alpha,beta)
   
   name <- NULL
   num_nodes <- 300
   num_edges <- 5200
   seed <- round
 
-  params.eps_a <- l_[row_eps,] %>% cbind(l_[row_a,]) %>%
+  params.eps_a <- alphbet[row_eps,] %>% cbind(alphbet[row_a,]) %>%
     format(nsmall=1)
   colnames(params.eps_a) <- c("eps", "eps", "a", "a") %>%
     paste(colnames(params.eps_a), sep = ".")
@@ -72,7 +72,7 @@ partition_culture <- function(brain_case = NULL,
                              freq_snapshot = 200,
                              name = name,
                              brain_younger = brain_case,
-                             quiet = FALSE)
+                             quiet = TRUE)
     if((brain_case@age$rewires-1) == final.age*1000) break
   }
   

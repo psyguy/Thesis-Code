@@ -35,7 +35,7 @@ netmeas_coefs <- function(initial = NULL,
                           name = NULL,
                           t_ = 0,
                           b = NULL,
-                          concise = TRUE,
+                          concise = FALSE,
                           limit = 10000,
                           freq_snapshot = 200){
   # h_ <- b@history

@@ -34,7 +34,7 @@ trial_grow <- function(
                        brain_younger = NULL,
                        save_brain = FALSE,
                        name = NULL,
-                       quiet = FALSE){
+                       quiet = TRUE){
   
   
   brain_growing <- brain_younger
@@ -66,12 +66,12 @@ trial_grow <- function(
     name <- bc_$name
     
     # setting eps and a parameter vectors
-    parameters$eps <- make_paramdist(alpha_beta = params.eps_a[1:2],
+    parameters$eps <- make_paramdist(alpha_beta = parameters$params.eps_a[1:2],
                                      range_param = c(0.3,0.5),
                                      n = parameters$n_nodes,
                                      seed = parameters$seed)
     
-    parameters$a <- make_paramdist(alpha_beta = params.eps_a[3:4],
+    parameters$a <- make_paramdist(alpha_beta = parameters$params.eps_a[3:4],
                                    range_param = c(1.4,2),
                                    n = parameters$n_nodes,
                                    seed = parameters$seed + 1)
