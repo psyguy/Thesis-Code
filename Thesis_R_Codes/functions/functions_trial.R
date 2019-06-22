@@ -240,9 +240,9 @@ make_brain.code <- function(p_ = NULL, name = NULL, b = NULL){
   
   seed <- paste0(p_$params.eps_a[1:2],
                  p_$params.eps_a[3:4],
-                 r_,
                  n_n,
                  n_e,
+                 r_,
                  collapse = "")
   seed <- gsub("[0.]","",seed) %>% as.numeric()
   seed <- seed %% .Machine$integer.max

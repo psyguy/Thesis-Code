@@ -23,38 +23,43 @@ partition_culture <- function(brain_case = NULL,
                               row_eps = 1,
                               row_a = 1,
                               round = 0,
+                              alphabeta = NULL,
                               final.age = 10){
   
   if(!is.null(brain_case)){
     if((brain_case@age$rewires-1) >= final.age*1000) return(brain_case)
     }
   
-  alpha <- c(0.5, 1, 1, 1, 2, 5)
-  beta <- c(0.5, 1, 2, 5, 1, 1)
-  alphbet <- data.frame(alpha,beta)
-  
   name <- NULL
   num_nodes <- 300
   num_edges <- 5200
   seed <- round
+  
+  # # since the input is the the actual alpha and beta parameters
+ 
+  if(is.null(alphabeta)){
+    alpha <- c(0.5, 1, 1, 1, 2, 5)
+    beta <- c(0.5, 1, 2, 5, 1, 1)
+    alphabeta <- data.frame(alpha,beta)
+  }
 
-  params.eps_a <- alphbet[row_eps,] %>% cbind(alphbet[row_a,]) %>%
-    format(nsmall=1)
-  colnames(params.eps_a) <- c("eps", "eps", "a", "a") %>%
-    paste(colnames(params.eps_a), sep = ".")
+  alphabeta_eps <- alphabeta[row_eps,]
+  colnames(alphabeta_eps) <- c("eps.alpa", "eps.beta")
   
+  alphabeta_a <- alphabeta[row_a,]
+  colnames(alphabeta_eps) <- c("a.alpa", "a.beta")
   
-  eps <- make_paramdist(alpha_beta = params.eps_a[1:2],
+  eps <- make_paramdist(alpha_beta = alphabeta_eps,
                             range_param = c(0.3,0.5),
                             n = num_nodes,
                             seed = seed)
   
-  a <- make_paramdist(alpha_beta = params.eps_a[3:4],
+  a <- make_paramdist(alpha_beta = alphabeta_a,
                           range_param = c(1.4,2),
                           n = num_nodes,
                           seed = seed + 1)
   
-  parameters =  list(params.eps_a = params.eps_a,
+  parameters =  list(params.eps_a = cbind(alphabeta_eps,alphabeta_a),
                      round = round,
                      n_nodes = num_nodes,
                      n_edges = num_edges,
@@ -72,7 +77,7 @@ partition_culture <- function(brain_case = NULL,
                              freq_snapshot = 200,
                              name = name,
                              brain_younger = brain_case,
-                             quiet = TRUE)
+                             quiet = FALSE)
     if((brain_case@age$rewires-1) == final.age*1000) break
   }
   
