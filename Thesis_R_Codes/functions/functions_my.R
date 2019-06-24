@@ -230,7 +230,7 @@ give_name <- function(num = 1, seed = -99, gender = "b"){
                        "William","Wout","Yannick")
   
   firstnames_female <- c("Alexandra","Alexia","Alice","Alicia","Aline","Amandine",
-                         "Amber","Amelie","Anaïs","Anke","Anna","Anouk","Audrey",
+                         "Amber","Amelie","Anais","Anke","Anna","Anouk","Audrey",
                          "Aurelie","Axelle","Bo","Britt","Camille","Caro","Caroline",
                          "Charlotte","Chiara","Chloe","Clara","Celia","Celine",
                          "Delphine","Eline","Elisa","Elise","Ellen","Elodie","Emilie",
