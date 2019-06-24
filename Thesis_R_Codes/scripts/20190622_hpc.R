@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 Args <- commandArgs(TRUE)
-index <- Args[1] %>% as.numeric()
+index <- as.numeric(Args[1])
 
 
 #rm(list = ls())
