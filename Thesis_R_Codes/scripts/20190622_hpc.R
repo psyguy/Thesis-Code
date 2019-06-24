@@ -1,4 +1,10 @@
-rm(list = ls())
+#!/usr/bin/env Rscript
+
+Args <- commandArgs(TRUE)
+index <- Args[1]
+
+
+#rm(list = ls())
 
 # source("./functions/functions_trial.R")
 source("./functions/functions_netmeas.R")
@@ -6,13 +12,6 @@ source("./functions/functions_partition.R")
 
 ## read the HPC instructions here:
 ## https://github.com/psyguy/Emotion-Dynamics-1/blob/master/ED%201%20-%20Codes/3.%20mirt-Model-Comp/correct_HPC-ready_May22/HPC%20readme.txt
-
-
-
-#!/usr/bin/env Rscript
-
-Args <- commandArgs(TRUE)
-index <- Args[1]
 
 
 alpha <- c(0.5, 1, 1, 1, 2, 5)# %>% rep(times = nrounds)
@@ -33,7 +32,7 @@ r_a_b <- data.frame(row_eps, row_a, round)
 brain_case <- partition_culture(round = r_a_b$round[index],
                                 row_eps = r_a_b$row_eps[index],
                                 row_a = r_a_b$row_a[index],
-                                final.age = 1)
+                                final.age = 100)
 save_vars(list.of.vars = "brain_case",
           prefix = paste(brain_case@parameters$brain.code, brain_case@name, sep = "_"))
 

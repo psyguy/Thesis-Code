@@ -20,7 +20,7 @@ source(paste0(path.to.functions_my,"/functions_netmeas.R"))
 trial_grow <- function(
                        parameters =  list(params.eps_a = c(0.5,0.5,1,2),
                                           round = 0,
-                                          n_nodes = 100,
+                                          #n_nodes = 100,
                                           n_edges = 0,
                                           seed = -99,
                                           round = 0,
@@ -240,7 +240,7 @@ make_brain.code <- function(p_ = NULL, name = NULL, b = NULL){
   
   seed <- paste0(p_$params.eps_a[1:2],
                  p_$params.eps_a[3:4],
-                 n_n,
+                 #n_n,
                  n_e,
                  r_,
                  collapse = "")
