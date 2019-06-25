@@ -1,0 +1,1152 @@
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x0.5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x0.5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x0.5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x0.5x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x1x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x1x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x1x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x1x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x2x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x2x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x2x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x2x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 1x5x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x0.5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x0.5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x0.5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x0.5x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x1x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x1x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x1x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x1x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x2x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x2x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x2x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x2x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 2x5x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x0.5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x0.5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x0.5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x0.5x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x1x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x1x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x1x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x1x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x2x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x2x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x2x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x2x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 3x5x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x0.5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x0.5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x0.5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x0.5x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x1x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x1x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x1x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x1x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x2x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x2x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x2x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x2x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 4x5x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x0.5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x0.5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x0.5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x0.5x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x1x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x1x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x1x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x1x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x2x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x2x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x2x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x2x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 5x5x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x0.5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x0.5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x0.5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x0.5x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x1x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x1x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x1x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x1x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x2x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x2x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x2x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x2x5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x5x0.5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x5x1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x5x2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.6.0-foss-2018a-bare
+ 
+./scripts/20190621_hpc.R 6x5x5
+#####--END
