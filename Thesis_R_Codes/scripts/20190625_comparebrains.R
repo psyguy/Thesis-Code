@@ -6,7 +6,7 @@ source("./functions/functions_partition.R")
 
 # for loop over all brain cases -------------------------------------------
 
-sampled.path <- "./data/20190625_hpc_data/"
+sampled.path <- "./data/"
 sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
 coefs_all <- NULL
 # rewires <- seq(1, 10001, 5)
@@ -30,17 +30,18 @@ c <- coefs_all %>% filter(alphabeta.eps=="(0.5, 0.5)")
 for(i in coefficient.name){
   this.coefficient <- coefs_all %>%
     # filter(name == "Noa Adam") %>% 
-    filter(alphabeta.eps=="(5, 1)", alphabeta.a=="(5, 1)") %>% 
+    # filter(alphabeta.eps=="(5, 1)", alphabeta.a=="(5, 1)") %>% 
     select(i, rewiring, alphabeta.a, alphabeta.eps, name)
   colnames(this.coefficient)[1] <- "value"
   # this.coefficient$value <- this.coefficient$value/co$value[1]
   coef.plot <- this.coefficient %>% ggplot(aes(x = rewiring,
                                                y = value,
-                                               colour = name,
-                                               linetype = alphabeta.eps)) +
+                                               colour = alphabeta.eps#,
+                                               # linetype = alphabeta.eps
+                                               )) +
     geom_line(size = .75, alpha = 0.8) + 
     ggplot2::ylim(0,NA) +
     ggtitle(i)
   coef.plot %>% print()
-  # paste0(i, ".png") %>% ggsave()
+  paste0(i, "_per-eps.png") %>% ggsave()
 }

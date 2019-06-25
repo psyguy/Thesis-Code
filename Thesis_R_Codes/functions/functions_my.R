@@ -164,30 +164,31 @@ my_coherenceD <- function(x.input) {
 
 make_paramdist <- function(alpha_beta = c(2, 5),
                            range_param = c(0.3, 0.5),
-                           n = 300,
+                           l = 300,
                            seed = -99){
-  
+  alpha_beta <- alpha_beta %>% as.matrix()
   ## if the alpha_beta parameter has a length of 3, it makes descreet distribution
-  if(length(alpha_beta)>2){
+  # if(length(alpha_beta)>2 | ncol(alpha_beta)>2){
     s_ <- alpha_beta %>% sum()
-    n_low <- (alpha_beta[1]*n/s_) %>% round(digits=0)
-    n_medium <- (alpha_beta[2]*n/s_) %>% round(digits=0)
-    n_high <- (alpha_beta[3]*n/s_) %>% round(digits=0)
+    n_low <- (as.numeric(alpha_beta[1])*l/s_) %>% round(digits=0)
+    n_medium <- (as.numeric(alpha_beta[2])*l/s_) %>% round(digits=0)
+    n_high <- (as.numeric(alpha_beta[3])*l/s_) %>% round(digits=0)
     
     v_low <- range_param[1] %>% rep(n_low)
     v_medium <- range_param %>% mean() %>% rep(n_medium)
     v_high <- range_param[2] %>% rep(n_high)
     
-    v_ <- c(v_medium, v_low, v_high)
+    v_ <- c(v_low, v_high, v_medium)
     v_ %>% return()
-  }
-  
-  alpha_beta <- alpha_beta %>% as.numeric()
-  range_param <- range_param %>% sort()
-  set.seed(seed)
-  v_ <- n %>% rbeta(alpha_beta[1], alpha_beta[2])
-  v_ <- v_*(range_param[2]-range_param[1]) + (range_param[1])
-  v_ %>% return()
+  # }
+  # if(length(alpha_beta)<=2 | ncol(alpha_beta)<=2){
+  #   alpha_beta <- alpha_beta %>% as.numeric()
+  #   range_param <- range_param %>% sort()
+  #   set.seed(seed)
+  #   v_ <- l %>% rbeta(alpha_beta[1], alpha_beta[2])
+  #   v_ <- v_*(range_param[2]-range_param[1]) + (range_param[1])
+  #   v_ %>% return()
+  # }
 }
 
 
@@ -266,7 +267,7 @@ give_name <- function(num = 1, seed = -99, gender = "b"){
                  "Claessens","Claeys","Cools","Coppens","Cornelis","De Backer",
                  "De Clercq","De Cock","De Meyer","De Pauw","De Ridder","De Smedt",
                  "De Smet","De Vos","De Wilde","Declercq","Denis","Deprez","Desmet",
-                 "Devos","Dubois","Dumont","Dupont","Evrard","Fontaine","François",
+                 "Devos","Dubois","Dumont","Dupont","Evrard","Fontaine","Francois",
                  "Geerts","Goossens","Gerard","Hendrickx","Hermans","Jacobs","Jansen",
                  "Janssen","Janssens","Lambert","Lambrechts","Laurent","Lauwers",
                  "Leclercq","Lejeune","Lemaire","Lemmens","Lenaerts","Leroy","Maes",

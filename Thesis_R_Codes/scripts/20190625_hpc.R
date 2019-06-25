@@ -14,18 +14,24 @@ source("./functions/functions_partition.R")
 ## https://github.com/psyguy/Emotion-Dynamics-1/blob/master/ED%201%20-%20Codes/3.%20mirt-Model-Comp/correct_HPC-ready_May22/HPC%20readme.txt
 
 
-alpha <- c(0.5, 1, 1, 1, 2, 5, 2, 9)# %>% rep(times = nrounds)
-beta <- c(0.5, 1, 2, 5, 1, 1, 2, 9)# %>% rep(times = nrounds)
-alphabeta <- data.frame(alpha,beta)
+alphabeta <- c(1,5,0,
+               0,5,1,
+               0,6,0) %>% matrix(nrow = 3, byrow = TRUE) %>%
+  as.data.frame()
+colnames(alphabeta) <- c("p_low", "p_medium", "p_high")
 
 l.alpha <- nrow(alphabeta)
-nrounds <- 3
+nrounds <- 10
 row_eps <- c(1:l.alpha) %>% rep(times = l.alpha) %>% rep(times = nrounds)
 row_a <- c(1:l.alpha) %>% rep(each = l.alpha) %>% rep(times = nrounds)
 round <- c(1:nrounds) %>% rep(each = l.alpha*l.alpha)
+# index <- 1:length(round)
 
-r_a_b <- data.frame(row_eps, row_a, round)
+## to make the index file of the remaining rows
+## (after adding (2,2) & (9,9)) uncomment the # %>%  ...
+r_a_b <- data.frame(row_eps, row_a, round)#,index) # %>% filter(row_a>6|row_eps>6) %>% filter(round==1)
 
+# r_a_b <- r_a_b %>% filter(row_eps==3 | row_a==3)
 
 # making and saving the brain ---------------------------------------------
 

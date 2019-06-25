@@ -22,15 +22,21 @@ source("./functions/functions_partition.R")
 
 
 
-alpha <- c(0.5, 1, 1, 1, 2, 5, 2, 9)# %>% rep(times = nrounds)
-beta <- c(0.5, 1, 2, 5, 1, 1, 2, 9)# %>% rep(times = nrounds)
-alphabeta <- data.frame(alpha,beta)
+# alpha <- c(0.5, 1, 1, 1, 2, 5, 2, 9)# %>% rep(times = nrounds)
+# beta <- c(0.5, 1, 2, 5, 1, 1, 2, 9)# %>% rep(times = nrounds)
+# alphabeta <- data.frame(alpha,beta)
+
+alphabeta <- c(1,5,0,
+               0,5,1,
+               0,6,0) %>% matrix(nrow = 3, byrow = TRUE) %>%
+  as.data.frame()
+colnames(alphabeta) <- c("p_low", "p_medium", "p_high")
 
 l.alpha <- nrow(alphabeta)
 nrounds <- 3
 row_eps <- c(1:l.alpha) %>% rep(times = l.alpha) %>% rep(times = nrounds)
 row_a <- c(1:l.alpha) %>% rep(each = l.alpha) %>% rep(times = nrounds)
-round <- c(1:nrounds) %>% rep(each = l.alpha*l.alpha)
+round <- c(1:nrounds) %>% rep(each = l.alpha*l.alpha) -1
 index <- 1:length(round)
 
 ## to make the index file of the remaining rows
@@ -42,7 +48,7 @@ tt <- Sys.time()
 for(r_a in 1:nrow(alphabeta)){
   for(r_eps in 1:nrow(alphabeta)){
     paste(r_a, r_eps) %>% print()
-    if(r_a<7 & r_eps<7) next
+    # if(r_a<7 & r_eps<7) next
     brain_case <- partition_culture(round = 0,
                                     row_eps = r_eps,
                                     row_a = r_a,
