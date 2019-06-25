@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #PBS -l nodes=3:ppn=28
 #PBS -l walltime=20:00:00
-#PBS -N June25_1225
+#PBS -N June25_1406
 #PBS -m b -M mhscientist@gmail.com
  
 export OPENBLAS_NUM_THREADS=1
