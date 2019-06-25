@@ -1,0 +1,132 @@
+time: 72000
+nodes: 3
+procs: 108
+account string: default_project
+queue: q24h
+========================================================================
+========================================================================
+Epilogue args:
+Date: Sat Jun 22 12:49:19 CEST 2019
+Allocated nodes:
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n17
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+Job ID: 50085980.tier2-p-moab-2.tier2.hpc.kuleuven.be
+User ID: vsc32736
+Group ID: vsc32736
+Job Name: June22_1247
+Session ID: 5842
+Resource List: nodes=3:ppn=36,walltime=20:00:00,neednodes=3:ppn=36,pmem=5gb
+Resources Used: cput=00:07:07,vmem=23883772kb,walltime=00:00:20,mem=1260792kb,energy_used=0
+Queue Name: q24h
+Account String: default_project
+-------------------------------------------------------------------------
+time: 20
+nodes: 3
+procs: 108
+account: default_project
