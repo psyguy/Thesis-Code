@@ -66,11 +66,12 @@ trial_grow <- function(
     name <- bc_$name
     
     # setting eps and a parameter vectors
-    parameters$eps <- make_paramdist(alpha_beta = parameters$params.eps_a[1:3],
+print(params.eps_a[1:3])
+    parameters$eps <- make_paramdist(alpha_beta = parameters$params.eps_a[1],
                                      range_param = c(0.3,0.5),
                                      l = parameters$n_nodes,
                                      seed = parameters$seed)
-    
+    print(parameters$params.eps_a[4:6])
     parameters$a <- make_paramdist(alpha_beta = parameters$params.eps_a[4:6],
                                    range_param = c(1.5,1.9),
                                    l = parameters$n_nodes,
@@ -236,7 +237,7 @@ make_brain.code <- function(p_ = NULL, name = NULL, b = NULL){
   n_n <- p_$n_nodes/1000
   n_e <- p_$n_edges/1000
   
-  if(length(p_$params.eps_a)==6){
+  #if(length(p_$params.eps_a)==6){
     e_ <- p_$params.eps_a[1:3] %>% paste(collapse = "v")
     a_ <- p_$params.eps_a[4:6] %>% paste(collapse = "v")
     
@@ -248,26 +249,26 @@ make_brain.code <- function(p_ = NULL, name = NULL, b = NULL){
                    collapse = "")
     seed <- gsub("[.]","",seed) %>% as.numeric()
     seed <- seed %% .Machine$integer.max
-  }
-  if(length(p_$params.eps_a)==4){
-    e_ <- p_$params.eps_a[1:2] %>% paste(collapse = "v")
-    a_ <- p_$params.eps_a[3:4] %>% paste(collapse = "v")
-    
-    seed <- paste0(p_$params.eps_a[1:2],
-                   p_$params.eps_a[3:4],
-                   #n_n,
-                   #n_e,
-                   r_,
-                   collapse = "")
-    seed <- gsub("[0.]","",seed) %>% as.numeric()
-    seed <- seed %% .Machine$integer.max
-    }
+  #}
+  # if(length(p_$params.eps_a)==4){
+#   e_ <- p_$params.eps_a[1:2] %>% paste(collapse = "v")
+#   a_ <- p_$params.eps_a[3:4] %>% paste(collapse = "v")
+#   
+#   seed <- paste0(p_$params.eps_a[1:2],
+#                  p_$params.eps_a[3:4],
+#                  #n_n,
+#                  #n_e,
+#                  r_,
+#                  collapse = "")
+#   seed <- gsub("[0.]","",seed) %>% as.numeric()
+#   seed <- seed %% .Machine$integer.max
+# }
   
   
   
   # bc_ brain code
-  bc_ <- paste0("eps-", e_,
-                   "_a-", a_,
+  bc_ <- paste0("eps-",# e_,
+                   "_a-",# a_,
                    "_r-", r_)
   # number of nodes and edges
   n_e <- paste0("g-",

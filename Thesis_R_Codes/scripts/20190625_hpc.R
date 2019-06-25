@@ -1,10 +1,10 @@
 #!/usr/bin/env Rscript
 
-Args <- commandArgs(TRUE)
-index <- as.numeric(Args[1])
+#Args <- commandArgs(TRUE)
+#index <- as.numeric(Args[1])
 
-
-#rm(list = ls())
+rm(list = ls())
+index <- 3
 
 # source("./functions/functions_trial.R")
 source("./functions/functions_netmeas.R")

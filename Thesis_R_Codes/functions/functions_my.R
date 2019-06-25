@@ -162,18 +162,31 @@ my_coherenceD <- function(x.input) {
 
 # make parameter distributions --------------------------------------------
 
-make_paramdist <- function(alpha_beta = c(2, 5),
+make_paramdist <- function(alpha_beta = 1,#c(2, 5),
                            range_param = c(0.3, 0.5),
                            l = 300,
                            seed = -99){
-  alpha_beta <- alpha_beta %>% as.matrix()
+    alpha_beta <- alpha_beta %>% as.matrix()
   ## if the alpha_beta parameter has a length of 3, it makes descreet distribution
   # if(length(alpha_beta)>2 | ncol(alpha_beta)>2){
-    s_ <- alpha_beta %>% sum()
-    n_low <- (as.numeric(alpha_beta[1])*l/s_) %>% round(digits=0)
-    n_medium <- (as.numeric(alpha_beta[2])*l/s_) %>% round(digits=0)
-    n_high <- (as.numeric(alpha_beta[3])*l/s_) %>% round(digits=0)
-    
+  if(alpha_beta==1){
+    n_low <- (l*1/6) %>% round(digits=0)
+    n_medium <- (l*5/6) %>% round(digits=0)
+    n_high <- 0
+  }
+  
+  if(alpha_beta==2){
+    n_low <- 0
+    n_medium <- (l*5/6) %>% round(digits=0)
+    n_high <- (l*1/6) %>% round(digits=0)
+  }
+  
+  if(alpha_beta==3){
+    n_low <- 0
+    n_medium <- (l*6/6) %>% round(digits=0)
+    n_high <- 0
+  }
+  
     v_low <- range_param[1] %>% rep(n_low)
     v_medium <- range_param %>% mean() %>% rep(n_medium)
     v_high <- range_param[2] %>% rep(n_high)

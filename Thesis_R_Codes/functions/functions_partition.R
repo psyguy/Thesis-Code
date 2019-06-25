@@ -37,43 +37,43 @@ partition_culture <- function(brain_case = NULL,
   
   # # since the input is the the actual alpha and beta parameters
  
-  if(is.null(alphabeta)){
-    alpha <- c(0.5, 1, 1, 1, 2, 5)
-    beta <- c(0.5, 1, 2, 5, 1, 1)
-    alphabeta <- data.frame(alpha,beta)
-  }
+  #if(is.null(alphabeta)){
+  #  alpha <- c(0.5, 1, 1, 1, 2, 5)
+  #  beta <- c(0.5, 1, 2, 5, 1, 1)
+  #  alphabeta <- data.frame(alpha,beta)
+  #}
   
-  if(ncol(alphabeta)==2){
+  if(FALSE){#ncol(alphabeta)==2){
     alphabeta_eps <- alphabeta[row_eps,]
-    colnames(alphabeta_eps) <- c("eps.alpa", "eps.beta")
+    #colnames(alphabeta_eps) <- c("eps.alpa", "eps.beta")
     
     alphabeta_a <- alphabeta[row_a,]
-    colnames(alphabeta_eps) <- c("a.alpa", "a.beta")
+    #colnames(alphabeta_eps) <- c("a.alpa", "a.beta")
     range_eps <- c(0.3,0.5)
     range_a <- c(1.4,2)
   }
   
-  if(ncol(alphabeta)==3){
-    alphabeta_eps <- alphabeta[row_eps,]
-    colnames(alphabeta_eps) <- c("eps.low", "eps.medium", "eps.high")
-    
-    alphabeta_a <- alphabeta[row_a,]
-    colnames(alphabeta_a) <- c("a.low", "a.medium", "a.high")
-    range_eps <- c(0.3,0.5)
-    range_a <- c(1.5,1.9)
-  }
+  #if(TRUE){#ncol(alphabeta)==3){
+  alphabeta_eps <- alphabeta[row_eps,]
+   #colnames(alphabeta_eps) <- c("eps.low", "eps.medium", "eps.high")
+
+   alphabeta_a <- alphabeta[row_a,]
+   #colnames(alphabeta_a) <- c("a.low", "a.medium", "a.high")
+  #  range_eps <- c(0.3,0.5)
+  #  range_a <- c(1.5,1.9)
+  #}
   
   
   
-  eps <- make_paramdist(alpha_beta = alphabeta_eps,
-                            range_param = range_eps,
-                            l = num_nodes,
-                            seed = seed)
+  eps <- make_paramdist(alpha_beta = row_eps,#alphabeta_eps,
+                        range_param = c(0.3,0.5),#range_eps,
+                        l = num_nodes,
+                        seed = seed)
   
-  a <- make_paramdist(alpha_beta = alphabeta_a,
-                          range_param = range_a,
-                          l = num_nodes,
-                          seed = seed + 1)
+  a <- make_paramdist(alpha_beta = row_a,#alphabeta_a,
+                      range_param = c(1.5,1.9),#range_a,
+                      l = num_nodes,
+                      seed = seed + 1)
   
   parameters =  list(params.eps_a = cbind(alphabeta_eps,alphabeta_a),
                      round = round,
