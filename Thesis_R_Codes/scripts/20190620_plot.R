@@ -18,25 +18,25 @@ for(sampled in sampled.names){
   brain_case@name %>% print()
   coefs_all <- coefs_all %>% rbind(brain_case %>% netmeas_coefs())
   
-  plot.title<- paste("Node activities of", brain_case@name)
+  plot.title<- paste(brain_case@name)
 
-  # sbs_h <- (brain_case@history$activities[rewires,1:300]) %>%
-  #   as.data.frame()
-  # 
-  # sbs_h[,12] %>% plot()
-  # 
-  # data <- sbs_h %>% cbind(rewires)
-  # 
-  # # Molten$variable %>% str()
-  # 
-  # # data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
-  # Molten <- reshape::melt(data, id.vars = "rewires")
-  # 
-  # ggplot(Molten,
-  #        aes(x = rewires,
-  #            y = value,
-  #            colour = variable)) +
-  #   geom_line(alpha = 0.5) + theme(legend.position="none") + ylim(-1, 1) + ggtitle(plot.title)
+  sbs_h <- (brain_case@history$activities[rewires,1:300]) %>%
+    as.data.frame()
+
+  sbs_h[,12] %>% plot(main = brain_case@parameters$params.eps_a)
+
+  data <- sbs_h %>% cbind(rewires)
+
+  # Molten$variable %>% str()
+
+  # data <- data.frame(time = seq(0, 23), noob = rnorm(24), plus = runif(24), extra = rpois(24, lambda = 1))
+  Molten <- reshape::melt(data, id.vars = "rewires")
+
+  ggplot(Molten,
+         aes(x = rewires,
+             y = value,
+             colour = variable)) +
+    geom_line(alpha = 0.5) + theme(legend.position="none") + ylim(-1, 1) + ggtitle(plot.title)
   # ggsave(paste0("activities.",brain_case@name,".png"), dpi = 500)
 }
 Sys.time()-t

@@ -6,13 +6,13 @@ source("./functions/functions_partition.R")
 
 # for loop over all brain cases -------------------------------------------
 
-sampled.path <- "./data/"
+sampled.path <- "./data/20190625_hpc_data/"
 sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
-
 coefs_all <- NULL
 # rewires <- seq(1, 10001, 5)
 t <- Sys.time()
 for(sampled in sampled.names){
+  rm(brain_case)
   load(paste(sampled.path, sampled, sep = ""))
   brain_case@name %>% print()
   coefs_all <- coefs_all %>%
