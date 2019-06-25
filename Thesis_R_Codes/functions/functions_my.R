@@ -166,6 +166,22 @@ make_paramdist <- function(alpha_beta = c(2, 5),
                            range_param = c(0.3, 0.5),
                            n = 300,
                            seed = -99){
+  
+  ## if the alpha_beta parameter has a length of 3, it makes descreet distribution
+  if(length(alpha_beta)>2){
+    s_ <- alpha_beta %>% sum()
+    n_low <- (alpha_beta[1]*n/s_) %>% round(digits=0)
+    n_medium <- (alpha_beta[2]*n/s_) %>% round(digits=0)
+    n_high <- (alpha_beta[3]*n/s_) %>% round(digits=0)
+    
+    v_low <- range_param[1] %>% rep(n_low)
+    v_medium <- range_param %>% mean() %>% rep(n_medium)
+    v_high <- range_param[2] %>% rep(n_high)
+    
+    v_ <- c(v_medium, v_low, v_high)
+    v_ %>% return()
+  }
+  
   alpha_beta <- alpha_beta %>% as.numeric()
   range_param <- range_param %>% sort()
   set.seed(seed)
