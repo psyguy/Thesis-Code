@@ -25,11 +25,11 @@ nrounds <- 10
 row_eps <- c(1:l.alpha) %>% rep(times = l.alpha) %>% rep(times = nrounds)
 row_a <- c(1:l.alpha) %>% rep(each = l.alpha) %>% rep(times = nrounds)
 r_ <- c(1:nrounds) %>% rep(each = l.alpha*l.alpha)
-# index <- 1:length(r_)
+index_ <- 1:length(r_)
 
 ## to make the index file of the remaining rows
 ## (after adding (2,2) & (9,9)) uncomment the # %>%  ...
-r_a_b <- data.frame(row_eps, row_a, r_, index) # %>% filter(row_a>6|row_eps>6) %>% filter(round==1)
+r_a_b <- data.frame(row_eps, row_a, r_, index_) # %>% filter(row_a>6|row_eps>6) %>% filter(round==1)
 
 # r_a_b <- r_a_b %>% filter(row_eps==3 | row_a==3)
 
