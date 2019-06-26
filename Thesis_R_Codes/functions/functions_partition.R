@@ -21,7 +21,7 @@ source("./functions/functions_trial.R")
 
 partition_culture <- function(brain_case = NULL,
                               row_eps = 1,
-                              row_a = 1,
+                              row_a = 3,
                               round = 0,
                               alphabeta = NULL,
                               final.age = 10){
@@ -36,34 +36,21 @@ partition_culture <- function(brain_case = NULL,
   seed <- round %>% as.numeric()
   
   # # since the input is the the actual alpha and beta parameters
- 
+  
   if(is.null(alphabeta)){
-    alpha <- c(0.5, 1, 1, 1, 2, 5)
-    beta <- c(0.5, 1, 2, 5, 1, 1)
-    alphabeta <- data.frame(alpha,beta)
+    alphabeta <- c(1,5,0,
+                   0,5,1,
+                   0,6,0) %>% matrix(nrow = 3, byrow = TRUE) %>%
+      as.data.frame()
+    colnames(alphabeta) <- c("p_low", "p_medium", "p_high")
   }
+  alphabeta_eps <- alphabeta[row_eps,]
+  colnames(alphabeta_eps) <- c("eps.low", "eps.medium", "eps.high")
   
-  if(ncol(alphabeta)==2){
-    alphabeta_eps <- alphabeta[row_eps,]
-    colnames(alphabeta_eps) <- c("eps.alpa", "eps.beta")
-    
-    alphabeta_a <- alphabeta[row_a,]
-    colnames(alphabeta_eps) <- c("a.alpa", "a.beta")
-    range_eps <- c(0.3,0.5)
-    range_a <- c(1.4,2)
-  }
-  
-  if(ncol(alphabeta)==3){
-    alphabeta_eps <- alphabeta[row_eps,]
-    colnames(alphabeta_eps) <- c("eps.low", "eps.medium", "eps.high")
-    
-    alphabeta_a <- alphabeta[row_a,]
-    colnames(alphabeta_a) <- c("a.low", "a.medium", "a.high")
-    range_eps <- c(0.3,0.5)
-    range_a <- c(1.5,1.9)
-  }
-  
-  
+  alphabeta_a <- alphabeta[row_a,]
+  colnames(alphabeta_a) <- c("a.low", "a.medium", "a.high")
+  range_eps <- c(0.3,0.5)
+  range_a <- c(1.5,1.9)
   
   eps <- make_paramdist(alpha_beta = alphabeta_eps,
                             range_param = range_eps,

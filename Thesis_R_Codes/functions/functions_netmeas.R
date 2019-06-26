@@ -74,15 +74,16 @@ netmeas_coefs <- function(initial = NULL,
   
   name <- name #%>% rep(l_)
   seed <- parameters$seed #%>% rep(l_)
+  round <- parameters$round
   p_d <- parameters$params.eps_a
-  alphabeta.eps <- paste0("(",p_d[1],", ",p_d[2],")")
-  alphabeta.a <- paste0("(",p_d[3],", ",p_d[4],")")
-
+  alphabeta.eps <- paste0("(",p_d[1],", ",p_d[2],", ",p_d[3],")")
+  alphabeta.a <- paste0("(",p_d[4],", ",p_d[5],", ",p_d[6],")")
+  
   # eps <- b@parameters$partitions$eps %>% rep(l_)
   # a <- b@parameters$partitions$a %>% rep(l_)
   # global_minmax <- b@parameters$global_minmax %>% rep(l_)
   # blind_swap <- b@parameters$blind_swap %>% rep(l_)
-
+  
   coef.clustering <- c_#/c_0
   coef.efficiency <- e_#/e_0
   coef.smallworld <- s_
@@ -93,6 +94,7 @@ netmeas_coefs <- function(initial = NULL,
   coefs <- cbind(
     name,
     seed,
+    round,
     alphabeta.eps,
     alphabeta.a,
     rewiring,
@@ -103,9 +105,9 @@ netmeas_coefs <- function(initial = NULL,
     coef.avgpathlength
   ) %>% as.data.frame()
   
-  coefs[5:ncol(coefs)] <- lapply(coefs[5:ncol(coefs)], function(x) as.numeric(as.character(x)))
+  coefs[6:ncol(coefs)] <- lapply(coefs[6:ncol(coefs)], function(x) as.numeric(as.character(x)))
   
-  if(concise) coefs <- coefs %>% select(-1:-4)
+  if(concise) coefs <- coefs %>% select(-1:-5)
   
   coefs %>% return()
 }

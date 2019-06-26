@@ -17,17 +17,17 @@ source(paste0(path.to.functions_my,"/functions_netmeas.R"))
 
 # a unified function to grow (update+rewire) ------------------------------
 
-trial_grow <- function(
-                       parameters =  list(params.eps_a = c(0.5,0.5,1,2),
-                                          round = 0,
-                                          #n_nodes = 100,
-                                          n_edges = 0,
-                                          seed = -99,
-                                          round = 0,
-                                          lower_bound_starting = 0,
-                                          brain.code <- NULL,
-                                          eps = NULL,
-                                          a = NULL),
+trial_grow <- function(parameters, # = NULL,
+                       # parameters =  list(params.eps_a = c(0.5,0.5,1,2),
+                       #                    round = 0,
+                       #                    n_nodes = 100,
+                       #                    n_edges = 0,
+                       #                    seed = -99,
+                       #                    round = 0,
+                       #                    lower_bound_starting = 0,
+                       #                    brain.code <- NULL,
+                       #                    eps = NULL,
+                       #                    a = NULL),
                        n_updates = 1, # number of heartupdates per rewireupdates of notes
                        n_rewires = 1, # number of rewirings of the network
                        freq_snapshot = 200, # frequency of saving connectivity matrices in the brain
@@ -44,6 +44,7 @@ trial_grow <- function(
 
   if(is.null(brain_growing)){
     
+    # if(is.null(parameters)) stop("Gimme the parameter list!")
     if(!parameters$n_edges){
       parameters$n_edges <- round(1.5 * 2 * log(parameters$n_nodes) * (parameters$n_nodes - 1))
     }
@@ -52,32 +53,25 @@ trial_grow <- function(
       parameters$seed <- 1000 * round(rnorm(1),3) %>% abs()
     }
     
-    m <- make_random_graph(size = parameters$n_nodes,
-                           num.links = parameters$n_edges,
-                           seed = parameters$seed)
-    a <- parameters$n_nodes %>%
-      runif(parameters$lower_bound_starting, 1) %>%
-      t()
+
     
-    # making the name and brain code
+    # making the name, seed, and brain code
     bc_ <- make_brain.code(parameters)
     parameters$brain.code <- bc_$braincode
     parameters$seed <- bc_$seed
     name <- bc_$name
     
+    m <- make_random_graph(size = parameters$n_nodes,
+                           num.links = parameters$n_edges,
+                           seed = parameters$seed)
+    act <- parameters$n_nodes %>%
+      runif(parameters$lower_bound_starting, 1) %>%
+      t()
+    
     # setting eps and a parameter vectors
-    parameters$eps <- make_paramdist(alpha_beta = parameters$params.eps_a[1:3],
-                                     range_param = c(0.3,0.5),
-                                     l = parameters$n_nodes,
-                                     seed = parameters$seed)
-    
-    parameters$a <- make_paramdist(alpha_beta = parameters$params.eps_a[4:6],
-                                   range_param = c(1.5,1.9),
-                                   l = parameters$n_nodes,
-                                   seed = parameters$seed + 1)
-    
+
     l <- list(
-      activities = a,
+      activities = act,
       mat.connectivity = list(m),
       coefficients = NULL
     )
@@ -94,7 +88,9 @@ trial_grow <- function(
       now = l
     )
     
-    brain_growing@initial$coefficients <- netmeas_coefs(b = brain_growing, t_ = 1)
+    brain_growing@initial$coefficients <-
+      brain_growing@now$coefficients <- 
+        netmeas_coefs(b = brain_growing, t_ = 1)
     
   }
   
@@ -229,39 +225,39 @@ trial_summary <- function(aged_brain){
 
 # make a code for brain ---------------------------------------------------
 
-make_brain.code <- function(p_ = NULL, name = NULL, b = NULL){
+make_brain.code <- function(p_, name = NULL, b = NULL){
   # if(!is.null(b)) p_ <- b@parameters; name <- b@name
   
   r_ <- p_$round
   n_n <- p_$n_nodes/1000
   n_e <- p_$n_edges/1000
   
-  if(length(p_$params.eps_a)==6){
+  # if(length(p_$params.eps_a)==6){
     e_ <- p_$params.eps_a[1:3] %>% paste(collapse = "v")
     a_ <- p_$params.eps_a[4:6] %>% paste(collapse = "v")
     
     seed <- paste0(# p_$params.eps_a[1:3],
                    # p_$params.eps_a[4:6],
-                   n_n,
-                   n_e,
-                   r_,
+                   2*n_n,
+                   15*n_e,
+                   100+r_,
                    collapse = "")
     seed <- gsub("[.]","",seed) %>% as.numeric()
     seed <- seed %% .Machine$integer.max
-  }
-  if(length(p_$params.eps_a)==4){
-    e_ <- p_$params.eps_a[1:2] %>% paste(collapse = "v")
-    a_ <- p_$params.eps_a[3:4] %>% paste(collapse = "v")
-    
-    seed <- paste0(p_$params.eps_a[1:2],
-                   p_$params.eps_a[3:4],
-                   #n_n,
-                   #n_e,
-                   r_,
-                   collapse = "")
-    seed <- gsub("[0.]","",seed) %>% as.numeric()
-    seed <- seed %% .Machine$integer.max
-    }
+  # }
+  # if(length(p_$params.eps_a)==4){
+  #   e_ <- p_$params.eps_a[1:2] %>% paste(collapse = "v")
+  #   a_ <- p_$params.eps_a[3:4] %>% paste(collapse = "v")
+  #   
+  #   seed <- paste0(p_$params.eps_a[1:2],
+  #                  p_$params.eps_a[3:4],
+  #                  #n_n,
+  #                  #n_e,
+  #                  r_,
+  #                  collapse = "")
+  #   seed <- gsub("[0.]","",seed) %>% as.numeric()
+  #   seed <- seed %% .Machine$integer.max
+  #   }
   
   
   
@@ -276,8 +272,13 @@ make_brain.code <- function(p_ = NULL, name = NULL, b = NULL){
                 "k-",
                 n_e,
                 "k")
-  
-  list(name = give_name(seed = seed),
+  # since the names should be different for eps_a parameters,
+  # it needs a specific seed for itself.
+  seed.name <- p_$params.eps_a %>%
+    paste(collapse = "") %>%
+    paste0(seed) %>% as.numeric()
+  seed.name <- seed.name %% .Machine$integer.max
+  list(name = give_name(seed = seed.name),
        braincode = paste(bc_, n_e, sep = "_"),
        seed = seed) %>% return()
   

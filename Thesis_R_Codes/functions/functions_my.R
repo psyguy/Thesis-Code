@@ -110,10 +110,10 @@ my_rewire <- function(a, m, global_minmax = FALSE, blind_swap = FALSE) {
   
   m_d_ <- (1 - m_)*d_
   m_d_[m_d_==0|is.na(m_d_)] <- 99
-
+  
   j_connected_maxdist <- (m_*d_) %>% which.max() -> j_1
   j_disconnected_mindist <- m_d_ %>% which.min() -> j_2
-
+  
   ## my wrong Way of doing it before 2019-06-19
   # j_1 <- which.min(d_)
   # j_2 <- which.max(d_)
@@ -140,7 +140,7 @@ my_rewire <- function(a, m, global_minmax = FALSE, blind_swap = FALSE) {
       to.2 = j_2)
     m %>% return()
   }
-
+  
   m[i_1,j_1] <- m[j_1,i_1] <- 0
   m[i_2,j_2] <- m[j_2,i_2] <- 1
   
@@ -162,24 +162,24 @@ my_coherenceD <- function(x.input) {
 
 # make parameter distributions --------------------------------------------
 
-make_paramdist <- function(alpha_beta = c(2, 5),
-                           range_param = c(0.3, 0.5),
+make_paramdist <- function(alpha_beta,
+                           range_param,
                            l = 300,
                            seed = -99){
   alpha_beta <- alpha_beta %>% as.matrix()
   ## if the alpha_beta parameter has a length of 3, it makes descreet distribution
   # if(length(alpha_beta)>2 | ncol(alpha_beta)>2){
-    s_ <- alpha_beta %>% sum()
-    n_low <- (as.numeric(alpha_beta[1])*l/s_) %>% round(digits=0)
-    n_medium <- (as.numeric(alpha_beta[2])*l/s_) %>% round(digits=0)
-    n_high <- (as.numeric(alpha_beta[3])*l/s_) %>% round(digits=0)
-    
-    v_low <- range_param[1] %>% rep(n_low)
-    v_medium <- range_param %>% mean() %>% rep(n_medium)
-    v_high <- range_param[2] %>% rep(n_high)
-    
-    v_ <- c(v_low, v_high, v_medium)
-    v_ %>% return()
+  s_ <- alpha_beta %>% sum()
+  n_low <- (as.numeric(alpha_beta[1])*l/s_) %>% round(digits=0)
+  n_medium <- (as.numeric(alpha_beta[2])*l/s_) %>% round(digits=0)
+  n_high <- (as.numeric(alpha_beta[3])*l/s_) %>% round(digits=0)
+  
+  v_low <- range_param[1] %>% rep(n_low)
+  v_medium <- range_param %>% mean() %>% rep(n_medium)
+  v_high <- range_param[2] %>% rep(n_high)
+  
+  v_ <- c(v_low, v_high, v_medium)
+  v_ %>% return()
   # }
   # if(length(alpha_beta)<=2 | ncol(alpha_beta)<=2){
   #   alpha_beta <- alpha_beta %>% as.numeric()
