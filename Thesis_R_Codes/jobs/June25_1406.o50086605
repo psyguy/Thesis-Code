@@ -1,0 +1,108 @@
+time: 72000
+nodes: 3
+procs: 84
+account string: lp_pdl
+queue: q24h
+========================================================================
+========================================================================
+Epilogue args:
+Date: Tue Jun 25 15:44:10 CEST 2019
+Allocated nodes:
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n16
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i13n21
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+r22i27n11
+Job ID: 50086605.tier2-p-moab-2.tier2.hpc.kuleuven.be
+User ID: vsc32736
+Group ID: vsc32736
+Job Name: June25_1406
+Session ID: 24517
+Resource List: nodes=3:ppn=28,walltime=20:00:00,neednodes=3:ppn=28,pmem=5gb
+Resources Used: cput=00:14:22,vmem=71190744kb,walltime=00:01:13,mem=5697640kb,energy_used=0
+Queue Name: q24h
+Account String: lp_pdl
+-------------------------------------------------------------------------
+time: 73
+nodes: 3
+procs: 84
+account: lp_pdl
