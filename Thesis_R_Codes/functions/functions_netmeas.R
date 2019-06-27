@@ -35,6 +35,7 @@ netmeas_coefs <- function(initial = NULL,
                           name = NULL,
                           t_ = 0,
                           b = NULL,
+                          normalize.s = TRUE,
                           concise = FALSE,
                           limit = 10000,
                           freq_snapshot = 200){
@@ -47,6 +48,7 @@ netmeas_coefs <- function(initial = NULL,
   # e_0 <- m_0 %>% netmeas_efficiency()
   
   if(!is.null(b)) initial <- b@initial -> now
+  
   
   m_0 <- initial
   if(is.list(initial)) m_0 <- initial$mat.connectivity[[1]]
@@ -70,7 +72,7 @@ netmeas_coefs <- function(initial = NULL,
   pl_ <- g_ %>% average.path.length(unconnected = TRUE)
     
     
-  s_ <- c_*e_/(c_0*e_0)
+  s_ <- ifelse(normalize.s, c_*e_/(c_0*e_0), c_*e_) 
   
   name <- name #%>% rep(l_)
   seed <- parameters$seed #%>% rep(l_)
@@ -107,7 +109,8 @@ netmeas_coefs <- function(initial = NULL,
   
   coefs[6:ncol(coefs)] <- lapply(coefs[6:ncol(coefs)], function(x) as.numeric(as.character(x)))
   
-  if(concise) coefs <- coefs %>% select(-1:-5)
+  if(concise) coefs <- coefs %>% select(#contains("rew"),
+                                            contains("coef."))
   
   coefs %>% return()
 }
