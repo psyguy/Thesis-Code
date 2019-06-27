@@ -132,6 +132,7 @@ for(i in 1:10){
 
 # looking at connectivities -----------------------------------------------
 
+library(seriation)
 load("I:/Thesis_Codes/Thesis_R_Codes/data/eps-0v6v0_a-0v5v1_r-3_g-0.3k-5.2k_David De Ridder_20190626_1905.RData")
 r3.olive <- brain_case
 load("I:/Thesis_Codes/Thesis_R_Codes/data/eps-1v5v0_a-0v6v0_r-3_g-0.3k-5.2k_Chiara Bosmans_20190626_1908.RData")
@@ -140,7 +141,7 @@ load("I:/Thesis_Codes/Thesis_R_Codes/data/eps-0v5v1_a-0v6v0_r-3_g-0.3k-5.2k_Daan
 r3.red <- brain_case
 rm(brain_case)
 
-m <- r3.olive@now$mat.connectivity
+m <- r3.pink@now$mat.connectivity
 m[1:50,1:50] <- m[1:50,1:50]*3
 m[1:50,51:300] <- m[1:50,51:300]*2
 m[51:300,1:50] <- m[51:300,1:50]*2
@@ -150,9 +151,38 @@ pimage(m, col = c("white", "brown3",
                   "darkorchid1", "blue2"))
 s <- seriate(m)
 pimage(m,s, col = c("white", "red", "black","blue"))
+
+
+size.minority <- (nrow(m)/6) %>% round(0)
+size.majority <- (nrow(m)*5/6) %>% round(0)
+
 g <- m %>% graph_from_adjacency_matrix(mode="undirected")
-g %>% plot(vertex.size=.1)
+V(g)$partition <- c(rep("minority", size.minority),
+                    rep("majority", size.majority))
+# net <- g
+# colrs <- c("gray50", "tomato", "gold")
+# 
+# V(net)$color <- colrs[V(net)$partition=="majority"]
+
+# ceb <- cluster_edge_betweenness(net) 
+l <- g %>% layout_with_fr()
+g %>% plot(#ceb,
+           vertex.size=4,
+           vertex.color=c("skyblue", "pink")[1+(V(g)$partition=="majority")],
+           # layout = l,
+           vertex.label = NA)
 
 
-
-
+# coloring the edges ------------------------------------------------------
+# c("white", "red", "black","blue") # 
+# rain <- rainbow(4, alpha=.5)
+# V(g)$color <- rain[V(g)$partition]
+# 
+# E(g)$color <- apply(as.data.frame(get.edgelist(g)), 1, 
+#                     function(x){
+#                       o <- rain[4]
+#                       if(V(g)$partition[x[1]] == "minority" & V(g)$partition[x[2]] == "minority") o <-  rain[2]
+#                       if(V(g)$partition[x[1]] == "majority" & V(g)$partition[x[2]] == "majority") o <- rain[3]
+#                       o %>% return()
+#                     })
+# plot(g, vertex.size=4, vertex.label=NA, edge.color=E(g)$color)
