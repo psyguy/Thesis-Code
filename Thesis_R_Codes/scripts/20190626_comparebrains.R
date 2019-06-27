@@ -81,7 +81,10 @@ library(ggpubr)
 
 
 for(i in 1:10){
-  coefs.this.round <- coefs %>% filter(Round==i)
+  coefs.this.round <- coefs %>% filter(Round==i) %>%
+    filter(Rewiring>8500) %>% 
+    filter(Rewiring<9700)
+  # coefs.this.round <- coefs.this.round[5000:12500,]
   owner.name <- coefs.this.round$Owner[1] %>% as.character()
   title <- paste0("Coefficients for round ",
                   i,
@@ -94,7 +97,7 @@ for(i in 1:10){
                    colour = `Proportions(eps)(a)`)) +
     geom_line(size = .75, alpha = 0.7) + 
     ggplot2::ylim(0,NA)
-  
+  p1
   p2 <- ggplot(data = coefs.this.round,
                aes(x = Rewiring,
                    y = `Small World`,
@@ -122,10 +125,10 @@ for(i in 1:10){
                       legend="bottom"
                       )
   
-  annotate_figure(figure, top = title)
+  annotate_figure(figure, top = title) %>% print()
   
-  paste0(title, ".png") %>% ggsave(width = 9,
-                                   dpi = "retina")
+  # paste0(title, ".png") %>% ggsave(width = 9,
+  #                                  dpi = "retina")
 }
 
 
@@ -141,16 +144,16 @@ load("I:/Thesis_Codes/Thesis_R_Codes/data/eps-0v5v1_a-0v6v0_r-3_g-0.3k-5.2k_Daan
 r3.red <- brain_case
 rm(brain_case)
 
-m <- r3.pink@now$mat.connectivity
+m <- r3.pink@history$mat.connectivity[10400][[1]]
 m[1:50,1:50] <- m[1:50,1:50]*3
 m[1:50,51:300] <- m[1:50,51:300]*2
 m[51:300,1:50] <- m[51:300,1:50]*2
 
 # https://rstudio-pubs-static.s3.amazonaws.com/3486_79191ad32cf74955b4502b8530aad627.html
-pimage(m, col = c("white", "brown3",
-                  "darkorchid1", "blue2"))
-s <- seriate(m)
-pimage(m,s, col = c("white", "red", "black","blue"))
+# pimage(m, col = c("white", "brown3",
+#                   "darkorchid1", "blue2"))
+# s <- seriate(m)
+# pimage(m,s, col = c("white", "red", "black","blue"))
 
 
 size.minority <- (nrow(m)/6) %>% round(0)
@@ -165,8 +168,8 @@ V(g)$partition <- c(rep("minority", size.minority),
 # V(net)$color <- colrs[V(net)$partition=="majority"]
 
 # ceb <- cluster_edge_betweenness(net) 
-l <- g %>% layout_with_fr()
-g %>% plot(#ceb,
+# l <- g %>% layout_with_fr()
+pg.9400 <- g %>% plot(#ceb,
            vertex.size=4,
            vertex.color=c("skyblue", "pink")[1+(V(g)$partition=="majority")],
            # layout = l,
