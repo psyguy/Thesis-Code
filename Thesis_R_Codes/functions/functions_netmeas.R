@@ -130,6 +130,7 @@ netmeas_coefs <- function(initial = NULL,
 netmeas_wbcoefs <- function(m,
                             parameters = p,
                             name = name,
+                            num_edges,
                             rewiring = 0,
                             size.minority = 50,
                             size.majority =250){
@@ -150,7 +151,9 @@ netmeas_wbcoefs <- function(m,
                                           parameters = p,
                                           name = name,
                                           t_ = rewiring,
-                                          normalize.s = F))
+                                          normalize.s = F) %>% cbind(Degree = sum(x)/2))
+  colnames(coefs.wb)[1] <- "Partition"
+  
   
   coefs.wb %>% return()
 }
