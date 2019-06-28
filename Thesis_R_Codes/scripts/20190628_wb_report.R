@@ -10,7 +10,7 @@ max.de <- coefs.wb.b$Degree %>% max()
 max.pl <- coefs.wb.b$`Avg Path Length` %>% max()
 max.ef <- coefs.wb.b$Efficiency %>% max()
 
-names <- coefs.wb.b$Owner %>% as.character() %>% unique()
+name <- title# <- coefs.wb.b$Owner %>% as.character() %>% unique()
 t3 <- Sys.time()
 for(name in names){
   print(name)
@@ -80,30 +80,61 @@ for(name in names){
 Sys.time() - t3
 
 
-
-
-
-
 # plots graphs with colored edges -----------------------------------------
 
 
-g <- r3.red@now$mat.connectivity %>% graph_from_adjacency_matrix(mode="undirected")
+sampled.path <- "./data/"
+sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
+r.this <- sampled.names[grepl("Logan",sampled.names)]
+load(paste(sampled.path, r.this, sep = ""))
+
+m <- brain_case@now$mat.connectivity
+g <- m %>% graph_from_adjacency_matrix(mode="undirected")
+
+title <- brain_case@name
+# num.mino <- (brain_case@parameters$n_edges/6) %>% round(digits=0)
 
 V(g)$partition <- c(rep("minority", 50),
                     rep("majority", 250))
 
-
-
-
 # select edges and set color 
-E(g)[V(g)[name == "minority"] %--% V(g)[name == "minority"]]$color <- "blue2" # within.mino
-E(g)[V(g)[name == "minority"] %--% V(g)[name == "majority"]]$color <- "darkorchid1" # between.minomajo
-E(g)[V(g)[name == "majority"] %--% V(g)[name == "majority"]]$color <- "brown3" # within.majo
+E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "minority"]]$color <- "blue2" # within.mino
+E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "majority"]]$color <- "darkorchid1" # between.minomajo
+E(g)[V(g)[partition == "majority"] %--% V(g)[partition == "majority"]]$color <- "brown3" # within.majo
 # plot
 set.seed(1)
+paste0(title, "_0", ".png") %>%
+  png(width = width.column.report, height = width.column.report/2, res = 200)
 g %>% plot(vertex.size = 0,
-           vertex.color = c("skyblue", "red")[1 + (V(g)$partition == "majority")],
+           # vertex.color = c("skyblue", "red")[1 + (V(g)$partition == "majority")],
            vertex.label = NA,
            edge.width = 1,
-           edge.curved= 0.5,
-           main = "red")
+           edge.curved= 0.5)#,
+           # main = brain_case@name)
+dev.off()
+
+m[1:50,1:50] <- m[1:50,1:50]*3
+m[1:50,51:300] <- m[1:50,51:300]*2
+m[51:300,1:50] <- m[51:300,1:50]*2
+
+width.column.report <- 2240
+
+paste0(title, "_1", ".png") %>%
+  png(width = width.column.report/2, height = width.column.report/2, res = 200)
+pimage(m,
+       col = c("white", "brown3",
+               "green4", "blue2"),
+       key = FALSE)#,
+# main = paste(title, "(unserialized)"))
+dev.off()
+
+
+paste0(title, "_2", ".png") %>%
+  png(width = width.column.report/2, height = width.column.report/2, res = 200)
+pimage(m,
+       seriate(m),
+       col = c("white", "brown3",
+               "green4", "blue2"),
+       key = FALSE)#,
+# main = paste(title, "(serialized)"))
+dev.off()

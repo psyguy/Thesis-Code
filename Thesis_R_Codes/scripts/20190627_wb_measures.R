@@ -96,7 +96,6 @@ for(partition in partition.list){
 }
 
 
-rewirings <- 
 m <- r3.pink@history$mat.connectivity[rew][[1]]
 m[1:50,1:50] <- m[1:50,1:50]*3
 m[1:50,51:300] <- m[1:50,51:300]*2

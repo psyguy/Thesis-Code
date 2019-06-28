@@ -8,9 +8,9 @@ source("./functions/functions_partition.R")
 
 sampled.path <- "./data/"
 sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
-r.this <- sampled.names[grepl("_r-1_",sampled.names)]
+r.this <- sampled.names[grepl("_r-5_",sampled.names)]
 
-coefs.wb.b <- NULL
+# coefs.wb.b <- NULL
 t <- Sys.time()
 for(sampled in r.this){
   rm(brain_case)
