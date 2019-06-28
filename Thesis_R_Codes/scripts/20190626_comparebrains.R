@@ -8,18 +8,17 @@ source("./functions/functions_partition.R")
 
 sampled.path <- "./data/"
 sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
-r3 <- sampled.names[grepl("_r-3_",sampled.names)]
-
+r.this <- sampled.names[grepl("_r-1_",sampled.names)]
 
 coefs.wb.b <- NULL
 t <- Sys.time()
-for(sampled in r3){
+for(sampled in r.this){
   rm(brain_case)
   load(paste(sampled.path, sampled, sep = ""))
   brain_case@name %>% print()
   
   t1 <- Sys.time()
-  for(i in 1:brain_case@age$rewires){
+  for(i in 1:(brain_case@age$rewires-1)){
     m <- brain_case@history$mat.connectivity[[i]]
     if(is.null(m)) next
     paste("Adding coefs of rewiring", i) %>% print()
@@ -32,6 +31,7 @@ for(sampled in r3){
 }
 Sys.time()-t
 
+save_vars("coefs.wb.b", prefix = "coefs.wb.b")
 
 # plotting coefficients over time -----------------------------------------
 save_vars(list.of.vars = "coefs_all", prefix = "hpcJune26Harvest_tmp")
@@ -154,14 +154,14 @@ for(i in 1:10){
 library(seriation)
 
 load("I:/Thesis_Codes/Thesis_R_Codes/data/eps-0v6v0_a-0v5v1_r-3_g-0.3k-5.2k_David De Ridder_20190626_1905.RData")
-r3.olive <- brain_case
+r.this.olive <- brain_case
 load("I:/Thesis_Codes/Thesis_R_Codes/data/eps-1v5v0_a-0v6v0_r-3_g-0.3k-5.2k_Chiara Bosmans_20190626_1908.RData")
-r3.pink <- brain_case
+r.this.pink <- brain_case
 load("I:/Thesis_Codes/Thesis_R_Codes/data/eps-0v5v1_a-0v6v0_r-3_g-0.3k-5.2k_Daan Pauwels_20190626_1904.RData")
-r3.red <- brain_case
+r.this.red <- brain_case
 rm(brain_case)
 
-m <- r3.pink@history$mat.connectivity[10400][[1]]
+m <- r.this.pink@history$mat.connectivity[10400][[1]]
 m[1:50,1:50] <- m[1:50,1:50]*3
 m[1:50,51:300] <- m[1:50,51:300]*2
 m[51:300,1:50] <- m[51:300,1:50]*2
