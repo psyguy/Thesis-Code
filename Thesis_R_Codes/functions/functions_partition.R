@@ -32,7 +32,7 @@ partition_culture <- function(brain_case = NULL,
   
   name <- NULL
   num_nodes <- 300
-  num_edges <- 5200
+  num_edges <- 5200*1.1
   seed <- round %>% as.numeric()
   
   # # since the input is the the actual alpha and beta parameters
