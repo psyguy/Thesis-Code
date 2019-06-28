@@ -128,7 +128,7 @@ netmeas_coefs <- function(initial = NULL,
 # a function to calculate coefficients on partitioned graphs --------------
 
 netmeas_wbcoefs <- function(m,
-                            parameters = p,
+                            parameters,
                             name = name,
                             num_edges,
                             rewiring = 0,
@@ -148,7 +148,7 @@ netmeas_wbcoefs <- function(m,
   coefs.wb <- m.list %>%
     plyr::ldply(function(x) netmeas_coefs(x, x,
                                           concise =  F,
-                                          parameters = p,
+                                          parameters = parameters,
                                           name = name,
                                           t_ = rewiring,
                                           normalize.s = F) %>% cbind(Degree = sum(x)/2))

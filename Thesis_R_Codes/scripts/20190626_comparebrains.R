@@ -8,16 +8,27 @@ source("./functions/functions_partition.R")
 
 sampled.path <- "./data/"
 sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
-sampled.names <- sampled.names[-length(sampled.names)]
-coefs_all <- NULL
-# rewires <- seq(1, 10001, 5)
+r3 <- sampled.names[grepl("_r-3_",sampled.names)]
+
+
+coefs.wb.b <- NULL
 t <- Sys.time()
-for(sampled in sampled.names){
+for(sampled in r3){
   rm(brain_case)
   load(paste(sampled.path, sampled, sep = ""))
   brain_case@name %>% print()
-  coefs_all <- coefs_all %>%
-    rbind(brain_case@history$coefficients)
+  
+  t1 <- Sys.time()
+  for(i in 1:brain_case@age$rewires){
+    m <- brain_case@history$mat.connectivity[[i]]
+    if(is.null(m)) next
+    paste("Adding coefs of rewiring", i) %>% print()
+    coefs.wb.b <- coefs.wb.b %>% rbind(m %>% netmeas_wbcoefs(parameters = brain_case@parameters,
+                                                             name = brain_case@name,
+                                                             rewiring = i)
+                                       )
+  }
+  Sys.time() - t1
 }
 Sys.time()-t
 
