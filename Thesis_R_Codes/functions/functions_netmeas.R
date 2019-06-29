@@ -151,7 +151,8 @@ netmeas_wbcoefs <- function(m,
                                           parameters = parameters,
                                           name = name,
                                           t_ = rewiring,
-                                          normalize.s = F) %>% cbind(Degree = sum(x)/2))
+                                          normalize.s = F) %>% cbind(`Edge Density` = sum(x)/(nrow(x)*(nrow(x)-1)))
+                )
   colnames(coefs.wb)[1] <- "Partition"
   
   

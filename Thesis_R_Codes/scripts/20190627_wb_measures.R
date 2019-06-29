@@ -130,5 +130,3 @@ rl = lapply(sprintf(paste0(title,"_%i.png"),
 gl = lapply(rl, grid::rasterGrob)
 gridExtra::grid.arrange(grobs=gl, ncol=2)
 
-(grobs=gl, )
-

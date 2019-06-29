@@ -8,7 +8,7 @@ source("./functions/functions_partition.R")
 
 sampled.path <- "./data/"
 sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
-r.this <- sampled.names[grepl("_r-5_",sampled.names)]
+r.this <- sampled.names[grepl("_r-1_",sampled.names)]
 
 # coefs.wb.b <- NULL
 t <- Sys.time()
@@ -31,7 +31,14 @@ for(sampled in r.this){
 }
 Sys.time()-t
 
-save_vars("coefs.wb.b", prefix = "coefs.wb.b")
+# 
+# denom <- c(300, 50, 250)
+# denom <- (denom*(denom-1)/2) %>% c(50*250)
+# coefs.wb.b$Degree <- coefs.wb.b$Degree / rep(denom, nrow(coefs.wb.b)/4)
+# 
+# colnames(coefs.wb.b)[13] <- "Edge Density"
+
+save_vars("coefs.wb.b", prefix = "coefs.wb.r1.5200")
 
 # plotting coefficients over time -----------------------------------------
 save_vars(list.of.vars = "coefs_all", prefix = "hpcJune26Harvest_tmp")
