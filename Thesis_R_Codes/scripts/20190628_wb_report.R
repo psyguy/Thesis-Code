@@ -113,7 +113,7 @@ sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
 r.this <- sampled.names[grepl("Logan",sampled.names)]
 load(paste(sampled.path, r.this, sep = ""))
 
-rew <- 99800
+rew <- 100000
 
 t4 <- Sys.time()
 m <- brain_case@history$mat.connectivity[[rew]]
@@ -206,24 +206,20 @@ conns_and_net <- rep(title,2) %>%
   as.list() %>%
   lapply(png::readPNG) %>% 
   lapply(grid::rasterGrob)
-
+require(grid)
 paste0(title, "", ".png") %>%
   png(width = width.column.report*2, height = width.column.report*3, res = 400)
 gr.net <- gridExtra::grid.arrange(grobs=conns_and_net, nrow=2,
-                              top = paste("\n",
+                              top = textGrob(paste("\n",
                                           brain_case@name,
                                           "after",
                                           rew,
-                                          "rewirings")
+                                          "rewirings"),
+                                          gp=gpar(fontsize=40,font=8)
+                                          )
                               )
 dev.off()
 Sys.time()-t4
-
-
-list(gr.con, gr.net)
-
-
-
 
 
 
