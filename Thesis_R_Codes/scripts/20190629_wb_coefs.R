@@ -1,7 +1,9 @@
-name <- "Sam Evrard"
-t3 <- Sys.time()
+name <- "Family 1 "
+t3 <- Sys.time
 print(name)
-coefs.this.round <- coefs.wb.b %>% filter(Owner == name)
+coefs.this.round <- coefs.wb.b %>%
+  filter(`a Proportion` == "(1, 5, 0)" &
+         `Epsilon Proportion` == "(0, 6, 0)")
 owner.name <- coefs.this.round$Owner[1] %>% as.character()
 title <- paste0("Evolution of coefficients for ",
                 name,
@@ -138,3 +140,10 @@ paste0("wb_", name, ".png") %>% ggsave(width = 14,
                                        dpi = "retina")
 
 Sys.time() - t3
+
+
+
+# denom <- c(300, 50, 250)
+# denom <- (denom*(denom-1)/2) %>% c(50*250)
+# coefs.wb.b$Degree <- coefs.wb.b$Degree / rep(denom, nrow(coefs.wb.b)/4)
+
