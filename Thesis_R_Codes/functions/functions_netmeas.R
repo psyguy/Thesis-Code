@@ -107,10 +107,54 @@ netmeas_coefs <- function(initial = NULL,
     coef.avgpathlength
   ) %>% as.data.frame()
   
+  colnames(coefs) <- c("Owner", "Seed",
+                       "Round", "Epsilon Proportion",
+                       "a Proportion", "Rewiring",
+                       "Clustering", "Efficiency",
+                       "Small World", "Modularity",
+                       "Avg Path Length")
+  
   coefs[6:ncol(coefs)] <- lapply(coefs[6:ncol(coefs)], function(x) as.numeric(as.character(x)))
   
-  if(concise) coefs <- coefs %>% select(#contains("rew"),
-                                            contains("coef."))
+  if(concise) coefs <- coefs %>% select("Clustering", "Efficiency",
+                                        "Small World", "Modularity",
+                                        "Avg Path Length")
   
   coefs %>% return()
+}
+
+
+
+# a function to calculate coefficients on partitioned graphs --------------
+
+netmeas_wbcoefs <- function(m,
+                            parameters,
+                            name = name,
+                            num_edges,
+                            rewiring = 0,
+                            size.minority = 50,
+                            size.majority =250){
+  
+  minority <- m[1:50,1:50]
+  majority <- m[51:300,51:300]
+  # removing the within group connections
+  interpartition <- m
+  interpartition[1:50,1:50] <- interpartition[51:300,51:300] <- 0
+  m.list <- list(whole = m,
+                 minority = minority,
+                 majority = majority,
+                 interpartition = interpartition)
+  
+  coefs.wb <- m.list %>%
+    plyr::ldply(function(x) netmeas_coefs(x, x,
+                                          concise =  F,
+                                          parameters = parameters,
+                                          name = name,
+                                          t_ = rewiring,
+                                          normalize.s = F) %>% cbind(`Edge Density` = sum(x)/(nrow(x)*(nrow(x)-1)))
+                )
+  colnames(coefs.wb)[1] <- "Partition"
+  
+  
+  coefs.wb %>% return()
 }

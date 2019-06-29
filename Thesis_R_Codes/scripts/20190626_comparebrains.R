@@ -8,19 +8,37 @@ source("./functions/functions_partition.R")
 
 sampled.path <- "./data/"
 sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
-sampled.names <- sampled.names[-length(sampled.names)]
-coefs_all <- NULL
-# rewires <- seq(1, 10001, 5)
+r.this <- sampled.names[grepl("_r-1_",sampled.names)]
+
+# coefs.wb.b <- NULL
 t <- Sys.time()
-for(sampled in sampled.names){
+for(sampled in r.this){
   rm(brain_case)
   load(paste(sampled.path, sampled, sep = ""))
   brain_case@name %>% print()
-  coefs_all <- coefs_all %>%
-    rbind(brain_case@history$coefficients)
+  
+  t1 <- Sys.time()
+  for(i in 1:(brain_case@age$rewires-1)){
+    m <- brain_case@history$mat.connectivity[[i]]
+    if(is.null(m)) next
+    paste("Adding coefs of rewiring", i) %>% print()
+    coefs.wb.b <- coefs.wb.b %>% rbind(m %>% netmeas_wbcoefs(parameters = brain_case@parameters,
+                                                             name = brain_case@name,
+                                                             rewiring = i)
+                                       )
+  }
+  Sys.time() - t1
 }
 Sys.time()-t
 
+# 
+# denom <- c(300, 50, 250)
+# denom <- (denom*(denom-1)/2) %>% c(50*250)
+# coefs.wb.b$Degree <- coefs.wb.b$Degree / rep(denom, nrow(coefs.wb.b)/4)
+# 
+# colnames(coefs.wb.b)[13] <- "Edge Density"
+
+save_vars("coefs.wb.b", prefix = "coefs.wb.r1.5200")
 
 # plotting coefficients over time -----------------------------------------
 save_vars(list.of.vars = "coefs_all", prefix = "hpcJune26Harvest_tmp")
@@ -81,9 +99,11 @@ library(ggpubr)
 
 
 for(i in 1:10){
-  coefs.this.round <- coefs %>% filter(Round==i) %>%
+  coefs.this.round <- coefs.wb.b %>%
+    filter(Round==3) %>%
+    filter(`.id` == "whole") %>% 
     filter(Rewiring>8500) %>% 
-    filter(Rewiring<9700)
+    filter(Rewiring<10000)
   # coefs.this.round <- coefs.this.round[5000:12500,]
   owner.name <- coefs.this.round$Owner[1] %>% as.character()
   title <- paste0("Coefficients for round ",
@@ -94,28 +114,32 @@ for(i in 1:10){
   p1 <- ggplot(data = coefs.this.round,
                aes(x = Rewiring,
                    y = Clustering,
-                   colour = `Proportions(eps)(a)`)) +
-    geom_line(size = .75, alpha = 0.7) + 
+                   colour = Owner)) +
+    geom_line(size = .75, alpha = 0.7) +
     ggplot2::ylim(0,NA)
-  p1
+  # ggplot2::ylim(0,NA)
+  # p1
+  
   p2 <- ggplot(data = coefs.this.round,
                aes(x = Rewiring,
                    y = `Small World`,
-                   colour = `Proportions(eps)(a)`)) +
-    geom_line(size = .75, alpha = 0.7) + 
+                   colour = Owner)) +
+    geom_line(size = .75, alpha = 0.7) +
     ggplot2::ylim(0,NA)
+  # p2
   
   p3 <- ggplot(data = coefs.this.round,
                aes(x = Rewiring,
                    y = Modularity,
-                   colour = `Proportions(eps)(a)`)) +
+                   colour = Owner)) +
     geom_line(size = .75, alpha = 0.7) + 
     ggplot2::ylim(0,NA)
+  # p3
   
   p4 <- ggplot(data = coefs.this.round,
                aes(x = Rewiring,
                    y = `Avg Path Length`,
-                   colour = `Proportions(eps)(a)`)) +
+                   colour = Owner)) +
     geom_line(size = .75, alpha = 0.7) + 
     ggplot2::ylim(0,NA)
   
@@ -123,10 +147,9 @@ for(i in 1:10){
                       ncol=2, nrow=2,
                       common.legend = TRUE,
                       legend="bottom"
-                      )
+  )
   
-  annotate_figure(figure, top = title) %>% print()
-  
+  annotate_figure(figure, top = title)# %>% print()
   # paste0(title, ".png") %>% ggsave(width = 9,
   #                                  dpi = "retina")
 }
@@ -136,25 +159,34 @@ for(i in 1:10){
 # looking at connectivities -----------------------------------------------
 
 library(seriation)
+
 load("I:/Thesis_Codes/Thesis_R_Codes/data/eps-0v6v0_a-0v5v1_r-3_g-0.3k-5.2k_David De Ridder_20190626_1905.RData")
-r3.olive <- brain_case
+r.this.olive <- brain_case
 load("I:/Thesis_Codes/Thesis_R_Codes/data/eps-1v5v0_a-0v6v0_r-3_g-0.3k-5.2k_Chiara Bosmans_20190626_1908.RData")
-r3.pink <- brain_case
+r.this.pink <- brain_case
 load("I:/Thesis_Codes/Thesis_R_Codes/data/eps-0v5v1_a-0v6v0_r-3_g-0.3k-5.2k_Daan Pauwels_20190626_1904.RData")
-r3.red <- brain_case
+r.this.red <- brain_case
 rm(brain_case)
 
-m <- r3.pink@history$mat.connectivity[10400][[1]]
+m <- r.this.pink@history$mat.connectivity[10400][[1]]
 m[1:50,1:50] <- m[1:50,1:50]*3
 m[1:50,51:300] <- m[1:50,51:300]*2
 m[51:300,1:50] <- m[51:300,1:50]*2
 
 # https://rstudio-pubs-static.s3.amazonaws.com/3486_79191ad32cf74955b4502b8530aad627.html
-# pimage(m, col = c("white", "brown3",
-#                   "darkorchid1", "blue2"))
-# s <- seriate(m)
-# pimage(m,s, col = c("white", "red", "black","blue"))
+title <- paste0(b@name, " at ", b@age$rewires/1000, "k")
+pimage(m,
+       col = c("white", "brown3",
+               "darkorchid1", "blue2"),
+       key = FALSE,
+       main = paste(title, "(unserialized)"))
 
+pimage(m,
+       seriate(m),
+       col = c("white", "brown3",
+               "darkorchid1", "blue2"),
+       key = FALSE,
+       main = paste(title, "(serialized)"))
 
 size.minority <- (nrow(m)/6) %>% round(0)
 size.majority <- (nrow(m)*5/6) %>% round(0)
