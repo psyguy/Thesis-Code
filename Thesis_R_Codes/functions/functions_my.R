@@ -10,7 +10,11 @@ list.of.packages <- c("tidyverse",
                       "plyr",
 #                      "corrplot",
                       "Hmisc",
+<<<<<<< HEAD
+                      "seriation",
+=======
 #                      "seriation",
+>>>>>>> 46595cb713e39561e1fba2b567797d902e601670
                       "igraph",
                       "ggplot2",
                       "gplots",
