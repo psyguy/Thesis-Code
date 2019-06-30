@@ -185,15 +185,23 @@ for(name in names.list[1:1]){
     lapply(png::readPNG) %>% 
     lapply(grid::rasterGrob)
   
+  plot.n_col <- 3
+  plot.n_row <- 2
+  
   Sys.time() - t5
   require(grid)
   paste0("Profile of ", title, ".png") %>%
-    png(width = width.column.report*2*n.plots, height = width.column.report*3, res = 400)
-  gr.net <- gridExtra::grid.arrange(grobs=all.plots, ncol = n.plots,
-                                    top = textGrob(paste("\n",
+    png(width = width.column.report*2*plot.n_col,
+        height = width.column.report*3*plot.n_row,
+        res = 400)
+  gr.net <- gridExtra::grid.arrange(grobs=all.plots,
+                                    ncol = plot.n_col,
+                                    nrow = plot.n_row,
+                                    top = textGrob(paste(#"\n",
                                                          "Profile of",
-                                                         title),
-                                                   gp=gpar(fontsize=30,font=8)
+                                                         title,
+                                                         "\n"),
+                                                   gp=gpar(fontsize=70,font=8)
                                                    )
                                     )
   dev.off()
