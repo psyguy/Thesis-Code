@@ -25,4 +25,16 @@ for(sampled in r.this){
 }
 (Sys.time()-t) %>% paste("for", pattern) %>% print()
 
-save_vars("coefs.wb.all", prefix = "coefs.wb.all")
+
+# making the verbal description of the parameter sets
+coefs.all <- coefs.wb.all %>% mutate(`Verbal Description` = 
+                                       paste(`Epsilon Proportion`, `a Proportion`, sep="_"))
+coefs.all$`Verbal Description` <- coefs.all$`Verbal Description` %>% as.factor()
+
+levels(coefs.all$`Verbal Description`) <- c("Hyper-coupled Minority",
+                                            "Hyper-chaotic Minority",
+                                            "Homogeneous Society",
+                                            "Hypo-chaotic Minority",
+                                            "Hypo-coupled Minority")
+
+save_vars("coefs.all", prefix = "coefs.all")
