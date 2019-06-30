@@ -25,6 +25,7 @@
 vignettes/*.html
 
 vignettes/*.pdf
+*.png
 
 
 
