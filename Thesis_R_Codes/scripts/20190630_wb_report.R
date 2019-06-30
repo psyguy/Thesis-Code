@@ -2,6 +2,12 @@
 library(ggpubr)
 library(grid)
 
+source("./functions/functions_reports.R")
+
+path.to.save <- "figures/20190630_hpc_figures/"
+path.to.read <- "figures/20190629_hpc_figures/"
+width.column.report <- 2240
+
 # reading the aggregated harvested data
 load("./data/coefs.wb.all_20190630_1327.RData")
 
@@ -31,6 +37,7 @@ max.pl <- coefs.all$`Avg Path Length` %>% max()
 max.ef <- coefs.all$Efficiency %>% max()
 
 names.list <- coefs.all$Owner %>% unique()
+
 t3 <- Sys.time()
 for(name in names.list[1:1]){
   print(name)
@@ -153,9 +160,54 @@ for(name in names.list[1:1]){
                        gp=gpar(fontsize=25,font=8))
   annotate_figure(figure, top = top.text)
 
-  paste0("wb_", title, ".png") %>% ggsave(width = 14,
+  paste0(path.to.save,"wb_", title, ".png") %>% ggsave(width = 14,
                                          height = 21,
                                          dpi = "retina")
+  
+  
+
+# reading network plots and gluing them to the coefficients over t --------
+
+  plot.names.nets <- list.files(path = path.to.read, pattern = "*rewirings.png")
+  r.this <- plot.names.nets[grepl(name, plot.names.nets)] %>% sort()
+  # to send the 1e+50 to the end
+  r.this <- c(r.this[1], r.this[3:length(r.this)], r.this[2])
+
+  plot.name.coefs <- list.files(path = path.to.save, pattern = name)
+  
+  plots.with.paths <- c(paste0(path.to.save, plot.name.coefs),
+                        paste0(path.to.read, r.this))
+  
+  n.plots <- length(plots.with.paths)
+  
+  t5 <- Sys.time()
+  all.plots <- plots.with.paths %>%
+    lapply(png::readPNG) %>% 
+    lapply(grid::rasterGrob)
+  
+  Sys.time() - t5
+  require(grid)
+  paste0("Profile of ", title, ".png") %>%
+    png(width = width.column.report*2*n.plots, height = width.column.report*3, res = 400)
+  gr.net <- gridExtra::grid.arrange(grobs=all.plots, ncol = n.plots,
+                                    top = textGrob(paste("\n",
+                                                         "Profile of",
+                                                         title),
+                                                   gp=gpar(fontsize=30,font=8)
+                                                   )
+                                    )
+  dev.off()
+  Sys.time() - t5
+  
+
+  paste("Netviz of round", r_,
+        "of", pat.tmp,
+        "index", rounds,
+        "took", (Sys.time()-t)) %>% print()
+  
+  
+  
+  
 }
 Sys.time() - t3
 
