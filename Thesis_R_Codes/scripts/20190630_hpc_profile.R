@@ -149,6 +149,7 @@ figure <- ggarrange(p.cl, p.ed, p.sw, p.pl, p.mo, p.ef,
                     # legend="bottom"
 )
 
+require(grid)
 top.text <- textGrob(paste("Evolution of coefficients for", title, "\n"),
                      gp=gpar(fontsize=25,font=8))
 annotate_figure(figure, top = top.text)
