@@ -190,7 +190,7 @@ for(name in names.list[1:1]){
   
   Sys.time() - t5
   require(grid)
-  paste0("Profile of ", title, ".png") %>%
+  paste0(path.to.save, "Profile of ", title, ".png") %>%
     png(width = width.column.report*2*plot.n_col,
         height = width.column.report*3*plot.n_row,
         res = 400)
