@@ -4,6 +4,7 @@ Args <- commandArgs(TRUE)
 rounds <- as.numeric(Args[1])
 
 source("./functions/functions_reports.R")
+options(bitmapType='cairo')
 
 r_ <- (rounds %% 10) + 1
 

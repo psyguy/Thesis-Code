@@ -101,7 +101,7 @@ reports_netviz <- function(brain_case,
                                                            "after",
                                                            rew,
                                                            "rewirings"),
-                                                     gp=gpar(fontsize=40,font=8)
+                                                     gp=gpar(fontsize=30,font=8)
                                       )
     )
     dev.off()

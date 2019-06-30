@@ -1,8 +1,8 @@
 #!/bin/bash -l
 #PBS -l nodes=2:ppn=24
 #PBS -l walltime=5:00:00
-#PBS -l pmem=8gb
-#PBS -N June29_coefs_1900
+#PBS -l pmem=7gb
+#PBS -N June29_coefs_2055
 #PBS -m b -M mhscientist@gmail.com
  
 export OPENBLAS_NUM_THREADS=1
