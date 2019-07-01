@@ -17,19 +17,18 @@ names.netvizs <- list.files(path = path.to.pngs, pattern = "after") %>% sort()
 titles <- gsub("wb_","", names.coefs)
 titles <- gsub(".png","", titles)
 
-i <- 1
-t6 <- Sys.time()
-
+# i <- 1
 
 # reading network plots and gluing them to the coefficients over t --------
 
+t6 <- Sys.time()
 for(i in 1:50){
   
-  t5 <- Sys.time()
-
+  print(i)
   
+  t5 <- Sys.time()
   plots.with.paths <- paste0(path.to.pngs,
-                            c(names.coefs[i], names.netvizs[1]))
+                            c(names.coefs[i], names.netvizs[i]))
   two.pannels <- plots.with.paths %>%
     lapply(png::readPNG) %>%
     lapply(grid::rasterGrob)
@@ -44,14 +43,13 @@ for(i in 1:50){
                                     ncol = 2,
                                     top = textGrob(paste(#"\n",
                                                          "Profile of",
-                                                         titles,
+                                                         titles[i],
                                                          "\n"),
                                                    gp=gpar(fontsize=40,font=8)
                                                    )
                                     )
   dev.off()
-  # Sys.time() - t5
-  
+
   paste("2-panel profile of",
         titles[i],
         "took",
