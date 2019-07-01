@@ -2,7 +2,7 @@
 #PBS -l nodes=12:ppn=9
 #PBS -l walltime=0:30:00
 #PBS -l pmem=20gb
-#PBS -N June30_profiles_2010
+#PBS -N June30_profiles_onlycoefs_2145
 #PBS -m b -M mhscientist@gmail.com
  
 export OPENBLAS_NUM_THREADS=1
