@@ -49,7 +49,7 @@ netmeas_coefs <- function(initial = NULL,
   # e_0 <- m_0 %>% netmeas_efficiency()
 
   # I think it is no more necessary as it will be computd later
-  # if(!for.wb) return(NULL)
+  if(!for.wb) return(NULL)
   
   if(!is.null(b)) initial <- b@initial -> now
   
@@ -115,19 +115,20 @@ netmeas_coefs <- function(initial = NULL,
     coef.richclub
   ) %>% as.data.frame()
   
-  colnames(coefs) <- c("Owner", "Seed",
-                       "Round", "Epsilon Proportion",
-                       "a Proportion", "Rewiring",
-                       "Clustering", "Efficiency",
-                       "Small World", "Modularity",
-                       "Avg Path Length", "Assortativity",
-                       "Rich Club")[1:ncol(coefs)]
+  # colnames(coefs) <- c("Owner", "Seed",
+  #                      "Round", "Epsilon Proportion",
+  #                      "a Proportion", "Rewiring",
+  #                      "Clustering", "Efficiency",
+  #                      "Small World", "Modularity",
+  #                      "Avg Path Length", "Assortativity",
+  #                      "Rich Club")
   
   coefs[6:ncol(coefs)] <- lapply(coefs[6:ncol(coefs)], function(x) as.numeric(as.character(x)))
   
-  if(concise) coefs <- coefs %>% select("Clustering", "Efficiency",
-                                        "Small World", "Modularity",
-                                        "Avg Path Length")
+  if(concise) coefs <- coefs %>% select(-1:-6)
+                                        # ("Clustering", "Efficiency",
+                                        # "Small World", "Modularity",
+                                        # "Avg Path Length")
   
   coefs %>% return()
 }

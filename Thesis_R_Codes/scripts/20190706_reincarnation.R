@@ -3,7 +3,7 @@
 Args <- commandArgs(TRUE)
 index <- as.numeric(Args[1])
 
-# index <- 1
+# index <- 7
 # first making a brain, from 0626_hpc.R -----------------------------------
 
 source("./functions/functions_reports.R")
@@ -38,12 +38,17 @@ sampled.path <- "./data/5200-edges/"
 brain_case <- partition_culture(round = r_a_b$r_[index],
                                 row_eps = r_a_b$row_eps[index],
                                 row_a = r_a_b$row_a[index],
-                                final.age = 3)
-save_vars(list.of.vars = "brain_case",
-          prefix = paste(brain_case@parameters$brain.code,
+                                final.age = 100)
+ save_vars(list.of.vars = "brain_case",
+          prefix = paste("life-01",
+                         brain_case@parameters$brain.code,
                          brain_case@name,
                          sep = "_"),
           path = sampled.path)
+
+ 
+t <- Sys.time()
+ for(reincarnation in 2:10){
 
 pat.tmp <- "_g-0.3k-5.2k"
 
@@ -51,21 +56,21 @@ pattern <- pat.tmp
 
 sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
 
-names <- sampled.names %>%
-  my_gsub(paste0(".*",
-                 pat.tmp,
-                 "_"), "") %>% 
-  my_gsub("\\_.*", "") %>% 
-  sort()
+# names <- sampled.names %>%
+#   my_gsub(paste0(".*",
+#                  pat.tmp,
+#                  "_"), "") %>% 
+#   my_gsub("\\_.*", "") %>% 
+#   sort()
 
-this.owner.oldest <- sampled.names[grepl(names[r_], sampled.names)] %>% 
+this.owner.oldest <- sampled.names[grepl(brain_case@name, sampled.names)] %>% 
   sort() %>% 
   tail(1)
 
 current.life <- this.owner.oldest %>% substring(6,7) %>% as.numeric()
 
-  
-t <- Sys.time()
+Sys.time()-t  
+
 # for(sampled in r.this){
   
   life.prefix <- sprintf("life-%02d", (current.life+1))
@@ -80,10 +85,13 @@ t <- Sys.time()
   brain_case@history <- brain_case@initial
   
   brain_case <- partition_culture(brain_case = brain_case,
-                                  final.age = 4)
+                                  final.age = (brain_case@age$rewires %/% 1000)+100)
   
+  tryCatch({
+    reports_netviz(brain_case)
+  }, error=function(e){print(paste("Error plotting", this.owner.oldest))})
   
-  reports_netviz(brain_case)
+  # 
   
   
   save_vars(list.of.vars = "brain_case",
@@ -94,7 +102,7 @@ t <- Sys.time()
             path = sampled.path
             )
   
-# }
+}
 
 paste("Netviz of round", r_,
       "of", pat.tmp,
