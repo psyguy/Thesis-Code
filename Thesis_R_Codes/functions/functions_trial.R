@@ -114,6 +114,13 @@ trial_grow <- function(parameters, # = NULL,
   his.coefs <- brain_growing@history$coefficients
   his.m <- brain_growing@history$mat.connectivity
   
+  colnames(his.coefs) <- c("Owner", "Seed",
+                       "Round", "Epsilon Proportion",
+                       "a Proportion", "Rewiring",
+                       "Clustering", "Efficiency",
+                       "Small World", "Modularity",
+                       "Avg Path Length")
+  
   time_start <- Sys.time()
   new.a <- now.a
   new.m <- now.m

@@ -27,12 +27,15 @@ partition_culture <- function(brain_case = NULL,
                               final.age = 10){
   
   if(!is.null(brain_case)){
+    parameters <- brain_case@parameters
+    name <- brain_case@name
     if((brain_case@age$rewires-1) >= final.age*1000) return(brain_case)
     }
   
+  if(is.null(brain_case)){
   name <- NULL
   num_nodes <- 300
-  num_edges <- 5200*1.2
+  num_edges <- 5200
   seed <- round %>% as.numeric()
   
   # # since the input is the the actual alpha and beta parameters
@@ -72,7 +75,7 @@ partition_culture <- function(brain_case = NULL,
                      brain.code = "",
                      eps = eps,
                      a = a)
-  
+  }
   repeat{
     brain_case <- trial_grow(parameters =  parameters,
                              n_rewires = 1000,

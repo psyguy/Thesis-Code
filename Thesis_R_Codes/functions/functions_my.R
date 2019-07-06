@@ -34,6 +34,9 @@ mini_logistic <- function(x, a = 1.7) {
   1 - a * (x ^ 2)
 }
 
+my_gsub <- function(str, pat, sub = "") gsub(pat, sub, str)
+
+
 # saves a backup of variables ---------------------------------------------
 
 save_vars <- function(list.of.vars = NULL,
