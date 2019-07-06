@@ -1,26 +1,54 @@
 #!/usr/bin/env Rscript
-# rm(list = ls())
 
 Args <- commandArgs(TRUE)
-rounds <- as.numeric(Args[1])
+index <- as.numeric(Args[1])
 
+# index <- 1
+# first making a brain, from 0626_hpc.R -----------------------------------
 
-rounds <- 34
 source("./functions/functions_reports.R")
-options(bitmapType='cairo')
 
-r_ <- (rounds %% 10) + 1
+## read the HPC instructions here:
+## https://github.com/psyguy/Emotion-Dynamics-1/blob/master/ED%201%20-%20Codes/3.%20mirt-Model-Comp/correct_HPC-ready_May22/HPC%20readme.txt
 
-ed_ <- (rounds) %/% 50 + 1
 
-pat.tmp <- NULL
+alphabeta <- c(1,5,0,
+               0,5,1,
+               0,6,0) %>% matrix(nrow = 3, byrow = TRUE) %>%
+  as.data.frame()
+colnames(alphabeta) <- c("p_low", "p_medium", "p_high")
+
+l.alpha <- nrow(alphabeta)
+nrounds <- 10
+row_eps <- c(1:l.alpha) %>% rep(times = l.alpha) %>% rep(times = nrounds)
+row_a <- c(1:l.alpha) %>% rep(each = l.alpha) %>% rep(times = nrounds)
+r_ <- c(1:nrounds) %>% rep(each = l.alpha*l.alpha)
+index_ <- 1:length(r_)
+
+## to make the index file of the remaining rows
+## (after adding (2,2) & (9,9)) uncomment the # %>%  ...
+r_a_b <- data.frame(row_eps, row_a, r_, index_) # %>% filter(row_a>6|row_eps>6) %>% filter(round==1)
+
+# r_a_b <- r_a_b %>% filter(row_eps==3 | row_a==3)
+
+# making and saving the brain ---------------------------------------------
+
+sampled.path <- "./data/5200-edges/"
+
+brain_case <- partition_culture(round = r_a_b$r_[index],
+                                row_eps = r_a_b$row_eps[index],
+                                row_a = r_a_b$row_a[index],
+                                final.age = 3)
+save_vars(list.of.vars = "brain_case",
+          prefix = paste(brain_case@parameters$brain.code,
+                         brain_case@name,
+                         sep = "_"),
+          path = sampled.path)
 
 pat.tmp <- "_g-0.3k-5.2k"
 
-pattern <- paste0("r-", r_, pat.tmp)
+pattern <- pat.tmp 
 
-
-sampled.path <- "./data/gen-1_5200-edges/"
 sampled.names <- list.files(path = sampled.path, pattern = "*.RData")
 
 names <- sampled.names %>%
@@ -52,7 +80,7 @@ t <- Sys.time()
   brain_case@history <- brain_case@initial
   
   brain_case <- partition_culture(brain_case = brain_case,
-                                  final.age = 102)
+                                  final.age = 4)
   
   
   reports_netviz(brain_case)

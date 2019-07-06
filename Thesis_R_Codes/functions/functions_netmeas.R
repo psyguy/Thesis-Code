@@ -30,6 +30,7 @@ netmeas_efficiency <- function(m){
 # calculating S, C, and E, and returning a df together with model  --------
 
 netmeas_coefs <- function(initial = NULL,
+                          for.wb = FALSE,
                           now = NULL,
                           parameters = NULL,
                           name = NULL,
@@ -46,6 +47,9 @@ netmeas_coefs <- function(initial = NULL,
   # modu_0 <- g_0 %>% cluster_fast_greedy() %>% modularity()
   # pl_0 <- g_0 %>% average.path.length(unconnected = TRUE)
   # e_0 <- m_0 %>% netmeas_efficiency()
+
+  # I think it is no more necessary as it will be computd later
+  # if(!for.wb) return(NULL)
   
   if(!is.null(b)) initial <- b@initial -> now
   
@@ -91,8 +95,8 @@ netmeas_coefs <- function(initial = NULL,
   coef.smallworld <- s_
   coef.modularity <- modu_#/modu_0
   coef.avgpathlength <- pl_#/pl_0
-  coef.assortativity <- g_ %>% assortativity.degree()
-  coef.richclub <- brainGraph::rich_club_coeff(g_)$phi
+  coef.assortativity <- g_ %>% assortativity.degree() %>% as.numeric()
+  coef.richclub <- brainGraph::rich_club_coeff(g_)$phi %>% as.numeric()
   rewiring <- t_
   
   coefs <- cbind(
@@ -117,14 +121,13 @@ netmeas_coefs <- function(initial = NULL,
                        "Clustering", "Efficiency",
                        "Small World", "Modularity",
                        "Avg Path Length", "Assortativity",
-                       "Rich Club")
+                       "Rich Club")[1:ncol(coefs)]
   
   coefs[6:ncol(coefs)] <- lapply(coefs[6:ncol(coefs)], function(x) as.numeric(as.character(x)))
   
   if(concise) coefs <- coefs %>% select("Clustering", "Efficiency",
                                         "Small World", "Modularity",
-                                        "Avg Path Length", "Assortativity",
-                                        "Rich Club")
+                                        "Avg Path Length")
   
   coefs %>% return()
 }
