@@ -17,6 +17,7 @@ list.of.packages <- c("tidyverse",
                       "ggplot2",
                       "gplots",
                       "reshape",
+                      "brainGraph",
                       "gridExtra")
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]

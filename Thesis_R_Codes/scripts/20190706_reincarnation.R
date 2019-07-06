@@ -5,7 +5,7 @@ Args <- commandArgs(TRUE)
 rounds <- as.numeric(Args[1])
 
 
-rounds <- 1
+rounds <- 34
 source("./functions/functions_reports.R")
 options(bitmapType='cairo')
 
@@ -38,7 +38,7 @@ current.life <- this.owner.oldest %>% substring(6,7) %>% as.numeric()
 
   
 t <- Sys.time()
-for(sampled in r.this){
+# for(sampled in r.this){
   
   life.prefix <- sprintf("life-%02d", (current.life+1))
   
@@ -54,6 +54,10 @@ for(sampled in r.this){
   brain_case <- partition_culture(brain_case = brain_case,
                                   final.age = 102)
   
+  
+  reports_netviz(brain_case)
+  
+  
   save_vars(list.of.vars = "brain_case",
             prefix = paste(life.prefix,
                            brain_case@parameters$brain.code,
@@ -62,7 +66,7 @@ for(sampled in r.this){
             path = sampled.path
             )
   
-}
+# }
 
 paste("Netviz of round", r_,
       "of", pat.tmp,

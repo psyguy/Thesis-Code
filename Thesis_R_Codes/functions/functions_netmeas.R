@@ -91,6 +91,8 @@ netmeas_coefs <- function(initial = NULL,
   coef.smallworld <- s_
   coef.modularity <- modu_#/modu_0
   coef.avgpathlength <- pl_#/pl_0
+  coef.assortativity <- g_ %>% assortativity.degree()
+  coef.richclub <- brainGraph::rich_club_coeff(g_)$phi
   rewiring <- t_
   
   coefs <- cbind(
@@ -104,7 +106,9 @@ netmeas_coefs <- function(initial = NULL,
     coef.efficiency,
     coef.smallworld,
     coef.modularity,
-    coef.avgpathlength
+    coef.avgpathlength,
+    coef.assortativity,
+    coef.richclub
   ) %>% as.data.frame()
   
   colnames(coefs) <- c("Owner", "Seed",
@@ -112,13 +116,15 @@ netmeas_coefs <- function(initial = NULL,
                        "a Proportion", "Rewiring",
                        "Clustering", "Efficiency",
                        "Small World", "Modularity",
-                       "Avg Path Length")
+                       "Avg Path Length", "Assortativity",
+                       "Rich Club")
   
   coefs[6:ncol(coefs)] <- lapply(coefs[6:ncol(coefs)], function(x) as.numeric(as.character(x)))
   
   if(concise) coefs <- coefs %>% select("Clustering", "Efficiency",
                                         "Small World", "Modularity",
-                                        "Avg Path Length")
+                                        "Avg Path Length", "Assortativity",
+                                        "Rich Club")
   
   coefs %>% return()
 }

@@ -7,7 +7,7 @@ source("./functions/functions_partition.R")
 
 
 reports_netviz <- function(brain_case,
-                           snapshots = c(1, 25000, 50000, 75000, 100000),
+                           snapshots = c(50000, 100000),
                            width.column.report = 2240,
                            colors = list(
                              bg = "white",
@@ -17,11 +17,19 @@ reports_netviz <- function(brain_case,
                              whole = "azure4"
                            )){
   
-  for(rew in snapshots){
+  
+  for(rew.base in snapshots){
+    
+    rew <- rew.base + brain_case@age$rewires - 100001
+    
     paste("Working on", brain_case@name, "at rewiring", rew) %>% print()
     m <- brain_case@history$mat.connectivity[[rew]]
     g <- m %>% graph_from_adjacency_matrix(mode="undirected")
     
+    
+    # rewrew <- ifelse(brain_case@age$rewires>100001,
+    #                  rew + 100000,
+    #                  rew)
     title <- brain_case@name %>% paste("after", rew, "rewirings")
     
     V(g)$partition <- c(rep("minority", 50),
