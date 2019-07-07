@@ -1,0 +1,331 @@
+time: 1800
+nodes: 12
+procs: 108
+account string: lp_pdl
+queue: q1h
+========================================================================
+[1] "Celine Thys"
+[1] "Lars Renard"
+[1] "Mathieu Segers"
+[1] "Julien Declercq"
+[1] "Ines Verheyen"
+[1] "Victor Willems"
+[1] "Sam Evrard"
+[1] "Anna Dupont"
+[1] "Seppe Timmermans"
+[1] "Ryan Lenaerts"
+[1] "Mohamed Goossens"
+[1] "Kaat Thomas"
+[1] "Marthe Desmet"
+[1] "Margot Simons"
+[1] "Thibault Aerts"
+[1] "Romain Thys"
+[1][1] "Audrey Claeys"
+ "Silke Pieters"
+[1] "Clement Vandenberghe"
+[1] "Vincent De Meyer"
+[1] "Audrey Cools"
+[1] "Gilles Aerts"
+[1] "Mathias Francois"
+[1] "Jessica Verlinden"
+[1] "Jana Lambrechts"
+[1] "Julien Thomas"
+[1] "Noah Wuyts"
+[1] "Elise Gerard"
+[1] "Celia Smets"
+[1] "Jordan Vermeersch"
+[1] "Jana Wouters"
+[1] "Elise De Cock"
+[1] "Logan Gerard"
+[1] "Estelle Michel"
+[1] "Axel Mertens"
+[1] "Anna Martens"
+[1] "Sander Dumont"
+[1] "Hannah Goossens"
+[1] "Nina Smets"
+[1] "Alexander Hendrickx"
+[1] "Victoria Lambrechts"
+[1] "Kaat Lejeune"
+[1] "Guillaume Mertens"
+[1] "Amelie Verbeke"
+[1] "Juliette Bauwens"
+[1] "Audrey Bogaerts"
+[1] "Nina Claes"
+[1] "Daan Aerts"
+[1] "Daan Pauwels"
+[1] "Guillaume Noel"
+[1] "Clara Fontaine"
+[1] "Maxime Simon"
+[1] "Arne Simon"
+[1] "Stef Fontaine"
+[1] "Eline Smet"
+[1] "Emilie Bauwens"
+[1] "Manon Stevens"
+[1] "Melanie Aerts"
+[1] "Alice Renard"
+[1] "David De Ridder"
+[1] "Luca Goossens"
+[1] "Loic Lambert"
+[1] "Amandine Cornelis"
+[1] "Jarne Pauwels"
+[1] "Sofie Verstraete"
+[1] "Milan Verlinden"
+[1] "Eline De Smet"
+[1][1] "Ines Lemaire"
+ "Stef Aerts"
+[1] "Alexander Janssens"
+[1] "Ines Van Damme"
+[1] "Thibault De Vos"
+[1] "Sarah Van De Velde"
+[1] "Logan Wauters"
+[1] "Marthe Maes"
+[1] "Corentin Michiels"
+[1] "Lies De Backer"
+[1] "Anke Goossens"
+[1] "Alexia Christiaens"
+[1] "Eline Desmet"
+[1] "Hugo Noel"
+[1] "Sam Verheyen"
+[1] "Aline Laurent"
+[1] "Alexandre Van Dyck"
+[1] "Jarne Goossens"
+[1] "William De Meyer"
+[1] "Maxim De Ridder"
+[1] "Dorian Gerard"
+[1] "Anais Verlinden"
+[1] "Morgane Leclercq"
+[1] "Martin Devos"
+[1] "David Cornelis"
+[1] "Alexia Cornelis"
+[1] "Margaux De Smet"
+[1] "Mohamed Dubois"
+[1] "Emma Verstraete"
+[1] "Chiara Bosmans"
+[1] "Noah Mathieu"
+[1] "Arthur Lejeune"
+[1] "Marie Michel"
+[1] "Lisa Verbeke"
+[1] "Imane Verhoeven"
+[1] "Jordy Claes"
+[1] "Lucas Dumont"
+[1] "Lea Vandenberghe"
+[1] "Noemie De Meyer"
+[1] "Thibault Janssens"
+[1] "Celine Segers"
+[1] "Valentine Jacobs"
+[1] "Amber Dupont"
+[1] "Lennert Mathieu"
+[1] "Jolien Bertrand"
+[1] "Lars Bogaert"
+[1] "Jordy Laurent"
+[1] "Milan Vermeersch"
+[1] "Loic Vermeiren"
+[1] "Ward Jacobs"
+[1] "Celine Simon"
+[1] "Lara Smets"
+[1] "Lea De Pauw"
+[1] "Jordy Geerts"
+[1] "Nicolas Segers"
+[1] "Olivier Verheyen"
+[1] "Kelly Wuyts"
+[1] "Theo Bogaerts"
+[1] "Jessica Fontaine"
+[1] "Victoria Jansen"
+[1] "Milan Lambrechts"
+[1] "Valentin Deprez"
+[1] "Tristan Charlier"
+[1] "Daan Dubois"
+[1] "Wout Lauwers"
+[1] "Seppe Jansen"
+[1] "Oceane Bauwens"
+[1] "David Janssen"
+[1] "Clement Vermeiren"
+[1] "Jana Dubois"
+[1] "Stijn Leclercq"
+[1] "Alexandre Laurent"
+[1] "Oceane Pauwels"
+[1] "Arno Evrard"
+[1] "Anais Van Damme"
+[1] "Yana Van Damme"
+[1] "Emilie Petit"
+[1] "Niels De Cock"
+[1] "Anouk De Pauw"
+[1] "Pauline Lambrechts"
+[1] "Hanne Peeters"
+[1] "Axelle Pieters"
+[1] "Robin De Backer"
+[1] "Maxim Declercq"
+[1] "Ine Verheyen"
+[1] "Luca Lemaire"
+[1] "Celine De Smet"
+[1] "Jordan Van Dyck"
+[1] "Victoria Denis"
+[1] "Jordan De Pauw"
+[1] "Lauren Mathieu"
+[1] "Samuel Devos"
+[1] "Nina Cools"
+[1] "Eva Coppens"
+[1] "Tim Maes"
+[1] "Tristan Janssens"
+[1] "Lars Lambrechts"
+[1] "Eva Stevens"
+[1] "Arthur De Pauw"
+[1] "Emma Bauwens"
+[1] "Noah Verstraeten"
+[1] "Julie Verstraeten"
+[1] "Sebastien Smet"
+[1] "Hannah Bauwens"
+[1] "Lauren Evrard"
+[1] "Ruben Declercq"
+[1] "Dylan Janssen"
+[1] "Margaux Bogaert"
+[1] "Alicia Van De Velde"
+[1] "Victor Beckers"
+[1] "Rania Bosmans"
+[1] "Fanny Dubois"
+[1] "Tim Laurent"
+[1] "Fanny Cools"
+[1] "Gilles Deprez"
+[1] "Lore Van Den Broeck"
+[1] "Jade Goossens"
+[1] "Sara Vermeersch"
+[1] "Jordan Lemaire"
+[1] "Tom Vermeulen"
+[1] "Kevin Jansen"
+[1] "Nina Petit"
+[1] "Camille Van De Velde"
+[1] "Jade Willems"
+[1] "Jordy Smet"
+[1] "Sara De Smedt"
+[1] "Anouk Verschueren"
+[1] "Loic Van De Velde"
+[1] "Ruben Martens"
+[1] "Clement Dumont"
+[1] "Ellen Leclercq"
+[1] "Milan Jacobs"
+========================================================================
+Epilogue args:
+Date: Sun Jun 30 21:48:40 CEST 2019
+Allocated nodes:
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n19
+r23i13n21
+r23i13n21
+r23i13n21
+r23i13n21
+r23i13n21
+r23i13n21
+r23i13n21
+r23i13n21
+r23i13n21
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n22
+r23i13n24
+r23i13n24
+r23i13n24
+r23i13n24
+r23i13n24
+r23i13n24
+r23i13n24
+r23i13n24
+r23i13n24
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n05
+r23i27n05
+r23i27n05
+r23i27n05
+r23i27n05
+r23i27n05
+r23i27n05
+r23i27n05
+r23i27n05
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n07
+r23i27n07
+r23i27n07
+r23i27n07
+r23i27n07
+r23i27n07
+r23i27n07
+r23i27n07
+r23i27n07
+r23i27n08
+r23i27n08
+r23i27n08
+r23i27n08
+r23i27n08
+r23i27n08
+r23i27n08
+r23i27n08
+r23i27n08
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r22i13n01
+r22i13n01
+r22i13n01
+r22i13n01
+r22i13n01
+r22i13n01
+r22i13n01
+r22i13n01
+r22i13n01
+Job ID: 50087867.tier2-p-moab-2.tier2.hpc.kuleuven.be
+User ID: vsc32736
+Group ID: vsc32736
+Job Name: June30_profiles_onlycoefs_2145
+Session ID: 23049
+Resource List: nodes=12:ppn=9,walltime=00:30:00,pmem=20gb,neednodes=12:ppn=9
+Resources Used: cput=00:37:33,vmem=71392836kb,walltime=00:00:57,mem=10070316kb,energy_used=0
+Queue Name: q1h
+Account String: lp_pdl
+-------------------------------------------------------------------------
+time: 57
+nodes: 12
+procs: 108
+account: lp_pdl
