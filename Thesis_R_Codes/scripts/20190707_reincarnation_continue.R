@@ -11,57 +11,42 @@ source("./functions/functions_reports.R")
 ## read the HPC instructions here:
 ## https://github.com/psyguy/Emotion-Dynamics-1/blob/master/ED%201%20-%20Codes/3.%20mirt-Model-Comp/correct_HPC-ready_May22/HPC%20readme.txt
 
-
-alphabeta <- c(1, 5, 0,
-               0, 5, 1,
-               0, 6, 0) %>% matrix(nrow = 3, byrow = TRUE) %>%
-  as.data.frame()
-colnames(alphabeta) <- c("p_low", "p_medium", "p_high")
-
-l.alpha <- nrow(alphabeta)
-nrounds <- 10
-row_eps <-
-  c(1:l.alpha) %>% rep(times = l.alpha) %>% rep(times = nrounds)
-row_a <-
-  c(1:l.alpha) %>% rep(each = l.alpha) %>% rep(times = nrounds)
-r_ <- c(1:nrounds) %>% rep(each = l.alpha * l.alpha)
-index_ <- 1:length(r_)
-
-## to make the index file of the remaining rows
-## (after adding (2,2) & (9,9)) uncomment the # %>%  ...
-r_a_b <-
-  data.frame(row_eps, row_a, r_, index_) # %>% filter(row_a>6|row_eps>6) %>% filter(round==1)
-
-# r_a_b <- r_a_b %>% filter(row_eps==3 | row_a==3)
-
-# making and saving the brain ---------------------------------------------
-
 sampled.path <- "./data/5200-edges/"
-age.already <- 3
-reincarnation.max <- age.already + 4
 
-if(index==7 | index==24 | index==25 | index==51){
-  brain_case <- partition_culture(
-    round = r_a_b$r_[index],
-    row_eps = r_a_b$row_eps[index],
-    row_a = r_a_b$row_a[index],
-    final.age = 100
-  )
-  save_vars(
-    list.of.vars = "brain_case",
-    prefix = paste(
-      "life-01",
-      brain_case@parameters$brain.code,
-      brain_case@name,
-      sep = "_"
-    ),
-    path = sampled.path
-  )
-  
-  age.already <- 1
-  
-}
+## used locally to manually make the following vector
+# sampled.names <-
+#   list.files(path = sampled.path, pattern = "*life-01")
+# 
+# names <- sampled.names %>%
+#   my_gsub(".*-5.2k_") %>%
+#   my_gsub("_.*")
 
+names <- c("Sam Evrard", "Jordan Vermeersch",
+           "Dorian Gerard", "Daan Pauwels",
+           "Arthur Lejeune", "Sam Verheyen",
+           "Alexandre Laurent", "Maxim Declercq",
+           "Loic Van De Velde", "Lauren Mathieu",
+           "Ines Verheyen", "Jana Wouters",
+           "Celine Thys", "Thibault Janssens",
+           "Lea Vandenberghe", "Jordan De Pauw",
+           "Emilie Petit", "Samuel Devos",
+           "Anna Dupont", "Elise De Cock",
+           "William De Meyer", "Maxime Simon",
+           "Romain Thys", "Alexandre Van Dyck",
+           "Oceane Bauwens", "Yana Van Damme",
+           "Kevin Jansen", "Milan Jacobs",
+           "Morgane Leclercq", "Julien Thomas",
+           "Noah Wuyts", "Logan Wauters",
+           "Milan Verlinden", "Loic Vermeiren",
+           "Oceane Pauwels", "Ruben Declercq",
+           "Niels De Cock", "Anouk De Pauw",
+           "David Cornelis", "Martin Devos",
+           "Ines Lemaire", "Celine Simon",
+           "Seppe Jansen", "Ine Verheyen",
+           "Margaux Bogaert", "Hannah Bauwens")
+
+
+name <- names[index]
 t0 <- Sys.time()
 for (reincarnation in (age.already+1):reincarnation.max) {
   t1 <- Sys.time()
@@ -79,7 +64,7 @@ for (reincarnation in (age.already+1):reincarnation.max) {
   #   sort()
   
   this.owner.oldest <-
-    sampled.names[grepl(brain_case@name, sampled.names)] %>%
+    sampled.names[grepl(name, sampled.names)] %>%
     sort() %>%
     tail(1)
   
