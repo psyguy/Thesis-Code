@@ -1,0 +1,15 @@
+---
+title: "Untitled"
+output:
+  pdf_document: 
+    keep_tex: yes
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Consciousness is a highly ambiguous concept which, to many, is one of the most mysterious phenomena in the world and is 'beyond the realm of human understanding.' Consciousness, as an aspect of the human mind, constitutes our inner, mental lives with the most private subjective experiences of ourselves and the world. Theories of consciousness have always been subject to heated debates. These disputes are not always about the explanans (e.g. 'what consciousness is'); in many cases, they stem from the conceptual inexactness in the definitions of the explananda. (Right?) 
+This chapter starts with a philosophical taxonomy to disentangle the conceptual complexities around the terms "conscious" and "consciousness." Then Van Gulick's (2007) classification of problems that any account of consciousness needs to address is reviewed. The chapter then introduces machine consciousness by giving a short history of the matter and an outline of the research in the field. Later the relevance of machine consciousness to the philosophical study of consciousness is discussed.
