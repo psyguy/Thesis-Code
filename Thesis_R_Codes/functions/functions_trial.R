@@ -89,8 +89,8 @@ trial_grow <- function(parameters, # = NULL,
     )
     
     brain_growing@initial$coefficients <-
-      brain_growing@now$coefficients <- 
-        netmeas_coefs(b = brain_growing, t_ = 1, name = name)
+      brain_growing@now$coefficients <- NULL
+        # netmeas_coefs(b = brain_growing, t_ = 1, name = name)
     
   }
   

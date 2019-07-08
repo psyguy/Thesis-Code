@@ -37,33 +37,26 @@ r_a_b <-
 # making and saving the brain ---------------------------------------------
 
 sampled.path <- "./data/5200-edges/"
-age.already <- 3
-reincarnation.max <- age.already + 4
 
-if(index==7 | index==24 | index==25 | index==51){
-  brain_case <- partition_culture(
-    round = r_a_b$r_[index],
-    row_eps = r_a_b$row_eps[index],
-    row_a = r_a_b$row_a[index],
-    final.age = 100
-  )
-  save_vars(
-    list.of.vars = "brain_case",
-    prefix = paste(
-      "life-01",
-      brain_case@parameters$brain.code,
-      brain_case@name,
-      sep = "_"
-    ),
-    path = sampled.path
-  )
-  
-  age.already <- 1
-  
-}
+brain_case <- partition_culture(
+  round = r_a_b$r_[index],
+  row_eps = r_a_b$row_eps[index],
+  row_a = r_a_b$row_a[index],
+  final.age = 100
+)
+save_vars(
+  list.of.vars = "brain_case",
+  prefix = paste(
+    "life-01",
+    brain_case@parameters$brain.code,
+    brain_case@name,
+    sep = "_"
+  ),
+  path = sampled.path
+)
 
 t0 <- Sys.time()
-for (reincarnation in 1:3) {
+for (reincarnation in 2:4) {
   t1 <- Sys.time()
   
   pattern <- "_g-0.3k-5.2k"
@@ -106,13 +99,13 @@ for (reincarnation in 1:3) {
   
   Sys.time() - t1
   
-  # tryCatch({
-  #   reports_netviz(brain_case)
-  # }, error = function(e) {
-  #   print(paste("Error plotting", this.owner.oldest))
-  # })
-  # 
-  # Sys.time() - t1
+# tryCatch({
+#   reports_netviz(brain_case)
+# }, error = function(e) {
+#   print(paste("Error plotting", this.owner.oldest))
+# })
+# 
+# Sys.time() - t1
   
   
   save_vars(
