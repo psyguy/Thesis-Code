@@ -62,7 +62,7 @@ if(index==7 | index==24 | index==25 | index==51){
 }
 
 t0 <- Sys.time()
-for (reincarnation in (age.already+1):10) {
+for (reincarnation in 1:3) {
   t1 <- Sys.time()
   
   pattern <- "_g-0.3k-5.2k"
