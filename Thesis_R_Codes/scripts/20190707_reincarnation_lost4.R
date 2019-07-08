@@ -99,13 +99,13 @@ for (reincarnation in 2:4) {
   
   Sys.time() - t1
   
-  tryCatch({
-    reports_netviz(brain_case)
-  }, error = function(e) {
-    print(paste("Error plotting", this.owner.oldest))
-  })
-  
-  Sys.time() - t1
+# tryCatch({
+#   reports_netviz(brain_case)
+# }, error = function(e) {
+#   print(paste("Error plotting", this.owner.oldest))
+# })
+# 
+# Sys.time() - t1
   
   
   save_vars(
