@@ -48,7 +48,11 @@ names <- c("Sam Evrard", "Jordan Vermeersch",
 
 name <- names[index]
 t0 <- Sys.time()
+<<<<<<< HEAD
 for (reincarnation in (age.already+1):reincarnation.max) {
+=======
+for (reincarnation in 1:4) {
+>>>>>>> d93fbf9b9d8d0ec45564a75d09c23bb0a7dec628
   t1 <- Sys.time()
   
   pattern <- "_g-0.3k-5.2k"
