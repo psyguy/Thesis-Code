@@ -28,19 +28,7 @@ for(sampled in r.this){
 
 snp <- snapshots_all_25e3
 
-coefs.names <- colnames(snp)
-
-
-
-partition.list <- c("minority", "majority",
-                    "interpartition", "whole")
-
-
-# noralizing degree in partitions
-denom <- c(300, 50, 250)
-denom <- (denom*(denom-1)/2) %>% c(50*250)
-coefs.wb.b$Degree <- coefs.wb.b$Degree / rep(denom, nrow(coefs.wb.b)/4)
-
+coefs.names <- colnames(snp)[9:15]
 
 color.bg <- "white"
 color.mino <- "deepskyblue3" #"blue2"
@@ -48,18 +36,21 @@ color.majo <- "orangered" #"brown3"
 color.inter <- "olivedrab2" #"green4"
 color.whole <- "azure4"
 
-max.cl <- coefs.wb.b$Clustering %>% max()
-max.sw <- coefs.wb.b$`Small World` %>% max()
-max.mo <- coefs.wb.b$Modularity %>% max()
-max.de <- coefs.wb.b$Degree %>% max()
-max.pl <- coefs.wb.b$`Avg Path Length` %>% max()
-max.ef <- coefs.wb.b$Efficiency %>% max()
+max.cl <- snp$Clustering %>% max()
+max.sw <- snp$Small.World %>% max()
+max.mo <- snp$Modularity %>% max()
+max.as <- snp$Assortativity %>% max()
+min.as <- snp$Assortativity %>% min()
+max.rc <- snp$Rich.Club %>% max()
+# max.de <- snp$Degree %>% max()
+max.pl <- snp$Avg.Path.Length %>% max()
+max.ef <- snp$Efficiency %>% max()
 
-name <- "Logan Wauters"#title# <- coefs.wb.b$Owner %>% as.character() %>% unique()
+name <- "Logan Wauters"#title# <- snp$Owner %>% as.character() %>% unique()
 t3 <- Sys.time()
 for(name in names){
   print(name)
-  coefs.this.round <- coefs.wb.b %>% filter(Owner == name)
+  coefs.this.round <- snp %>% filter(Owner == name)
   owner.name <- coefs.this.round$Owner[1] %>% as.character()
   title <- paste0("Evolution of coefficients for ",
                   name,
@@ -79,7 +70,7 @@ for(name in names){
   
   p2 <- ggplot(data = coefs.this.round,
                aes(x = Rewiring,
-                   y = `Small World`,
+                   y = Small.World,
                    colour = Partition)) +
     geom_line(size = .75, alpha = 0.7) +
     scale_colour_manual(values = c(color.inter, color.majo,
@@ -97,16 +88,16 @@ for(name in names){
   
   p4 <- ggplot(data = coefs.this.round,
                aes(x = Rewiring,
-                   y = Degree,
+                   y = Assortativity,
                    colour = Partition)) +
     geom_line(size = .75, alpha = 0.7) + 
     scale_colour_manual(values = c(color.inter, color.majo,
                                    color.mino, color.whole)) +
-    ggplot2::ylim(0,max.de)
+    ggplot2::ylim(min.as,max.as)
   
   p5 <- ggplot(data = coefs.this.round,
                aes(x = Rewiring,
-                   y = `Avg Path Length`,
+                   y = Avg.Path.Length,
                    colour = Partition)) +
     geom_line(size = .75, alpha = 0.7) + 
     scale_colour_manual(values = c(color.inter, color.majo,
@@ -115,7 +106,7 @@ for(name in names){
   
   p6 <- ggplot(data = coefs.this.round,
                aes(x = Rewiring,
-                   y = Efficiency,
+                   y = Rich.Club,
                    colour = Partition)) +
     geom_line(size = .75, alpha = 0.7) + 
     scale_colour_manual(values = c(color.inter, color.majo,

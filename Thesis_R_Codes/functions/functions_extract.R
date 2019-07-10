@@ -68,6 +68,7 @@ extract_coefs <- function(m,
   Assortativity <- g_ %>% assortativity.degree() %>% as.numeric()
   `Rich Club` <- brainGraph::rich_club_coeff(g_)$phi %>% as.numeric()
   `Avg Path Length` <- g_ %>% average.path.length(unconnected = TRUE)
+  `Edge Density` <- m %>% sum() %>% sum()
   
   coefs <- data.frame(Clustering, 
                       `Small World`,
@@ -75,6 +76,7 @@ extract_coefs <- function(m,
                       Assortativity,
                       `Rich Club`,
                       `Avg Path Length`,
+                      `Edge Density`,
                       Efficiency
   )
   
@@ -93,11 +95,16 @@ extract_id.n.mats <- function(m_raw, identifiers){
   coefs_partitioned <- m_partitions %>%
     map(extract_coefs)
   
-  identifiers %>%
+  output <- identifiers %>%
     map2(coefs_partitioned, cbind) %>% 
     bind_rows(.id = "Partition") %>% 
-    mutate(adj.mat.vect = map(m_partitions, mat2vec)) %>% 
-    return()
+    mutate(adj.mat.vect = map(m_partitions, mat2vec))
+  
+  # normalizing the edge densities
+  denom <- c(300, 50, 250)
+  denom <- (denom*(denom-1)/2) %>% c(50*250)
+  output$`Edge Density` <- output$`Edge Density` / rep(denom, nrow(output)/4)
+  output %>% return()
 }
 
 
