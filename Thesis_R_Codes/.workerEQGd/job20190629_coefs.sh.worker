@@ -1,0 +1,480 @@
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 1
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 2
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 3
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 4
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 5
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 6
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 7
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 8
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 9
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 10
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 11
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 12
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 13
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 14
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 15
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 16
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 17
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 18
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 19
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 20
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 21
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 22
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 23
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 24
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 25
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 26
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 27
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 28
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 29
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 30
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 31
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 32
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 33
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 34
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 35
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 36
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 37
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 38
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 39
+#####--END
+export OPENBLAS_NUM_THREADS=1
+export GOTO_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+ 
+ 
+cd $PBS_O_WORKDIR
+ 
+ 
+module load R/3.5.0-iomkl-2018a-X11-20180131
+ 
+./scripts/20190629_hpc_readcoefs.R 40
+#####--END

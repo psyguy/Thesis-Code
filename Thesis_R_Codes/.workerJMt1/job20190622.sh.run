@@ -1,0 +1,3 @@
+#!/bin/bash -l
+
+/usr/bin/qsub -A 'default_project[B' worker.pbs
