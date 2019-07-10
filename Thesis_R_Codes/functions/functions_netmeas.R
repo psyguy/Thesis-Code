@@ -49,7 +49,8 @@ netmeas_coefs <- function(initial = NULL,
   # e_0 <- m_0 %>% netmeas_efficiency()
 
   # I think it is no more necessary as it will be computd later
-  if(!for.wb) return(NULL)
+  # if(!for.wb) 
+    return(NULL)
   
   if(!is.null(b)) initial <- b@initial -> now
   

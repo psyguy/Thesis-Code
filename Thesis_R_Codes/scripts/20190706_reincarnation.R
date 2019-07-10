@@ -3,7 +3,7 @@
 Args <- commandArgs(TRUE)
 index <- as.numeric(Args[1])
 
-# index <- 7
+# index <- 24
 # first making a brain, from 0626_hpc.R -----------------------------------
 
 source("./functions/functions_reports.R")
@@ -42,7 +42,7 @@ brain_case <- partition_culture(
   round = r_a_b$r_[index],
   row_eps = r_a_b$row_eps[index],
   row_a = r_a_b$row_a[index],
-  final.age = 100
+  final.age = 10
 )
 save_vars(
   list.of.vars = "brain_case",

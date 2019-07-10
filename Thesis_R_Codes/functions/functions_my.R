@@ -38,6 +38,25 @@ mini_logistic <- function(x, a = 1.7) {
 my_gsub <- function(str, pat, sub = "") gsub(pat, sub, str)
 
 
+
+# vectorizing symmetrical adj. matrix and vice versa ----------------------
+
+
+vec2mat <- function(v_){
+  l_ <- length(v_)
+  n_ <- (1 + sqrt(1 + 8*l_))/2
+  m_ <- matrix(0, n_, n_)
+  m_[lower.tri(m_, diag = FALSE)] <- v_
+  (m_ + t(m_)) %>% return()
+}
+
+
+mat2vec <- function(m_){
+  l_ <- nrow(m_)
+  m_[m_ %>% lower.tri(diag = FALSE)] %>%
+    as.vector() %>%
+    return()
+}
 # saves a backup of variables ---------------------------------------------
 
 save_vars <- function(list.of.vars = NULL,
