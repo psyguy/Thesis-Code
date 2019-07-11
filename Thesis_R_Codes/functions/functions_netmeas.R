@@ -50,7 +50,11 @@ netmeas_coefs <- function(initial = NULL,
 
   # I think it is no more necessary as it will be computd later
   # if(!for.wb) 
+<<<<<<< HEAD
     return(NULL)
+=======
+  return(NULL)
+>>>>>>> 0dca90e9c9d517bca73db1612a9a85175aea626a
   
   if(!is.null(b)) initial <- b@initial -> now
   
