@@ -149,16 +149,20 @@ V(g)$partition <- c(rep("minority", 50),
                     rep("majority", 250))
 
 # select edges and set color 
-E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "minority"]]$color <- color.mino
 E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "majority"]]$color <- color.inter
 E(g)[V(g)[partition == "majority"] %--% V(g)[partition == "majority"]]$color <- color.majo
+E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "minority"]]$color <- color.mino
 # plot
 set.seed(1)
 paste0(title, "_network", ".png") %>%
   png(width = width.column.report*2, height = width.column.report*2, res = 200)
+#Set the margin size (huge margins)
+par(mar=c(.1,.1,.1,.1))
 g %>% plot(vertex.size = 0,
            # vertex.color = c("skyblue", "red")[1 + (V(g)$partition == "majority")],
+           add=TRUE,
            vertex.label = NA,
+           vertex.color = "black",
            edge.width = 1,
            # rescale = F,
            # xlim = c(-5,5),
@@ -170,6 +174,8 @@ g %>% plot(vertex.size = 0,
 )
 dev.off()
 
+
+s <- m %>% seriate()
 m[1:50,1:50] <- m[1:50,1:50]*3
 m[1:50,51:300] <- m[1:50,51:300]*2
 m[51:300,1:50] <- m[51:300,1:50]*2
@@ -180,7 +186,9 @@ col.pimage <- c(color.bg, color.majo,
 
 
 paste0(title, "_unserialized", ".png") %>%
-  png(width = width.column.report, height = width.column.report, res = 400)
+  pdf(width = width.column.report,
+      height = width.column.report)#,
+      res = 400)
 pimage(m,
        col = col.pimage,
        key = FALSE#,
@@ -195,8 +203,9 @@ dev.off()
 paste0(title, "_serialized", ".png") %>%
   png(width = width.column.report, height = width.column.report, res = 400)
 pimage(m,
-       seriate(m),
+       s,
        col = col.pimage,
+
        key = FALSE#,
        # main = paste(brain_case@name,
        #              "at",

@@ -131,3 +131,109 @@ extract_brains <- function(b_loc,
   output %>% return()
 }
 
+
+extract_plotnet <- function(m,
+                            title = "Network",
+                            colors = list(
+                              bg = "white",
+                              mino = "deepskyblue3", #"blue2"
+                              majo = "orangered", #"brown3"
+                              inter = "olivedrab2", #"green4"
+                              whole = "azure4"),
+                            save = TRUE,
+                            path.fig = "figures"
+                            ){
+  if(is.vector(m)) m <- m %>% vec2mat()
+  pf <- path.fig
+  if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
+  
+  g <- m %>% graph_from_adjacency_matrix(mode="undirected")
+  
+  V(g)$partition <- c(rep("minority", 50),
+                      rep("majority", 250))
+  
+  
+  #Set the margin size (small margins)
+  par(mar = rep(0.05, 4))
+  vertex.color <- c("skyblue", "salmon")[1 + (V(g)$partition == "majority")]
+  vertex.size <- 2
+  ## select edges and set color and plot one by one
+  # First remove them, then add majority, plot majority 
+  E(g)$color <- NA
+  E(g)[V(g)[partition == "majority"] %--% V(g)[partition == "majority"]]$color <- colors$majo
+  set.seed(1)
+  g %>% plot(vertex.size = vertex.size,
+             vertex.color = vertex.color,
+             add=FALSE,
+             vertex.label = NA,
+             edge.width = 1,
+             edge.curved= 0.5)
+  
+  E(g)$color <- NA
+  E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "majority"]]$color <- colors$inter
+  set.seed(1)
+  g %>% plot(vertex.size = vertex.size,
+             vertex.color = vertex.color,
+             add=TRUE,
+             vertex.label = NA,
+             edge.width = 1,
+             edge.curved= 0.5)
+  
+  
+  E(g)$color <- NA
+  E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "minority"]]$color <- colors$mino
+  set.seed(1)
+  g %>% plot(vertex.size = vertex.size,
+             vertex.color = vertex.color,
+             add=TRUE,
+             vertex.label = NA,
+             edge.width = 1,
+             edge.curved= 0.5)
+  
+  if(save) graph2pdf(height = 20, width = 20,
+                     file = paste0(path.fig, title, "_network"))
+}
+
+
+extract_plotcon <- function(m,
+                            title = "Connectivity",
+                            colors = list(
+                              bg = "white",
+                              mino = "deepskyblue3", #"blue2"
+                              majo = "orangered", #"brown3"
+                              inter = "olivedrab2", #"green4"
+                              whole = "azure4"),
+                            save = TRUE,
+                            path.fig = "figures"){
+  if(is.vector(m)) m <- m %>% vec2mat
+  pf <- path.fig
+  if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
+  
+  s <- m %>% seriate()
+  m[1:50,1:50] <- m[1:50,1:50]*3
+  m[1:50,51:300] <- m[1:50,51:300]*2
+  m[51:300,1:50] <- m[51:300,1:50]*2
+  
+  col.pimage <- c(colors$bg, colors$majo,
+                  colors$inter, colors$mino)
+
+  pimage(m,
+         col = col.pimage,
+         key = FALSE)
+  
+  if(save) graph2pdf(height = 20, width = 20,
+                     file = paste0(path.fig, title, "_unserialized"))
+  
+  pimage(m,
+         s,
+         col = col.pimage,
+         key = FALSE)
+  
+  if(save) graph2pdf(height = 20, width = 20,
+                     file = paste0(path.fig, title, "_serialized"))
+}
+
+
+
+
+
