@@ -30,7 +30,9 @@ this.brain_location <- brain_locations#[1]
 Sys.time()
 system.time(yy <- this.brain_location %>%
               ldply(extract_brains,
-                    snapshots = seq(25e3, 100e3, 25e3)))
+                    snapshots =  100e3#seq(25e3, 100e3, 25e3)
+                    )
+            )
 
 
 
