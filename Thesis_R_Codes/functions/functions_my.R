@@ -13,6 +13,8 @@ list.of.packages <- c("tidyverse",
 		                  "png",
                       "seriation",
                       "ggpubr",
+                      "magick",
+                      "export",
                       "igraph",
                       "ggplot2",
                       "gplots",
@@ -43,6 +45,7 @@ my_gsub <- function(str, pat, sub = "") gsub(pat, sub, str)
 
 
 vec2mat <- function(v_){
+  if(is.list(v_)) v_ <- v_[[1]]
   l_ <- length(v_)
   n_ <- (1 + sqrt(1 + 8*l_))/2
   m_ <- matrix(0, n_, n_)

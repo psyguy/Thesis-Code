@@ -25,12 +25,12 @@ r.this <- r.this[!grepl("coefs.wb.", r.this)]
 brain_locations <- path.to.brains %>% 
   paste(r.this, sep = "/")
 
-this.brain_location <- brain_locations#[1]
+this.brain_location <- brain_locations[1]
 
 Sys.time()
-system.time(yy <- this.brain_location %>%
+system.time(snp <- this.brain_location %>%
               ldply(extract_brains,
-                    snapshots =  100e3#seq(25e3, 100e3, 25e3)
+                    snapshots =  seq(5e3, 100e3, 5e3)
                     )
             )
 

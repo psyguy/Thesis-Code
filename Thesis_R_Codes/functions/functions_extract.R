@@ -63,20 +63,20 @@ extract_coefs <- function(m,
   
   Clustering <- m %>% my_clustceof()
   Efficiency <- m %>% netmeas_efficiency()
-  `Small World` <- Clustering*Efficiency
+  Small.World <- Clustering*Efficiency
   Modularity <- g_ %>% cluster_fast_greedy() %>% modularity()
   Assortativity <- g_ %>% assortativity.degree() %>% as.numeric()
-  `Rich Club` <- brainGraph::rich_club_coeff(g_)$phi %>% as.numeric()
-  `Avg Path Length` <- g_ %>% average.path.length(unconnected = TRUE)
-  `Edge Density` <- m %>% sum() %>% sum()
+  Rich.Club <- brainGraph::rich_club_coeff(g_)$phi %>% as.numeric()
+  Average.Path.Length <- g_ %>% average.path.length(unconnected = TRUE)
+  Edge.Density <- m %>% sum() %>% sum()
   
   coefs <- data.frame(Clustering, 
-                      `Small World`,
+                      Small.World,
                       Modularity,
                       Assortativity,
-                      `Rich Club`,
-                      `Avg Path Length`,
-                      `Edge Density`,
+                      Rich.Club,
+                      Average.Path.Length,
+                      Edge.Density,
                       Efficiency
   )
   
@@ -103,7 +103,7 @@ extract_id.n.mats <- function(m_raw, identifiers){
   # normalizing the edge densities
   denom <- c(300, 50, 250)
   denom <- (denom*(denom-1)/2) %>% c(50*250)
-  output$`Edge Density` <- output$`Edge Density` / rep(denom, nrow(output)/4)
+  output$Edge.Density <- output$Edge.Density / rep(denom, nrow(output)/4)
   output %>% return()
 }
 
@@ -112,6 +112,7 @@ extract_brains <- function(b_loc,
                            snapshots = c(50e3, 100e3)){
   ## debug
   # b_loc <- this.brain_location
+  # snapshots <- 100e3
   
   library(purrr)
   
@@ -190,7 +191,7 @@ extract_plotnet <- function(m,
              edge.width = 1,
              edge.curved= 0.5)
   
-  if(save) graph2pdf(height = 20, width = 20,
+  if(save) graph2pdf(height = 5, width = 5,
                      file = paste0(path.fig, title, "_network"))
 }
 
@@ -208,6 +209,7 @@ extract_plotcon <- function(m,
   if(is.vector(m)) m <- m %>% vec2mat
   pf <- path.fig
   if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
+  title <- paste0(path.fig, title)
   
   s <- m %>% seriate()
   m[1:50,1:50] <- m[1:50,1:50]*3
@@ -221,7 +223,7 @@ extract_plotcon <- function(m,
          col = col.pimage,
          key = FALSE)
   
-  if(save) graph2pdf(height = 20, width = 20,
+  if(save) graph2pdf(height = 5, width = 5,
                      file = paste0(path.fig, title, "_unserialized"))
   
   pimage(m,
@@ -229,8 +231,24 @@ extract_plotcon <- function(m,
          col = col.pimage,
          key = FALSE)
   
-  if(save) graph2pdf(height = 20, width = 20,
+  if(save) graph2pdf(height = 5, width = 5,
                      file = paste0(path.fig, title, "_serialized"))
+  
+  if(save){
+    
+    rep(title,2) %>%
+      paste0(c("_unserialized.pdf", "_serialized.pdf")) %>% 
+      as.list() %>%
+      lapply(magick::image_read_pdf) %>% 
+      lapply(grid::rasterGrob) %>% 
+      gridExtra::grid.arrange(ncol=2,
+                              padding = unit(1, "point")
+                              ) %>% 
+    graph2pdf(height = 20, width = 20,
+              file = paste0(path.fig, title, "_connectivities"))
+    
+  } 
+  
 }
 
 
