@@ -29,23 +29,23 @@ extract_identifiers <- function(b){
   Seed <- b@parameters$seed #%>% rep(l_)
   Round <- b@parameters$round
   p_d <- b@parameters$params.eps_a
-  `Epsilon Proportion` <- paste0("(",p_d[1],", ",p_d[2],", ",p_d[3],")")
-  `a Proportion` <- paste0("(",p_d[4],", ",p_d[5],", ",p_d[6],")")
+  Epsilon.Proportion <- paste0("(",p_d[1],", ",p_d[2],", ",p_d[3],")")
+  a.Proportion <- paste0("(",p_d[4],", ",p_d[5],", ",p_d[6],")")
   
   vd <- "Homogeneous Society"
-  if(`Epsilon Proportion` == "(0, 5, 1)") vd <- "Hyper-coupled minority"
-  if(`Epsilon Proportion` == "(1, 5, 0)") vd <- "Hypo-coupled minority"
-  if(`a Proportion` == "(0, 5, 1)") vd <- "Hyper-chaotic minority"
-  if(`a Proportion` == "(1, 5, 0)") vd <- "Hypo-chaotic minority"
-  `Verbal Description` <- vd
+  if(Epsilon.Proportion == "(0, 5, 1)") vd <- "Hyper-coupled minority"
+  if(Epsilon.Proportion == "(1, 5, 0)") vd <- "Hypo-coupled minority"
+  if(a.Proportion == "(0, 5, 1)") vd <- "Hyper-chaotic minority"
+  if(a.Proportion == "(1, 5, 0)") vd <- "Hypo-chaotic minority"
+  Verbal.Description <- vd
   
   identifiers <- data.frame(Owner,
                             Seed,
                             Round,
                             Rewiring = 0,
-                            `Verbal Description`,
-                            `Epsilon Proportion`,
-                            `a Proportion`)
+                            Verbal.Description,
+                            Epsilon.Proportion,
+                            a.Proportion)
   identifiers <- lapply(1:4, function(x) identifiers)
   names(identifiers) <- c("whole",
                           "minority",
@@ -118,6 +118,9 @@ extract_brains <- function(b_loc,
   
   load(b_loc)
   age_ <- brain_case@age$rewires - 1
+  
+  brain_case@name %>% paste("being extracted at age", age_) %>% print()
+  
   l.m <- brain_case@history$mat.connectivity
   l.m[1] <- NULL
   l.m.compact <- l.m %>% compact()
@@ -234,20 +237,21 @@ extract_plotcon <- function(m,
   if(save) graph2pdf(height = 5, width = 5,
                      file = paste0(path.fig, title, "_serialized"))
   
-  if(save){
-    
-    rep(title,2) %>%
-      paste0(c("_unserialized.pdf", "_serialized.pdf")) %>% 
-      as.list() %>%
-      lapply(magick::image_read_pdf) %>% 
-      lapply(grid::rasterGrob) %>% 
-      gridExtra::grid.arrange(ncol=2,
-                              padding = unit(1, "point")
-                              ) %>% 
-    graph2pdf(height = 20, width = 20,
-              file = paste0(path.fig, title, "_connectivities"))
-    
-  } 
+  # if(save){
+  #   
+  #   ggg <- rep(title,2) %>%
+  #     paste0(c("_unserialized.pdf", "_serialized.pdf")) %>% 
+  #     as.list() %>%
+  #     lapply(magick::image_read_pdf) %>% 
+  #     lapply(grid::rasterGrob) %>% 
+  #     gridExtra::grid.arrange(ncol=2,
+  #                             padding = unit(1, "point")
+  #                             )# %>% 
+  #   graph2pdf(ggg, 
+  #             height = 20, width = 20,
+  #             file = paste0(path.fig, title, "_connectivities"))
+  #   
+  # } 
   
 }
 

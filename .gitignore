@@ -30,8 +30,9 @@ vignettes/*.pdf
 
 
 # old/draft
-data
+data/
 data/*_graveyard_data/
+*/figures/
 
 data/
 
@@ -43,8 +44,5 @@ figures/*_graveyard_figures/
 .httr-oauth
 
 Thesis_R_Codes/figures/20190629_graveyard_figures/
-<<<<<<< HEAD
+
 .Rproj.user
-=======
-.Rproj.user
->>>>>>> 0dca90e9c9d517bca73db1612a9a85175aea626a
