@@ -4,7 +4,7 @@
 # rounds <- as.numeric(Args[1])
 
 # rm(list = ls())
-# source("./functions/functions_extract.R")
+source("./functions/functions_extract.R")
 
 path.to.snapshots <- "./data/5200-edges-snapshots/"
 
