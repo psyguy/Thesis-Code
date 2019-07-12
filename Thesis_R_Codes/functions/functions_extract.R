@@ -145,6 +145,7 @@ extract_plotnet <- function(m,
                               inter = "olivedrab2", #"green4"
                               whole = "azure4"),
                             save = TRUE,
+                            curve = 0,
                             path.fig = "figures"
                             ){
   if(is.vector(m)) m <- m %>% vec2mat()
@@ -171,7 +172,7 @@ extract_plotnet <- function(m,
              add=FALSE,
              vertex.label = NA,
              edge.width = 1,
-             edge.curved= 0.5)
+             edge.curved= curve)
   
   E(g)$color <- NA
   E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "majority"]]$color <- colors$inter
@@ -181,7 +182,7 @@ extract_plotnet <- function(m,
              add=TRUE,
              vertex.label = NA,
              edge.width = 1,
-             edge.curved= 0.5)
+             edge.curved= curve)
   
   
   E(g)$color <- NA
@@ -192,9 +193,9 @@ extract_plotnet <- function(m,
              add=TRUE,
              vertex.label = NA,
              edge.width = 1,
-             edge.curved= 0.5)
+             edge.curved= curve)
   
-  if(save) graph2pdf(height = 5, width = 5,
+  if(save) graph2pdf(height = 10, width = 10,
                      file = paste0(path.fig, title, "_network"))
 }
 
@@ -212,7 +213,7 @@ extract_plotcon <- function(m,
   if(is.vector(m)) m <- m %>% vec2mat
   pf <- path.fig
   if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
-  title <- paste0(path.fig, title)
+  file.name <- paste0(path.fig, title)
   
   s <- m %>% seriate()
   m[1:50,1:50] <- m[1:50,1:50]*3
@@ -237,25 +238,30 @@ extract_plotcon <- function(m,
   if(save) graph2pdf(height = 5, width = 5,
                      file = paste0(path.fig, title, "_serialized"))
   
-  # if(save){
-  #   
-  #   ggg <- rep(title,2) %>%
-  #     paste0(c("_unserialized.pdf", "_serialized.pdf")) %>% 
-  #     as.list() %>%
-  #     lapply(magick::image_read_pdf) %>% 
-  #     lapply(grid::rasterGrob) %>% 
-  #     gridExtra::grid.arrange(ncol=2,
-  #                             padding = unit(1, "point")
-  #                             )# %>% 
-  #   graph2pdf(ggg, 
-  #             height = 20, width = 20,
-  #             file = paste0(path.fig, title, "_connectivities"))
-  #   
-  # } 
-  
 }
 
 
-
+extract_plotglue <- function(title = "Someone",
+                             path.fig = "figures"){
+  pf <- path.fig
+  if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
+  file.name <- paste0(path.fig, title)
+  
+  panel.upper.l <- file.name %>% paste0("_unserialized.pdf") %>% image_read_pdf()
+  panel.upper.r <- file.name %>% paste0("_serialized.pdf") %>% image_read_pdf()
+  panel.lower <- file.name %>% paste0("_network.pdf") %>% image_read_pdf()
+  
+  whole <- c(panel.upper.l, panel.upper.r) %>% 
+    image_append() %>% 
+    c(panel.lower) %>% 
+    image_append(stack = TRUE)
+  
+  image_write(whole,"a.pdf")
+  
+  graph2pdf(whole,
+            height = 15, width = 10,
+            file = paste0("Profile of", title))
+  
+}
 
 
