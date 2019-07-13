@@ -207,7 +207,7 @@ extract_plotcon <- function(m,
                               mino = "deepskyblue3", #"blue2"
                               majo = "orangered", #"brown3"
                               inter = "olivedrab2", #"green4"
-                              whole = "azure4"),
+                              whole = "dimgray"),
                             save = TRUE,
                             path.fig = "figures"){
   if(is.vector(m)) m <- m %>% vec2mat
@@ -263,5 +263,69 @@ extract_plotglue <- function(title = "Someone",
             file = paste0("Profile of", title))
   
 }
+
+
+extract_plotcoefs.single <- function(chosen.coef,
+                                     name.this.owner,
+                                     snp,
+                                     colors = list(
+                                       bg = "white",
+                                       mino = "deepskyblue3",
+                                       majo = "orangered",
+                                       inter = "olivedrab2",
+                                       whole = "dimgray")){
+  
+  p <- ggplot(data = snp %>% filter(Owner == name.this.owner),
+              aes(x = Rewiring,
+                  y = !!ensym(chosen.coef),
+                  colour = Partition)) +
+    geom_line(size = 1.5, alpha = 0.8) +
+    scale_colour_manual(values = c(colors$inter, colors$majo,
+                                   colors$mino, colors$whole)) +
+    ggplot2::ylim(min(0, min(snp[chosen.coef])),
+                  max(snp[chosen.coef]))
+  p %>% return()
+}
+
+
+extract_plotcoefs.glued <- function(name.this.owner,
+                                    snp,
+                                    path.fig = "figures"){
+  coef.names <- names(snp)[9:16] %>% as.list()
+  list.of.plots <- coef.names %>% 
+    llply(extract_plotcoefs.single,
+          name.this.owner = name.this.owner, snp = snp)
+  
+  figure <- ggarrange(plotlist = list.of.plots,
+                      ncol = 2, nrow = 4,
+                      common.legend = TRUE,
+                      legend = "bottom")
+  
+  title <- paste0("Network statistics of ",
+                  name.this.owner,
+                  " (", tolower(snp$Verbal.Description[1]), ")")
+  
+  pf <- path.fig
+  if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
+  file.name <- paste0(path.fig, title)
+  
+  
+  annotate_figure(figure,
+                  top = text_grob(label =  paste0("",
+                                                  "Network statistics of ",
+                                                  name.this.owner,
+                                                  "\n (",
+                                                  tolower(snp$Verbal.Description[1]),
+                                                  ")"),
+                                  size = 25, family = "Times"
+                                  )
+                  ) %>%
+    graph2pdf(height = 15, width = 15,
+              file = file.name
+              )
+  
+}
+
+
 
 
