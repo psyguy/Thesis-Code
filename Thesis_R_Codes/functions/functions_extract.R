@@ -301,9 +301,13 @@ extract_plotcoefs.glued <- function(name.this.owner,
                       common.legend = TRUE,
                       legend = "bottom")
   
+  vd <- snp %>%
+    filter(Owner == name.this.owner) %>%
+    pull(Verbal.Description) %>% 
+    as.character()
   title <- paste0("Network statistics of ",
                   name.this.owner,
-                  " (", tolower(snp$Verbal.Description[1]), ")")
+                  " (", tolower(vd[1]), ")")
   
   pf <- path.fig
   if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
