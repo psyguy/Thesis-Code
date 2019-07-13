@@ -319,7 +319,7 @@ extract_plotcoefs.glued <- function(name.this.owner,
                                                   "Network statistics of ",
                                                   name.this.owner,
                                                   "\n (",
-                                                  tolower(snp$Verbal.Description[1]),
+                                                  tolower(vd[1]),
                                                   ")"),
                                   size = 25, family = "Times"
                                   )

@@ -22,3 +22,18 @@ system.time(all.owners %>%
                   snp = snp)
             )
 
+
+path.to.pdfs <- "./figures/netstats-plots_25k"
+coef.files <- list.files(path = path.to.pdfs, pattern = "*.pdf")
+
+p <- coef.files[grepl("homo", coef.files)] %>% 
+  c(coef.files[grepl("hypo-cha", coef.files)]) %>% 
+  c(coef.files[grepl("hyper-cha", coef.files)]) %>% 
+  c(coef.files[grepl("hypo-cou", coef.files)]) %>% 
+  c(coef.files[grepl("hyper-cou", coef.files)])
+
+
+
+staple_pdf(input_files = paste(path.to.pdfs, p, sep = "/"),
+           output_filepath = "./figures")
+
