@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
-
-Args <- commandArgs(TRUE)
-ind <- as.numeric(Args[1])
+# 
+# Args <- commandArgs(TRUE)
+# ind <- as.numeric(Args[1])
 
 rm(list = ls())
 
@@ -12,7 +12,7 @@ path.to.snapshots <- "./data/5200-edges-snapshots/"
 snp_files <- list.files(path = path.to.snapshots, pattern = "*.RData")
 
 
-snp_files <- snp_files[ind]
+# snp_files <- snp_files[ind]
 
 t0 <- Sys.time()
 for(this.snp in snp_files){
@@ -34,8 +34,8 @@ for(this.snp in snp_files){
     title <- paste0(owner,
                     " (", tolower(vd), ")",
                     " at ", rew, "k rewirings")
-    extract_plotcon(v, title = title)
-    extract_plotnet(v, title = title)
+    extract_plotcon(v, title = title, path.fig = "figures/connectivity-plots_25k")
+    extract_plotnet(v, title = title, path.fig = "figures/connectivity-plots_25k")
   }
   (Sys.time()-t) %>% print()
   
