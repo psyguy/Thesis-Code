@@ -10,7 +10,7 @@ path.to.pdfs <- "./figures/pdfs_1-2/"
 
 con.files <- list.files(path = path.to.pdfs, pattern = "*.pdf")
 
-i <- 1
+i <- 7
 
 this.con.files <- con.files[(3*(i-1)+1):(3*i)]
 
@@ -26,16 +26,36 @@ all.owners <- snp$Owner %>%
   as.character() %>%
   as.list()
 
-l <- paste0(path.to.pdfs, this.con.files) %>% 
+l <- paste0(path.to.pdfs, this.con.files) #%>% 
   as.list() %>% 
   map(~image_read_pdf(.x))
+
+
+whole2 <- image_append(c(image_read_pdf(l[1]),
+                         image_read_pdf(l[3])))
+
+plot(image_read_pdf(l[1]))
+plot(whole2)
+savePlot("whole2.pdf", type = "pdf") 
+
+panel.upr <- image_read_pdf("whole2.pdf")
+final <-  image_append(c(image_append(panel.upr),l[[1]]), stack = TRUE)
+plot(final)
+savePlot("final.pdf", type = "pdf") 
+
+
+
+
 
 whole <- c(l[[3]], l[[2]]) %>% 
     image_append() %>% 
     c(l[[1]]) %>% 
     image_append(stack = TRUE)
 
-graph2pdf()
+plot(whole)
+savePlot(type = "pdf")
+
+graph2pdf(width = 10, height = 5)
 
 library(pdftools)
 pdftools::pdf_combine()

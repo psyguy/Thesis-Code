@@ -35,5 +35,6 @@ p <- coef.files[grepl("homo", coef.files)] %>%
 
 
 staple_pdf(input_files = paste(path.to.pdfs, p, sep = "/"),
-           output_filepath = "./figures")
+           output_filepath = NULL)
 
+?savePlot
