@@ -16,11 +16,30 @@ all.owners <- snp$Owner %>%
   as.character() %>%
   as.list()
 
+all.partitions <- snp$Partition %>% 
+  unique() %>% 
+  sort() %>% 
+  as.character() %>%
+  as.list()
+
+all.vd <- snp$Verbal.Description %>% 
+  unique() %>% 
+  sort() %>% 
+  as.character() %>%
+  as.list()
+
+
 
 system.time(all.owners %>%
               map(extract_plotcoefs.glued,
                   snp = snp)
-            )
+)
+
+system.time(all.partitions %>%
+              map(extract_plotcoefs.glued,
+                  snp = snp)
+)
+
 
 
 path.to.pdfs <- "./figures/netstats-plots_25k"
@@ -38,3 +57,8 @@ staple_pdf(input_files = paste(path.to.pdfs, p, sep = "/"),
            output_filepath = NULL)
 
 ?savePlot
+
+
+extract_plotcoefs.glued(this.Verbal.Description = all.vd[[1]],
+                        this.Partition = all.partitions[[1]], 
+                        snp=snp)

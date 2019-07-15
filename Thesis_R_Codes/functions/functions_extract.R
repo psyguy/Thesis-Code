@@ -266,7 +266,9 @@ extract_plotglue <- function(title = "Someone",
 
 
 extract_plotcoefs.single <- function(chosen.coef,
-                                     name.this.owner,
+                                     name.this.owner = NULL,
+                                     this.Verbal.Description = NULL,
+                                     this.Partition = NULL,
                                      snp,
                                      colors = list(
                                        bg = "white",
@@ -274,39 +276,70 @@ extract_plotcoefs.single <- function(chosen.coef,
                                        majo = "orangered",
                                        inter = "olivedrab2",
                                        whole = "dimgray")){
+  if(!is.null(name.this.owner)){
+    p <- ggplot(data = snp %>% filter(Owner == name.this.owner),
+                aes(x = Rewiring,
+                    y = !!ensym(chosen.coef),
+                    colour = Partition)) +
+      geom_line(size = 1.5, alpha = 0.8) +
+      scale_colour_manual(values = c(colors$inter, colors$majo,
+                                     colors$mino, colors$whole)) +
+      ggplot2::ylim(min(0, min(snp[chosen.coef])),
+                    max(snp[chosen.coef]))
+    p %>% return()
+  }
   
-  p <- ggplot(data = snp %>% filter(Owner == name.this.owner),
+  p <- ggplot(data = snp %>%
+                filter(Verbal.Description == this.Verbal.Description) %>%
+                filter(Partition == this.Partition),
               aes(x = Rewiring,
                   y = !!ensym(chosen.coef),
-                  colour = Partition)) +
-    geom_line(size = 1.5, alpha = 0.8) +
-    scale_colour_manual(values = c(colors$inter, colors$majo,
-                                   colors$mino, colors$whole)) +
+                  colour = Owner)) +
+    geom_line(size = 0.5, alpha = 0.8) +
+    # scale_colour_manual(values = c(colors$inter, colors$majo,
+    #                                colors$mino, colors$whole)) +
+    theme(legend.position = "none")+
     ggplot2::ylim(min(0, min(snp[chosen.coef])),
                   max(snp[chosen.coef]))
   p %>% return()
+  
 }
 
 
-extract_plotcoefs.glued <- function(name.this.owner,
+extract_plotcoefs.glued <- function(name.this.owner = NULL,
+                                    this.Verbal.Description = NULL,
+                                    this.Partition = NULL,
                                     snp,
                                     path.fig = "figures"){
   coef.names <- names(snp)[9:16] %>% as.list()
   list.of.plots <- coef.names %>% 
     llply(extract_plotcoefs.single,
-          name.this.owner = name.this.owner, snp = snp)
+          name.this.owner = name.this.owner,
+          this.Verbal.Description = this.Verbal.Description,
+          this.Partition = this.Partition,
+          snp = snp)
   
   figure <- ggarrange(plotlist = list.of.plots,
                       ncol = 2, nrow = 4,
                       common.legend = TRUE,
-                      legend = "bottom")
+                      legend = ifelse(is.null(name.this.owner),
+                                      "none", "bottom"))
   
-  vd <- snp %>%
-    filter(Owner == name.this.owner) %>%
-    pull(Verbal.Description) %>% 
-    as.character()
+  if(is.null(name.this.owner)){
+    vd <- snp %>%
+      filter(Verbal.Description == this.Verbal.Description) %>%
+      filter(Partition == this.Partition) %>% 
+      as.character()
+  }else{
+    vd <- snp %>%
+      filter(Owner == name.this.owner) %>%
+      pull(Verbal.Description) %>% 
+      as.character()
+  }
+  
   title <- paste0("Network statistics of ",
                   name.this.owner,
+                  " ", this.Partition,
                   " (", tolower(vd[1]), ")")
   
   pf <- path.fig
@@ -318,6 +351,7 @@ extract_plotcoefs.glued <- function(name.this.owner,
                   top = text_grob(label =  paste0("",
                                                   "Network statistics of ",
                                                   name.this.owner,
+                                                  " ", this.Partition,
                                                   "\n (",
                                                   tolower(vd[1]),
                                                   ")"),
@@ -330,6 +364,27 @@ extract_plotcoefs.glued <- function(name.this.owner,
   
 }
 
-
-
-
+# 
+# 
+# extract_plotcoefs.family <- function(chosen.coef,
+#                                      name.this.owner,
+#                                      snp,
+#                                      colors = list(
+#                                        bg = "white",
+#                                        mino = "deepskyblue3",
+#                                        majo = "orangered",
+#                                        inter = "olivedrab2",
+#                                        whole = "dimgray")){
+#   
+#   p <- ggplot(data = snp %>% filter(Verbal.Description == Verbal.Description,
+#                                     Partition == Partition),
+#               aes(x = Rewiring,
+#                   y = !!ensym(chosen.coef),
+#                   colour = Owner)) +
+#     geom_line(size = 0.4, alpha = 0.8) +
+#     # scale_colour_manual(values = c(colors$inter, colors$majo,
+#     #                                colors$mino, colors$whole)) +
+#     ggplot2::ylim(min(0, min(snp[chosen.coef])),
+#                   max(snp[chosen.coef]))
+#   p %>% return()
+# }

@@ -27,7 +27,7 @@ all.owners <- snp$Owner %>%
   as.list()
 
 l <- paste0(path.to.pdfs, this.con.files) #%>% 
-  as.list() %>% 
+as.list() %>% 
   map(~image_read_pdf(.x))
 
 
@@ -48,9 +48,9 @@ savePlot("final.pdf", type = "pdf")
 
 
 whole <- c(l[[3]], l[[2]]) %>% 
-    image_append() %>% 
-    c(l[[1]]) %>% 
-    image_append(stack = TRUE)
+  image_append() %>% 
+  c(l[[1]]) %>% 
+  image_append(stack = TRUE)
 
 plot(whole)
 savePlot(type = "pdf")
