@@ -1,5 +1,5 @@
 ---
-  title: "Two column test"
+title: "Two column test"
 # author: "Grant McDermott"
 # date: "6/28/2019"
 output:
@@ -10,7 +10,7 @@ html_document:
   css: preamble.css
 ---
   
-  ```{r setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, cache = T)
 ```
 
@@ -67,3 +67,25 @@ p + scale_fill_viridis_c(option="A")
 ```
 \etwocol
 </div>
+
+<div class="column-left">
+\btwocol
+#### Stata
+```{stata, eval=F}
+knitr::include_graphics("I:/Thesis_Codes/Thesis_R_Codes/figures/connectivity-plots_25k/Alexandre Laurent (hyper-coupled minority) at 50k rewirings_unserialized.pdf")
+```
+</div>
+\columnbreak
+<div class="column-right">
+#### R
+```{r, eval=F}
+knitr::include_graphics("I:/Thesis_Codes/Thesis_R_Codes/figures/connectivity-plots_25k/Alexandre Laurent (hyper-coupled minority) at 50k rewirings_serialized.pdf")
+```
+\etwocol
+</div>
+
+And then we could continue writing. We could still use regular code chunks spanning the whole page if we wanted.
+
+```{r p}
+knitr::include_graphics("I:/Thesis_Codes/Thesis_R_Codes/figures/connectivity-plots_25k/Alexandre Laurent (hyper-coupled minority) at 50k rewirings_network.pdf")
+```

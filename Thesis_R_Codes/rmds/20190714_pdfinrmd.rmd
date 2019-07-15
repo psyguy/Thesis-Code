@@ -1,0 +1,82 @@
+---
+title: "Untitled"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r, include=TRUE, fig.align="center", fig.cap=c("your caption"), echo=FALSE}
+knitr::include_graphics("I:/Thesis_Codes/Thesis_R_Codes/figures/connectivity-plots_25k/Alexandre Laurent (hyper-coupled minority) at 50k rewirings_network.pdf")
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+<div class="column-left">
+\btwocol
+#### Stata
+```{stata, eval=F}
+knitr::include_graphics("I:/Thesis_Codes/Thesis_R_Codes/figures/connectivity-plots_25k/Alexandre Laurent (hyper-coupled minority) at 50k rewirings_unserialized.pdf")
+```
+</div>
+\columnbreak
+<div class="column-right">
+#### R
+```{r, eval=F}
+knitr::include_graphics("I:/Thesis_Codes/Thesis_R_Codes/figures/connectivity-plots_25k/Alexandre Laurent (hyper-coupled minority) at 50k rewirings_serialized.pdf")
+```
+\etwocol
+</div>
+
+And then we could continue writing. We could still use regular code chunks spanning the whole page if we wanted.
+
+```{r p}
+knitr::include_graphics("I:/Thesis_Codes/Thesis_R_Codes/figures/connectivity-plots_25k/Alexandre Laurent (hyper-coupled minority) at 50k rewirings_network.pdf")
+```
+
+And then revert back to the side-by-side format when needed.
+
+<div class="column-left">
+\btwocol
+#### Some people like viridis default
+```{r viridis_default}
+# library(ggplot2)
+# set.seed(1234)
+# 
+# p <- ggplot(
+#   data.frame(x= rnorm(1e4), y = rnorm(1e4)), 
+#   aes(x = x, y = y)
+#   ) +
+#   geom_hex() + 
+#   coord_fixed() +
+#   theme_void()
+# p + scale_fill_viridis_c()
+```
+</div>
+\columnbreak
+<div class="column-right">
+#### Others prefer viridis magma
+```{r viridis_magma}
+# p + scale_fill_viridis_c(option="A")
+```
+\etwocol
+</div>
