@@ -168,7 +168,7 @@ extract_plotnet <- function(m,
   E(g)$color <- NA
   E(g)[V(g)[partition == "majority"] %--% V(g)[partition == "majority"]]$color <- colors$majo
   set.seed(1)
-  g %>% plot(vertex.size = vertex.size,
+  g %>% plot(vertex.size = vertex.size*sqrt(ps)/2,
              vertex.color = vertex.color,
              add=F,
              vertex.label = NA,
@@ -178,7 +178,7 @@ extract_plotnet <- function(m,
   E(g)$color <- NA
   E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "majority"]]$color <- colors$inter
   set.seed(1)
-  g %>% plot(vertex.size = vertex.size,
+  g %>% plot(vertex.size = vertex.size*sqrt(ps)/2,
              vertex.color = vertex.color,
              add=TRUE,
              vertex.label = NA,
@@ -189,7 +189,7 @@ extract_plotnet <- function(m,
   E(g)$color <- NA
   E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "minority"]]$color <- colors$mino
   set.seed(1)
-  g %>% plot(vertex.size = vertex.size,
+  g %>% plot(vertex.size = vertex.size*sqrt(ps)/2,
              vertex.color = vertex.color,
              add=TRUE,
              vertex.label = NA,
