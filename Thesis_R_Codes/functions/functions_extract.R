@@ -145,6 +145,7 @@ extract_plotnet <- function(m,
                               inter = "olivedrab2", #"green4"
                               whole = "azure4"),
                             save = TRUE,
+                            first.add = FALSE,
                             curve = 0,
                             ps = 3,
                             path.fig = "figures"
@@ -170,7 +171,7 @@ extract_plotnet <- function(m,
   set.seed(1)
   g %>% plot(vertex.size = vertex.size*sqrt(ps)/2,
              vertex.color = vertex.color,
-             add=F,
+             add = first.add,
              vertex.label = NA,
              edge.width = 1*ps,
              edge.curved= curve*ps)
@@ -210,6 +211,7 @@ extract_plotcon <- function(m,
                               inter = "olivedrab2", #"green4"
                               whole = "dimgray"),
                             save = TRUE,
+                            ps = 3,
                             path.fig = "figures"){
   if(is.vector(m)) m <- m %>% vec2mat
   pf <- path.fig
@@ -223,14 +225,21 @@ extract_plotcon <- function(m,
   
   col.pimage <- c(colors$bg, colors$majo,
                   colors$inter, colors$mino)
-
+  
+  grid.newpage()
+  pushViewport(viewport(layout=grid.layout(nrow = 1, ncol = 2)))
+  pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
+  
   pimage(m,
          col = col.pimage,
          key = FALSE,
          newpage = FALSE)
   
-  if(save) graph2pdf(height = 5, width = 5,
-                     file = paste0(path.fig, title, "_unserialized"))
+  # if(save) graph2pdf(height = 5, width = 5,
+  #                    file = paste0(path.fig, title, "_unserialized"))
+  
+  upViewport(1)
+  pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
   
   pimage(m,
          s,
@@ -238,8 +247,11 @@ extract_plotcon <- function(m,
          key = FALSE,
          newpage = FALSE)
   
-  if(save) graph2pdf(height = 5, width = 5,
-                     file = paste0(path.fig, title, "_serialized"))
+  upViewport(1)
+  popViewport(0)
+  
+  if(save) graph2pdf(height = 5*ps, width = 5*2*ps,
+                     file = paste0(path.fig, title, "_connectivities"))
   
 }
 

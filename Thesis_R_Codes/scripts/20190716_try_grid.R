@@ -87,39 +87,22 @@ graph2pdf(height = hw, width=2*hw)
 # igraph ------------------------------------------------------------------
 library(grid)
 grid.newpage()
-pushViewport(viewport(layout=grid.layout(nrow = 1, ncol = 2)))
+pushViewport(viewport(layout=grid.layout(nrow = 2, ncol = 1)))
 pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
+
+extract_plotcon(m, save = T)
+
+upViewport(1)
+pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
 
 plot.new()
 
-E(g)$color <- NA
-E(g)[V(g)[partition == "majority"] %--% V(g)[partition == "majority"]]$color <- colors$majo
-set.seed(1)
-g %>% plot(vertex.size = vertex.size,
-           vertex.color = vertex.color,
-           add=TRUE,
-           vertex.label = NA,
-           edge.width = 1,
-           ylim=c(0.25,.5), xlim = c(0.25, .5),
-           edge.curved= curve)
-
-E(g)$color <- NA
-E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "majority"]]$color <- colors$inter
-set.seed(1)
-g %>% plot(vertex.size = vertex.size,
-           vertex.color = vertex.color,
-           add=TRUE,
-           vertex.label = NA,
-           edge.width = 1,
-           edge.curved= curve)
+extract_plotnet(m, save = FALSE, first.add = TRUE)
 
 
-E(g)$color <- NA
-E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "minority"]]$color <- colors$mino
-set.seed(1)
-g %>% plot(vertex.size = vertex.size,
-           vertex.color = vertex.color,
-           add=TRUE,
-           vertex.label = NA,
-           edge.width = 1,
-           edge.curved= curve)
+
+
+
+# s -----------------------------------------------------------------------
+
+
