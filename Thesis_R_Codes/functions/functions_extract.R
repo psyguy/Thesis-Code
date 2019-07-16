@@ -146,6 +146,7 @@ extract_plotnet <- function(m,
                               whole = "azure4"),
                             save = TRUE,
                             curve = 0,
+                            ps = 3,
                             path.fig = "figures"
                             ){
   if(is.vector(m)) m <- m %>% vec2mat()
@@ -169,10 +170,10 @@ extract_plotnet <- function(m,
   set.seed(1)
   g %>% plot(vertex.size = vertex.size,
              vertex.color = vertex.color,
-             add=FALSE,
+             add=F,
              vertex.label = NA,
-             edge.width = 1,
-             edge.curved= curve)
+             edge.width = 1*ps,
+             edge.curved= curve*ps)
   
   E(g)$color <- NA
   E(g)[V(g)[partition == "minority"] %--% V(g)[partition == "majority"]]$color <- colors$inter
@@ -181,8 +182,8 @@ extract_plotnet <- function(m,
              vertex.color = vertex.color,
              add=TRUE,
              vertex.label = NA,
-             edge.width = 1,
-             edge.curved= curve)
+             edge.width = 1*ps,
+             edge.curved= curve*ps)
   
   
   E(g)$color <- NA
@@ -192,10 +193,10 @@ extract_plotnet <- function(m,
              vertex.color = vertex.color,
              add=TRUE,
              vertex.label = NA,
-             edge.width = 1,
-             edge.curved= curve)
+             edge.width = 1*ps,
+             edge.curved= curve*ps)
   
-  if(save) graph2pdf(height = 10, width = 10,
+  if(save) graph2pdf(height = 10*ps, width = 10*ps,
                      file = paste0(path.fig, title, "_network"))
 }
 
@@ -225,7 +226,8 @@ extract_plotcon <- function(m,
 
   pimage(m,
          col = col.pimage,
-         key = FALSE)
+         key = FALSE,
+         newpage = FALSE)
   
   if(save) graph2pdf(height = 5, width = 5,
                      file = paste0(path.fig, title, "_unserialized"))
@@ -233,7 +235,8 @@ extract_plotcon <- function(m,
   pimage(m,
          s,
          col = col.pimage,
-         key = FALSE)
+         key = FALSE,
+         newpage = FALSE)
   
   if(save) graph2pdf(height = 5, width = 5,
                      file = paste0(path.fig, title, "_serialized"))
