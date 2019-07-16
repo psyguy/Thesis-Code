@@ -323,12 +323,14 @@ extract_plotcoefs.glued <- function(name.this.owner = NULL,
                       ncol = 2, nrow = 4,
                       common.legend = TRUE,
                       legend = ifelse(is.null(name.this.owner),
-                                      "none", "bottom"))
+                                      "bottom", "bottom")#"none", "bottom")
+                      )
   
   if(is.null(name.this.owner)){
     vd <- snp %>%
       filter(Verbal.Description == this.Verbal.Description) %>%
       filter(Partition == this.Partition) %>% 
+      pull(Verbal.Description) %>% 
       as.character()
   }else{
     vd <- snp %>%
@@ -337,10 +339,14 @@ extract_plotcoefs.glued <- function(name.this.owner = NULL,
       as.character()
   }
   
+  this.Partition <- ifelse(is.null(this.Partition),
+                           "",
+                           paste0(this.Partition, " "))
+  
   title <- paste0("Network statistics of ",
                   name.this.owner,
-                  " ", this.Partition,
-                  " (", tolower(vd[1]), ")")
+                  this.Partition,
+                  "(", tolower(vd[[1]]), ")")
   
   pf <- path.fig
   if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
@@ -351,7 +357,7 @@ extract_plotcoefs.glued <- function(name.this.owner = NULL,
                   top = text_grob(label =  paste0("",
                                                   "Network statistics of ",
                                                   name.this.owner,
-                                                  " ", this.Partition,
+                                                  this.Partition,
                                                   "\n (",
                                                   tolower(vd[1]),
                                                   ")"),

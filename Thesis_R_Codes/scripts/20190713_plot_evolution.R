@@ -35,14 +35,25 @@ system.time(all.owners %>%
                   snp = snp)
 )
 
-system.time(all.partitions %>%
-              map(extract_plotcoefs.glued,
-                  snp = snp)
+# system.time(all.partitions %>%
+#               map2(all.vd, extract_plotcoefs.glued,
+#                   snp = snp)
+# )
+
+system.time(
+for(vd in all.vd){
+  for(part in all.partitions){
+    extract_plotcoefs.glued(this.Verbal.Description = vd,
+                            this.Partition = part, 
+                            snp=snp)
+  }
+}
 )
 
 
 
-path.to.pdfs <- "./figures/netstats-plots_25k"
+
+path.to.pdfs <- "./figures"
 coef.files <- list.files(path = path.to.pdfs, pattern = "*.pdf")
 
 p <- coef.files[grepl("homo", coef.files)] %>% 
@@ -54,11 +65,12 @@ p <- coef.files[grepl("homo", coef.files)] %>%
 
 
 staple_pdf(input_files = paste(path.to.pdfs, p, sep = "/"),
-           output_filepath = NULL)
+           output_filepath = path.to.pdfs)
+
 
 ?savePlot
 
 
-extract_plotcoefs.glued(this.Verbal.Description = all.vd[[1]],
-                        this.Partition = all.partitions[[1]], 
-                        snp=snp)
+# extract_plotcoefs.glued(this.Verbal.Description = all.vd[[3]],
+#                         this.Partition = all.partitions[[3]], 
+#                         snp=snp)
