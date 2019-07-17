@@ -65,7 +65,7 @@ p <- coef.files[grepl("homo", coef.files)] %>%
 
 
 staple_pdf(input_files = paste(path.to.pdfs, p, sep = "/"),
-           output_filepath = path.to.pdfs)
+           output_filepath = "partitioned per family.pdf")
 
 
 ?savePlot
