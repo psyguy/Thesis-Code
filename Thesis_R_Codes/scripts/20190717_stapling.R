@@ -14,16 +14,17 @@ pdf.names <- pdf.names[grepl("at 1000k rewirings_connectivities",
 names <- gsub(" at 1000k rewirings_connectivities",
               "",
               pdf.names)
-
-# Sys.time()
-# for(i in seq_along(names)){
-#   print(i)
-#   pages <- (1+ (i-1)*40):(i*40)
-#   staplr::select_pages(pages,
-#                        "./figures/Network structure - all 25k.pdf",
-#                        paste("./figures/Network maturation of", names[i]))
-# }
-# Sys.time()
+i <- 21
+Sys.time()
+for(i in seq_along(names)){
+  print(i)
+  if(!grepl("Jana Wouters", pdf.names[i])) next()
+  pages <- (1+ (i-1)*40):(i*40)
+  staplr::select_pages(pages,
+                       "./figures/Network structure - all 25k.pdf",
+                       paste("./figures/Network maturation of", names[i]))
+}
+Sys.time()
 
 
 
@@ -37,15 +38,19 @@ pdf.names <- pdf.names[grepl("rewirings_connectivities",
 
 names <- gsub(" at.*",
               "",
-              pdf.names) %>% unique()
+              pdf.names) %>% 
+  unique() %>% 
+  paste0(".pdf")
 
 Sys.time()
 for(i in seq_along(names)){
   print(i)
   pages <- (1+ (i-1)*40):(i*40)
-  staplr::select_pages(pages,
-                       "./figures/Network structure - all 25k.pdf",
-                       paste("./figures/Network maturation of", names[i]))
+  staplr::staple_pdf(input_files = paste0("./figures/connectivity-plots_25k/",
+                                          pdf.names[pages]),
+                     output_filepath = paste("./figures/Evolution of connectivities in",
+                                             names[i])
+                                             )
 }
 Sys.time()
 
