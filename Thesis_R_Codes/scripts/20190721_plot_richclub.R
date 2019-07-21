@@ -21,17 +21,23 @@ colors = list(
   inter = "olivedrab2", #"green4"
   whole = "azure4")
 
-bt <- function(v){
-  o <- v %>%
+bt <- function(v, edge_betweenness = FALSE){
+  g <- v %>%
   vec2mat() %>% 
-  graph_from_adjacency_matrix() %>% 
-  edge_betweenness(directed = FALSE)
+  graph_from_adjacency_matrix()
   
-  oo <- o
-  # if(length(o) < 44850) oo <- o %>% 
-  #   c(rep(NA, 44850 - length(o)))
-  tibble(oo) %>%
-    return()
+  if(edge_betweenness) o <- g %>% 
+  edge_betweenness(directed = FALSE)
+  else o <- g %>% 
+      betweenness(directed = FALSE, normalized = FALSE)
+  
+  o %>% return()
+  
+  # oo <- o
+  # # if(length(o) < 44850) oo <- o %>% 
+  # #   c(rep(NA, 44850 - length(o)))
+  # # tibble(oo) %>%
+  #   return()
   }
 
 rc <- function(v, k = c(1:150)){
@@ -42,35 +48,132 @@ rc <- function(v, k = c(1:150)){
   o <- 
     sapply(k, function(x) brainGraph::rich_club_coeff(g_,
                                                     k=x)$phi %>% as.numeric())
-  oo <- o
-  # if(length(o) < 44850) oo <- o %>% 
-  #   c(rep(NA, 44850 - length(o)))
-  tibble(oo) %>%
-    return()
+  
+  o %>% return()
+  
+  # oo <- o
+  # # if(length(o) < 44850) oo <- o %>% 
+  # #   c(rep(NA, 44850 - length(o)))
+  # # tibble(oo) %>%
+  #   return()
   }
 
+name.this.owner <- "Sam Evrard"
+
+system.time(
 tmp <- snp %>%
+  filter(Owner == name.this.owner) %>% 
   filter(Rewiring == 1e+5) %>% 
-  # mutate(bet = map(adj.mat.vect, bt)) %>% 
-  mutate(rc = map(adj.mat.vect, rc))
+  mutate(`Vertex Betweenness` = map(adj.mat.vect, bt,
+                   edge_betweenness = FALSE)) %>%
+  mutate(`Edge Betweenness` = map(adj.mat.vect, bt,
+                   edge_betweenness = TRUE)) %>%
+  mutate(`Rich Club` = map(adj.mat.vect, rc))
+)
 
 
-tmp.unnested <- tmp %>% unnest()
+make.df <- function(input.df, col){
+  
+   d <- input.df %>% 
+     select("Partition",
+            "Owner",
+            "Verbal.Description",
+            col)
+   
+   output.df <- NULL
+   for(p in 1:4){
+     this.df <- select(d, -col)[p,]
+     vec <- pull(d, col)[[p]]
+     len <- length(vec)
+     x <- this.df[rep(seq_len(nrow(this.df)),
+                      each = len),]
+     
+     output.df <- output.df %>%
+       rbind(
+         cbind(x, vec, c(1:len))
+       )
+   }
+   
+   colnames(output.df) <- c("Partition",
+                            "Owner",
+                            "Verbal.Description",
+                            col,
+                            "Club Size")
+   # output.df$Partition <- output.df$Partition %>% as.factor()
+   output.df %>% return()
+}
 
 
-my3cols <- c("#E7B800", "#2E9FDF", "#FC4E07")
-set.seed(1234)
-x <- c(rnorm(350, mean = -1), rnorm(350, mean = 1.5), rnorm(350, mean = 4))
-y <- c(rnorm(350, mean = -0.5), rnorm(350, mean = 1.7), rnorm(350, mean = 2.5))
-group <- as.factor(rep(c(1, 2, 3), each = 350))
-df2 <- data.frame(x, y, group) 
-head(df2) 
-# Scatter plot of x and y variables and color by groups 
-scatterPlot <-
-  ggplot(df2,
-         aes(x, y)) + geom_point(aes(color = group)) + scale_color_manual(values = my3cols) + theme(legend.position=c(0,1), legend.justification=c(0,1))
-# Marginal density plot of x (top panel) 
-xdensity <- ggplot(df2, aes(x)) + geom_density(aes(fill = group), alpha=.8) + scale_fill_manual(values = my3cols) + theme(legend.position = "none")
+Rich.Club.150 <- tmp %>%
+  make.df("Rich Club") %>%
+  ggplot(aes(x = `Club Size`,
+             y = `Rich Club`,
+             colour = Partition)) +
+  geom_line(size = 1.5, alpha = 0.8) +
+  scale_colour_manual(values = c(colors$inter, colors$majo,
+                               colors$mino, colors$whole)) +
+  # scale_colour_manual(values = c(colors$inter, colors$majo,
+  #                                colors$mino, colors$whole)) +
+  theme(legend.position = "none") +
+  ggplot2::xlim(0, 150) +
+  ggplot2::ylim(0, 1)
+
+`Vertex Betweenness` <- tmp %>%
+  make.df("Vertex Betweenness") %>%
+  ggplot(aes(`Vertex Betweenness`)) +
+  geom_density(aes(fill = Partition), alpha = 0.6) +
+  scale_fill_manual(values = c(colors$inter, colors$majo,
+                               colors$mino, colors$whole)) +
+  theme(legend.position = "none") +
+  ggplot2::xlim(0, 1000)
+
+
+`Edge Betweenness` <- tmp %>%
+  make.df("Edge Betweenness") %>%
+  ggplot(aes(`Edge Betweenness`)) +
+  geom_density(aes(fill = Partition), alpha = 0.6) +
+  scale_fill_manual(values = c(colors$inter, colors$majo,
+                               colors$mino, colors$whole)) +
+  theme(legend.position = "none") +
+  ggplot2::xlim(0, 150)
+
+
+figure <- ggarrange(Rich.Club.150,
+                    `Vertex Betweenness`,
+                    `Edge Betweenness`,
+                    ncol = 1, nrow = 3,
+                    common.legend = TRUE,
+                    legend = "bottom"#ifelse(is.null(name.this.owner),
+                                    # "bottom", "bottom")#"none", "bottom")
+)
+
+vd <- snp %>%
+  filter(Owner == name.this.owner) %>%
+  pull(Verbal.Description) %>% 
+  as.character()
+
+pf <- path.fig <- "."
+if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
+file.name <- paste0(path.fig, title)
+
+annotate_figure(figure,
+                top = text_grob(label =  paste0("",
+                                                "Final Rich Club and Betweenness values of",
+                                                "\n",
+                                                name.this.owner,
+                                                " (",
+                                                tolower(vd[1]),
+                                                ")"
+                                              ),
+                                size = 25,
+                                family = "Times"
+                                )
+                ) %>%
+  graph2pdf(height = 15, width = 15,
+            file = paste0(file.name,".pdf")
+  )
+
+
 # Marginal density plot of y (right panel) 
 ydensity <- ggplot(df2, aes(y)) + geom_density(aes(fill=group), alpha=.8) + scale_fill_manual(values = my3cols) + theme(legend.position = "none") + coord_flip()
 
