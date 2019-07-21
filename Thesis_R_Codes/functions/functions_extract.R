@@ -385,27 +385,134 @@ extract_plotcoefs.glued <- function(name.this.owner = NULL,
   
 }
 
-# 
-# 
-# extract_plotcoefs.family <- function(chosen.coef,
-#                                      name.this.owner,
-#                                      snp,
-#                                      colors = list(
-#                                        bg = "white",
-#                                        mino = "deepskyblue3",
-#                                        majo = "orangered",
-#                                        inter = "olivedrab2",
-#                                        whole = "dimgray")){
-#   
-#   p <- ggplot(data = snp %>% filter(Verbal.Description == Verbal.Description,
-#                                     Partition == Partition),
-#               aes(x = Rewiring,
-#                   y = !!ensym(chosen.coef),
-#                   colour = Owner)) +
-#     geom_line(size = 0.4, alpha = 0.8) +
-#     # scale_colour_manual(values = c(colors$inter, colors$majo,
-#     #                                colors$mino, colors$whole)) +
-#     ggplot2::ylim(min(0, min(snp[chosen.coef])),
-#                   max(snp[chosen.coef]))
-#   p %>% return()
-# }
+
+extract_plot_rc.btwn <- function(chosen.coef,
+                                 name.this.owner = NULL,
+                                 this.Verbal.Description = NULL,
+                                 this.Partition = NULL,
+                                 snp,
+                                 colors = list(
+                                   bg = "white",
+                                   mino = "deepskyblue3",
+                                   majo = "orangered",
+                                   inter = "olivedrab2",
+                                   whole = "dimgray"),
+                                 path.fig = "figures"){
+  
+  tmp <- snp %>%
+    filter(Owner == name.this.owner) %>% 
+    filter(Rewiring == 1e+6) %>% 
+    mutate(`Vertex Betweenness` = map(adj.mat.vect, netmeas_bt,
+                                      edge_betweenness = FALSE)) %>%
+    mutate(`Edge Betweenness` = map(adj.mat.vect, netmeas_bt,
+                                    edge_betweenness = TRUE)) %>%
+    # mutate(`Centrality` = map(adj.mat.vect, netmeas_rc)) %>%
+    mutate(`Rich Club` = map(adj.mat.vect, netmeas_rc))
+  
+  
+  Rich.Club.150 <- tmp %>%
+    make.df("Rich Club") %>%
+    ggplot(aes(x = `Club Size`,
+               y = `Rich Club`,
+               colour = Partition)) +
+    geom_line(size = 1.5, alpha = 0.8) +
+    scale_colour_manual(values = c(colors$inter, colors$majo,
+                                   colors$mino, colors$whole)) +
+    # scale_colour_manual(values = c(colors$inter, colors$majo,
+    #                                colors$mino, colors$whole)) +
+    theme(legend.position = "none") +
+    ggplot2::xlim(0, 150) +
+    ggplot2::ylim(0, 1)
+  
+  `Vertex Betweenness` <- tmp %>%
+    make.df("Vertex Betweenness") %>%
+    ggplot(aes(`Vertex Betweenness`)) +
+    geom_density(aes(fill = Partition), alpha = 0.6) +
+    scale_fill_manual(values = c(colors$inter, colors$majo,
+                                 colors$mino, colors$whole)) +
+    theme(legend.position = "none") +
+    ggplot2::xlim(0, 1000)
+  
+  
+  `Edge Betweenness` <- tmp %>%
+    make.df("Edge Betweenness") %>%
+    ggplot(aes(`Edge Betweenness`)) +
+    geom_density(aes(fill = Partition), alpha = 0.6) +
+    scale_fill_manual(values = c(colors$inter, colors$majo,
+                                 colors$mino, colors$whole)) +
+    theme(legend.position = "none") +
+    ggplot2::xlim(0, 150)
+  
+  
+  figure <- ggarrange(Rich.Club.150,
+                      `Vertex Betweenness`,
+                      `Edge Betweenness`,
+                      ncol = 1, nrow = 3,
+                      common.legend = TRUE,
+                      legend = "bottom"#ifelse(is.null(name.this.owner),
+                      # "bottom", "bottom")#"none", "bottom")
+  )
+  
+  
+  title <- paste0("Final Rich Club and Betweenness of ",
+                  name.this.owner,
+                  " (", tolower(vd[[1]]), ")")
+  
+  vd <- snp %>%
+    filter(Owner == name.this.owner) %>%
+    pull(Verbal.Description) %>% 
+    as.character()
+  
+  pf <- path.fig
+  if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
+  file.name <- paste0(path.fig, title)
+  
+  annotate_figure(figure,
+                  top = text_grob(label =  paste0("",
+                                                  "Final Rich Club and Betweenness values of",
+                                                  "\n",
+                                                  name.this.owner,
+                                                  " (",
+                                                  tolower(vd[1]),
+                                                  ")"
+                  ),
+                  size = 25,
+                  family = "Times"
+                  )
+  ) %>%
+    graph2pdf(height = 15, width = 15,
+              file = paste0(file.name,".pdf")
+    )
+  
+}
+
+
+make.df <- function(input.df, col){
+  
+  d <- input.df %>% 
+    select("Partition",
+           "Owner",
+           "Verbal.Description",
+           col)
+  
+  output.df <- NULL
+  for(p in 1:4){
+    this.df <- select(d, -col)[p,]
+    vec <- pull(d, col)[[p]]
+    len <- length(vec)
+    x <- this.df[rep(seq_len(nrow(this.df)),
+                     each = len),]
+    
+    output.df <- output.df %>%
+      rbind(
+        cbind(x, vec, c(1:len))
+      )
+  }
+  
+  colnames(output.df) <- c("Partition",
+                           "Owner",
+                           "Verbal.Description",
+                           col,
+                           "Club Size")
+  output.df %>% return()
+}

@@ -170,3 +170,28 @@ netmeas_wbcoefs <- function(m,
   
   coefs.wb %>% return()
 }
+
+
+netmeas_bt <- function(v, edge_betweenness = FALSE){
+  g <- v %>%
+    vec2mat() %>% 
+    graph_from_adjacency_matrix()
+  
+  if(edge_betweenness) o <- g %>% 
+      edge_betweenness(directed = FALSE)
+  else o <- g %>% 
+      betweenness(directed = FALSE, normalized = FALSE)
+  o %>% return()
+}
+
+netmeas_rc <- function(v, k = c(1:150)){
+  g_ <- v %>% 
+    vec2mat() %>% 
+    graph_from_adjacency_matrix()
+  
+  o <- 
+    sapply(k, function(x) brainGraph::rich_club_coeff(g_,
+                                                      k=x)$phi %>% as.numeric())
+  o %>% return()
+}
+

@@ -58,6 +58,15 @@ rc <- function(v, k = c(1:150)){
   #   return()
   }
 
+# cd <- function(v, k = c(1:150)){
+#   g_ <- v %>% 
+#     vec2mat() %>% 
+#     graph_from_adjacency_matrix()
+#   
+#   o <- centralization.degree(g_)$res   
+#   o %>% return
+# }
+
 name.this.owner <- "Sam Evrard"
 
 system.time(
@@ -68,40 +77,12 @@ tmp <- snp %>%
                    edge_betweenness = FALSE)) %>%
   mutate(`Edge Betweenness` = map(adj.mat.vect, bt,
                    edge_betweenness = TRUE)) %>%
+  mutate(`Centrality` = map(adj.mat.vect, rc)) %>%
   mutate(`Rich Club` = map(adj.mat.vect, rc))
 )
 
 
-make.df <- function(input.df, col){
-  
-   d <- input.df %>% 
-     select("Partition",
-            "Owner",
-            "Verbal.Description",
-            col)
-   
-   output.df <- NULL
-   for(p in 1:4){
-     this.df <- select(d, -col)[p,]
-     vec <- pull(d, col)[[p]]
-     len <- length(vec)
-     x <- this.df[rep(seq_len(nrow(this.df)),
-                      each = len),]
-     
-     output.df <- output.df %>%
-       rbind(
-         cbind(x, vec, c(1:len))
-       )
-   }
-   
-   colnames(output.df) <- c("Partition",
-                            "Owner",
-                            "Verbal.Description",
-                            col,
-                            "Club Size")
-   # output.df$Partition <- output.df$Partition %>% as.factor()
-   output.df %>% return()
-}
+
 
 
 Rich.Club.150 <- tmp %>%
