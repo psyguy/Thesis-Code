@@ -386,8 +386,7 @@ extract_plotcoefs.glued <- function(name.this.owner = NULL,
 }
 
 
-extract_plot_rc.btwn <- function(chosen.coef,
-                                 name.this.owner = NULL,
+extract_plot_rc.btwn <- function(name.this.owner = NULL,
                                  this.Verbal.Description = NULL,
                                  this.Partition = NULL,
                                  snp,
@@ -453,15 +452,16 @@ extract_plot_rc.btwn <- function(chosen.coef,
                       # "bottom", "bottom")#"none", "bottom")
   )
   
+    vd <- snp %>%
+    filter(Owner == name.this.owner) %>%
+    pull(Verbal.Description) %>% 
+    as.character()
   
   title <- paste0("Final Rich Club and Betweenness of ",
                   name.this.owner,
                   " (", tolower(vd[[1]]), ")")
   
-  vd <- snp %>%
-    filter(Owner == name.this.owner) %>%
-    pull(Verbal.Description) %>% 
-    as.character()
+
   
   pf <- path.fig
   if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
