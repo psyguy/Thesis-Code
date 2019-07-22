@@ -404,28 +404,23 @@ extract_plot_rc.btwn <- function(name.this.owner = NULL,
     mutate(`Vertex Betweenness` = map(adj.mat.vect, netmeas_bt,
                                       edge_betweenness = FALSE)) %>%
     mutate(`Edge Betweenness` = map(adj.mat.vect, netmeas_bt,
-                                    edge_betweenness = TRUE)) #%>%
+                                    edge_betweenness = TRUE)) %>%
     # mutate(`Centrality` = map(adj.mat.vect, netmeas_rc)) %>%
-    # mutate(`Rich Club` = map(adj.mat.vect, netmeas_rc, part=Partition))
-  
-  tmp.rc <- snp %>%
-    filter(Owner == name.this.owner) %>% 
-    filter(Rewiring == 1e+6) %>% 
-    filter(Partition != "interpartition") %>% 
     mutate(`Rich Club` = map(adj.mat.vect, netmeas_rc))
   
-  Rich.Club.150 <- tmp.rc %>%
+  
+  Rich.Club.150 <- tmp %>%
     make.df("Rich Club") %>%
     ggplot(aes(x = `Club Size`,
                y = `Rich Club`,
                colour = Partition)) +
     geom_line(size = 1.5, alpha = 0.8) +
-    scale_colour_manual(values = c(colors$majo,
+    scale_colour_manual(values = c(colors$inter, colors$majo,
                                    colors$mino, colors$whole)) +
     # scale_colour_manual(values = c(colors$inter, colors$majo,
     #                                colors$mino, colors$whole)) +
     theme(legend.position = "none") +
-    ggplot2::xlim(0, 100) +
+    ggplot2::xlim(0, 150) +
     ggplot2::ylim(0, 1)
   
   `Vertex Betweenness` <- tmp %>%
@@ -500,9 +495,8 @@ make.df <- function(input.df, col){
            "Verbal.Description",
            col)
   
-  parts <- ifelse(col=="Rich Club", c(1:3), c(1:4))
   output.df <- NULL
-  for(p in parts){
+  for(p in 1:4){
     this.df <- select(d, -col)[p,]
     vec <- pull(d, col)[[p]]
     len <- length(vec)
