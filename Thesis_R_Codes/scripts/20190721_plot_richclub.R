@@ -30,7 +30,7 @@ all.vd <- snp$Verbal.Description %>%
 
 
 
-system.time(all.owners %>%
+system.time(all.owners[1] %>%
               map(extract_plot_rc.btwn,
                   snp = snp)
 )
@@ -49,8 +49,6 @@ system.time(
     }
   }
 )
-
-
 
 
 path.to.pdfs <- "./figures"
