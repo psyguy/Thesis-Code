@@ -184,19 +184,19 @@ netmeas_bt <- function(v, edge_betweenness = FALSE){
   o %>% return()
 }
 
-netmeas_rc <- function(v, non.normalized = FALSE, k = c(1:150)){
-  g_ <- v %>% 
-    vec2mat() %>% 
+netmeas_rc <- function(v, non.normalized = TRUE, k = c(1:150)){
+  m_ <- v %>% 
+    vec2mat()
+  g_ <- m_ %>% 
     graph_from_adjacency_matrix()
   
-  if(non.normalized){
-  o <- 
+  o1 <- 
     sapply(k, function(x) brainGraph::rich_club_coeff(g_,
                                                       k=x)$phi %>% as.numeric())
-  }else{
-    z <-  g_ %>% rich_club_norm(200)
-    o <- z$norm
-  }
+  if(sum(m_) != 10400 | non.normalized == TRUE) o1 %>% return()
+  # if(sum(m_) == 10400 & non.normalized == FALSE)
+  z <-  g_ %>% rich_club_norm(200)
+  o <- z$norm
   o %>% return()
 }
 

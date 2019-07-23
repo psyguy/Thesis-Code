@@ -409,10 +409,11 @@ extract_plot_rc.btwn <- function(name.this.owner = NULL,
     mutate(`Rich Club` = map(adj.mat.vect, netmeas_rc))
   
   
+  
   Rich.Club.150 <- tmp %>%
     make.df("Rich Club") %>%
     ggplot(aes(x = `Club Size`,
-               y = `Rich Club`,
+               y = `Rich Club`, 
                colour = Partition)) +
     geom_line(size = 1.5, alpha = 0.8) +
     scale_colour_manual(values = c(colors$inter, colors$majo,
