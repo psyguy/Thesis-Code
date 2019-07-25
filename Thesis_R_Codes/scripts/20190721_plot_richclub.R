@@ -5,7 +5,8 @@
 # rm(list = ls())
 
 source("./functions/functions_extract.R")
-# 
+load("./data/snp_only-1e+6_20190723_1404.RData")
+
 # load("./data/snp.lean_all_5k_20190713_1356.RData")
 # snp <- snp.lean
 # rm(snp.lean)
@@ -28,13 +29,26 @@ all.vd <- snp$Verbal.Description %>%
   as.character() %>%
   as.list()
 
+name.this.owner <- all.owners[[1]]
 
+# rand.graphs <- snp$adj.mat.vect[[1]] %>% 
+#   vec2mat() %>% 
+#   graph_from_adjacency_matrix() %>% 
+#   sim.rand.graph.par(200)
 
-system.time(all.owners[1] %>%
+# The problematic owners (those who died out)
+# are cause error in rendom graph generation,
+# so the normalized Rich Club cannot be calculated for them.
+# The indices are:
+# 14 ("David De Ridder"), 17 ("Daan Dubois"),
+# 41 ("Audrey Claeys"), 44 ("Chiara Bosmans")
+
+t <- Sys.time()
+system.time(all.owners[45:50] %>%
               map(extract_plot_rc.btwn,
                   snp = snp)
 )
-
+Sys.time() - t
 # system.time(all.partitions %>%
 #               map2(all.vd, extract_plotcoefs.glued,
 #                   snp = snp)

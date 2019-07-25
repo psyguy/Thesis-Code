@@ -193,10 +193,11 @@ netmeas_rc <- function(v, non.normalized = TRUE, k = c(1:150)){
   o1 <- 
     sapply(k, function(x) brainGraph::rich_club_coeff(g_,
                                                       k=x)$phi %>% as.numeric())
-  if(sum(m_) != 10400 | non.normalized == TRUE) o1 %>% return()
-  # if(sum(m_) == 10400 & non.normalized == FALSE)
-  z <-  g_ %>% rich_club_norm(200)
-  o <- z$norm
-  o %>% return()
+  # if(sum(m_) != 10400 | non.normalized == TRUE) 
+    o1 %>% return()
+  # if(sum(m_) == 10400 & non.normalized == FALSE){
+  # z <-  g_ %>% rich_club_norm(200)
+  # o <- z$norm
+  # o %>% return()}
 }
 

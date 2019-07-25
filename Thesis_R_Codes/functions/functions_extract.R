@@ -408,21 +408,38 @@ extract_plot_rc.btwn <- function(name.this.owner = NULL,
     # mutate(`Centrality` = map(adj.mat.vect, netmeas_rc)) %>%
     mutate(`Rich Club` = map(adj.mat.vect, netmeas_rc))
   
+  tmp$`Rich Club`[[2]] <- tmp$`Rich Club`[[2]]/tmp$`Rich Club`[[1]]
+  tmp$`Rich Club`[[3]] <- tmp$`Rich Club`[[3]]/tmp$`Rich Club`[[1]]
+  tmp$`Rich Club`[[4]] <- tmp$`Rich Club`[[4]]/tmp$`Rich Club`[[1]]
   
+  rc_norm <- tmp$adj.mat.vect %>% 
+    vec2mat() %>% 
+    graph_from_adjacency_matrix() %>% 
+    rich_club_norm(200)
+  tmp$`Rich Club`[[1]] <- rc_norm$norm
   
-  Rich.Club.150 <- tmp %>%
+  sig.level <- 0.05
+  significants <- data.frame(x = rc_norm$k[rc_norm$p < sig.level],
+                             y = rc_norm$norm[rc_norm$p < sig.level])
+    
+  Rich.Club.150 <- 
+    tmp %>%
     make.df("Rich Club") %>%
+    # filter(Partition=="whole") %>% 
     ggplot(aes(x = `Club Size`,
                y = `Rich Club`, 
                colour = Partition)) +
-    geom_line(size = 1.5, alpha = 0.8) +
+    geom_line(size = 1.5, alpha = .8) +
     scale_colour_manual(values = c(colors$inter, colors$majo,
                                    colors$mino, colors$whole)) +
-    # scale_colour_manual(values = c(colors$inter, colors$majo,
-    #                                colors$mino, colors$whole)) +
     theme(legend.position = "none") +
-    ggplot2::xlim(0, 150) +
-    ggplot2::ylim(0, 1)
+    geom_point(aes(x=x, y=y),
+               data = significants,
+               colour="black",
+               size = 2.2,
+               shape = 18)
+  ggplot2::xlim(0, 150) 
+  
   
   `Vertex Betweenness` <- tmp %>%
     make.df("Vertex Betweenness") %>%

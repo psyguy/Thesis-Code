@@ -43,3 +43,5 @@ for(this.snp in snp_files){
   
 }
 (Sys.time()-t0) %>% print()
+
+m <- snp[1,17][[1]] %>% vec2mat()
