@@ -10,42 +10,48 @@ e100 <- eigen(m100)$values
 
 e200 %*% e100
 
-matsim <- function(v1, v2){
-  
-  m1 <- v1 %>% vec2mat()
-  m2 <- v2 %>% vec2mat()
-  
-  s1 <- m1 %>% seriate()
-  s2 <- m2 %>% seriate()
-  
-  eig1 <- m1[s1[[1]],s1[[2]]] %>% eigen(symmetric = TRUE)
-  eig2 <- m2[s2[[1]],s2[[2]]] %>% eigen(symmetric = TRUE)
-  
-  sim <- eig1$values %*% eig2$values
-  sim %>% return()
-}
+# matsim <- function(v1, v2){
+#   
+#   m1 <- v1 %>% vec2mat()
+#   m2 <- v2 %>% vec2mat()
+#   
+#   s1 <- m1 %>% seriate()
+#   s2 <- m2 %>% seriate()
+#   
+#   eig1 <- m1[s1[[1]],s1[[2]]] %>% eigen(symmetric = TRUE)
+#   eig2 <- m2[s2[[1]],s2[[2]]] %>% eigen(symmetric = TRUE)
+#   
+#   sim <- eig1$values %*% eig2$values
+#   sim %>% return()
+# }
+# 
+# snpmatsim <- function(r1, r2, snp){
+#   matsim(snp$adj.mat.vect[[r1]],snp$adj.mat.vect[[r2]])
+# }
+# 
+# eigenmaker <- function(v){
+#   
+#   m <- v %>% vec2mat()
+# 
+#   s <- m %>% seriate()
+# 
+#   eig <- m[s[[1]], s[[2]]] %>% eigen(symmetric = TRUE)
+#   
+#   eig$values %>% return()
+# }
 
-snpmatsim <- function(r1, r2, snp){
-  matsim(snp$adj.mat.vect[[r1]],snp$adj.mat.vect[[r2]])
-}
 
-eigenmaker <- function(v){
-  
+svdmaker <- function(v){
   m <- v %>% vec2mat()
-
   s <- m %>% seriate()
-
-  eig <- m[s[[1]], s[[2]]] %>% eigen(symmetric = TRUE)
-  
-  eig$values %>% return()
+  eig <- m[s[[1]], s[[2]]] %>% svd()
+  eig$d %>% return()
 }
 
 
 snp.whole <- snp %>% filter(Partition=="whole")
 
-e <- snp.whole$adj.mat.vect %>% map(eigenmaker)
-
-snpmatsim(1, 2, snp.whole)
+e <- snp.whole$adj.mat.vect %>% map(svdmaker)
 
 num.persons <- 50
 eigensim <- matrix(0, num.persons, nrow = num.persons)
