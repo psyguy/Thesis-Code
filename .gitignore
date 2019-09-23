@@ -26,7 +26,7 @@ vignettes/*.html
 
 vignettes/*.pdf
 *.png
-
+*.pdf
 
 
 # old/draft
