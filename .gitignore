@@ -34,7 +34,7 @@ data/
 data/*_graveyard_data/
 */figures/
 
-data/
+data*/
 
 figures/*_graveyard_figures/
 
