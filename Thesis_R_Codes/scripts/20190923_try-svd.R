@@ -1,14 +1,16 @@
 source("./functions/functions_extract.R")
 
+load("./data-pc/snp_only-1e+6_20190723_1404.RData")
+
 m <- snp$adj.mat.vect[[1]] %>% vec2mat()
 
-m200 <- snp$adj.mat.vect[[200]] %>% vec2mat()
-m100 <- snp$adj.mat.vect[[100]] %>% vec2mat()
-
-e200 <- eigen(m200)$values
-e100 <- eigen(m100)$values
-
-e200 %*% e100
+# m200 <- snp$adj.mat.vect[[200]] %>% vec2mat()
+# m100 <- snp$adj.mat.vect[[100]] %>% vec2mat()
+# 
+# e200 <- eigen(m200)$values
+# e100 <- eigen(m100)$values
+# 
+# e200 %*% e100
 
 # matsim <- function(v1, v2){
 #   
@@ -48,6 +50,14 @@ svdmaker <- function(v){
   eig$d %>% return()
 }
 
+svd.e <- eig$d
+
+p <-  m[s[[1]], s[[2]]] %>% princomp()
+
+p$loadings
+
+
+
 
 snp.whole <- snp %>% filter(Partition=="whole")
 
@@ -70,13 +80,19 @@ pimage(e.centered, es, key=F)
 ee <- e %>% simplify2array %>% t()
 
 k <- kmeans(ee, 5)
-
+k.seriated <- 
 
 k$cluster %>% hist()
 
 cl <- k$cluster %>% cbind(snp.whole$Verbal.Description %>% as.character())
 
+ee
 
+h <- ee %>%
+  dist(method = "euclidean") %>% 
+  hclust()
+
+h %>% plot()
 
 # 
 # #######################
