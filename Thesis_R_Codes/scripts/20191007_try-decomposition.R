@@ -121,3 +121,18 @@ h %>% plot()
 
 
 library("MatrixCorrelation")
+
+m1 <- snp$adj.mat.vect[[1]] %>% vec2mat()
+m2 <- snp$adj.mat.vect[[121]] %>% vec2mat()
+
+MatrixCorrelation::allCorrelations(m1,m1)
+nc <- 300
+MatrixCorrelation::allCorrelations(m1,m2,nc,nc)
+
+red <- 20:300
+X1  <- m1# scale( matrix( rnorm(100*300), 100,300), scale = FALSE)
+usv <- svd(X1)
+X2  <- usv$u[,-red] %*% diag(usv$d[-red]) %*% t(usv$v[,-red])
+PSI(X1,X2)
+nc <- min(red)-1
+MatrixCorrelation::allCorrelations(X1,X2)#,nc,nc)
