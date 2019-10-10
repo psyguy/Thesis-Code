@@ -50,7 +50,7 @@ for(i in 1:num.persons){
   print(i)
   for(j in i:(num.persons)){
     m2 <- s[[j]] %>% my_seriate()
-    sim[j,i] <- MatrixCorrelation::PSI(m1,m2)
+    sim[j,i] <- 1 - MatrixCorrelation::PSI(m1,m2)
     print(j)
   }
 }

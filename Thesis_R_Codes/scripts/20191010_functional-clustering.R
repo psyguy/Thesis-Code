@@ -83,7 +83,7 @@ dist_maker <- function(l.now){
     "Hypo-coupled minority", "Hypo-coupled minority",
     "Hypo-coupled minority", "Hypo-coupled minority"
   )
-  dist.a <- matrix(0, num.persons, nrow = num.persons)
+  # dist.a <- matrix(0, num.persons, nrow = num.persons)
   system.time(
     for(i in 1:num.persons){
       m1 <- l.now[[i]]$m %>% my_seriate()
@@ -91,7 +91,7 @@ dist_maker <- function(l.now){
       for(j in i:(num.persons)){
         m2 <- l.now[[j]]$m %>% my_seriate()
         dist.m[j,i] <- 1 - MatrixCorrelation::PSI(m1,m2)
-        dist.a[j,i] <- a %>% dist() %>% as.matrix()
+        # dist.a[j,i] <- a %>% dist() %>% as.matrix()
         print(j)
       }
     }
@@ -101,12 +101,24 @@ dist_maker <- function(l.now){
 
 
 l.a <- list()
-for(k in l.now){
-  l.a[paste(k$verbal, k$owner, sep = "_")] <- k$a %>% 
-    dist() %>% as.matrix() %>% my_seriate()
+# l.extracted <- list()
+system.time(
+for(b in brain_files_1e6){
+  load(paste0(path.to.brains,"/",b))
+  k <- brain_case %>% extract_now()
+    k$owner %>% print()
+  m <- k$a %>% 
+    t() %>%  as.matrix() %>% 
+    dist() %>% as.matrix()
+  if(brain_case@now$activities %>% is.na() %>% sum()){
+    m[,] <- 0
+  }
+  s <- m %>% seriate()
+  l.a[[paste(k$verbal, k$owner, sep = "_")]] <- m[s[[1]], s[[2]]]
+  l.extracted[[paste(k$verbal, k$owner, sep = "_")]] <- brain_case %>% extract_now()
+  
 }
-
-
+)
 
 o <- extract_now(b)
 
@@ -128,10 +140,21 @@ for (i in 1:25) {
 }
 
 
+dist.a <- matrix(0, num.persons, nrow = num.persons)
+system.time(
+  for(i in 1:50){
+    print(i)
+    for(j in i:(num.persons)){
+      dist.a[j,i] <- 1 - MatrixCorrelation::PSI(l.a[[i]],l.a[[j]])
+      print(j)
+    }
+  }
+)
 
 
-
-
+for(a in 1:length(l.a)){
+  pimage(l.a[[a]], main = names(l.a)[a], key=FALSE)
+}
 
 
 
@@ -146,7 +169,7 @@ d <- a %>% dist() %>% as.matrix()
 
 
 
-
+d <- dist.a %>% as.matrix()
 s <- d %>% seriate()
 pimage(d,s)
 
@@ -154,13 +177,16 @@ pimage(d,s)
 
 c.d <- cluster::diana(d)
 pltree(c.d, cex = 0.6, hang = -1,
-       main = "activities")
+       main = "diana activities")
 rect.hclust(c.d, k = 5, border = 2:5)
 
+c.a <- cluster::agnes(d)
+pltree(c.a, cex = 0.6, hang = -1,
+       main = "agnes activities")
+rect.hclust(c.a, k = 5, border = 2:5)
 
-fviz_dist(d, gradient = list(low = "white", high = "black"))
 
+fviz_dist(as.dist(d), gradient = list(low = "white", high = "black"))
 
-m <- brain_case@now$mat.connectivity
-s <- m %>% seriate()
-
+save_vars("l.extracted", )
+save_vars(prefix = "last-snapshot-conn-activity", path = "data-pc")
