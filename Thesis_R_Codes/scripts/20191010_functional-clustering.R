@@ -101,7 +101,7 @@ dist_maker <- function(l.now){
 
 
 l.a <- list()
-# l.extracted <- list()
+l.extracted <- list()
 system.time(
 for(b in brain_files_1e6){
   load(paste0(path.to.brains,"/",b))
@@ -188,5 +188,6 @@ rect.hclust(c.a, k = 5, border = 2:5)
 
 fviz_dist(as.dist(d), gradient = list(low = "white", high = "black"))
 
-save_vars("l.extracted", )
-save_vars(prefix = "last-snapshot-conn-activity", path = "data-pc")
+# save_vars("l.extracted", )
+rm(brain_case)
+save_vars("l.extracted", prefix = "last-snapshot-conn-activity", path = "data-pc")
