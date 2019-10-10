@@ -109,7 +109,8 @@ extract_id.n.mats <- function(m_raw, identifiers){
 
 
 extract_brains <- function(b_loc,
-                           snapshots = c(50e3, 100e3)){
+                           snapshots = c(50e3, 100e3),
+                           incl.activities = FALSE){
   ## debug
   # b_loc <- this.brain_location
   # snapshots <- 100e3

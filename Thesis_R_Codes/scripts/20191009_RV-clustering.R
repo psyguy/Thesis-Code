@@ -15,7 +15,7 @@ m <- snp$adj.mat.vect[[1]] %>% vec2mat()
 # RV and MatrixCorrelation ------------------------------------------------
 
 my_seriate <- function(v){
-  m <- v %>% vec2mat()
+  m <- ifelse(is.matrix(v), v, vec2mat(v))
   s <- m %>% seriate()
   m[s[[1]], s[[2]]] %>% return()
 }
