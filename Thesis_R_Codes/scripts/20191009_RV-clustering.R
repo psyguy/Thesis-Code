@@ -69,3 +69,6 @@ c.d <- cluster::diana(di)
 pltree(c.d, cex = 0.6, hang = -1,
        main = "RV")
 rect.hclust(c.d, k = 5, border = 2:5)
+
+
+fviz_dist(dist.PSI, gradient = list(low = "white", high = "black"))
