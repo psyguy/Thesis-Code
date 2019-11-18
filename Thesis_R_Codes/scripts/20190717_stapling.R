@@ -6,8 +6,8 @@ rm(list = ls())
 
 source("./functions/functions_extract.R")
 
-pdf.names <- list.files(path = "./figures/connectivity-plots_25k",
-                        pattern = "*.pdf")
+pdf.names <- list.files(path = "./figures/",
+                        pattern = "Final Rich")
 
 pdf.names <- pdf.names[grepl("at 1000k rewirings_connectivities",
                              pdf.names)]
@@ -59,7 +59,7 @@ Sys.time()
 
 
 path.to.pdfs <- "./figures/netstats-plots_25k"
-coef.files <- list.files(path = path.to.pdfs, pattern = "*.pdf")
+coef.files <- list.files(path = path.to.pdfs, pattern = "Final Rich")
 
 p <- coef.files[grepl("homo", coef.files)] %>% 
   c(coef.files[grepl("hypo-cha", coef.files)]) %>% 
