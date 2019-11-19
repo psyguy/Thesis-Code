@@ -111,10 +111,12 @@ sigvectors <- snp %>%
 )
 
 
-
-sigvectors[c(41:50),] %>%
+for(i in 1:5){
+  
+}
+d3 <- sigvectors[c(21:30),] %>%
   dist(method = "canberra") %>%
-  as.vector() %>% 
+  as.vector() #%>% 
   densityplot()
 
 di %>% pimage
