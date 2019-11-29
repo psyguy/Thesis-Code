@@ -66,16 +66,9 @@ featAggr <- function(FM){
   sig
 }
 
-##### Algo 1: NetSimile, computing similarity scores between pair of graphs
-
-
-s <- l.extracted$`Hyper-coupled minority_Sam Evrard`$m %>% featExt()
-s %>% featAggr()
-s[4,] %>% densityplot()
-
-
 
 calc_signature <- function(s) featAggr(featExt(s))
+
 
 l.connectivities <- l.extracted %>% map("m")
 l.activities <- l.extracted %>% map("a") %>% map(my_coherenceD)
@@ -85,42 +78,27 @@ signatures.connectivities <- l.connectivities %>% ldply(calc_signature)
 signatures.activities <- l.activities %>% ldply(calc_signature)
 
 
-d <- signatures.activities %>% stats::dist(method = "canberra")
-
-d %>% hclust() %>% plot()
-
-
-
-
 # making feature distributions --------------------------------------------
 
 system.time(features.connectivities <- l.connectivities %>% map(featExt))
+system.time(features.activities <- l.activities %>% map(featExt))
 
 # features.activities <- l.activities %>% ldply(featExt)
 
 signatures.connectivities <- features.connectivities %>% ldply(featAggr)
+signatures.activities <- features.activities%>% ldply(featAggr)
 
 dist.signatures <- signatures.connectivities[-1] %>%
   dist(method = "canberra") %>% 
   as.matrix()
 
+dist.signatures %>% pimage()
+
 system.time(
   distances.connectivities <- features.connectivities %>% map(~as.matrix(dist(.x, diag = TRUE, upper = TRUE)))
             )
 
-
-
-# HHG on features ---------------------------------------------------------
-
-
-D.1 <- s.1 %>% dist(diag = TRUE, upper = TRUE) %>% as.matrix()
-D.21 <- s.21 %>% dist(diag = TRUE, upper = TRUE) %>% as.matrix()
-
-system.time(h <- hhg.test(distances.connectivities[[1]],distances.connectivities[[21]]))
-
-
-
-l.hgg <- list()
+# writing nested for loop of HHG ------------------------------------------
 
 d <- distances.connectivities
 for(i in 1:length(d)){
@@ -129,26 +107,3 @@ for(i in 1:length(d)){
     k <- k+1
   }
 }
-
-
-d3 <- signatures.connectivities[c(21:30),] %>%
-  dist(method = "canberra") %>%
-  as.vector() %>% 
-  densityplot()
-
-di %>% pimage
-
-di <- sigvectors %>%
-  dist(method = "canberra") # %>% hclust() %>% plot()
-c.d <- cluster::diana(di)
-pltree(c.d, cex = 0.6, hang = -1,
-       main = "RV")
-rect.hclust(c.d, k = 5, border = 2:5)
-
-
-di %>% hclust(method = "ward.D") %>% plot()
-
-
-wilcox.test(as.numeric(sigvectors[1,]),as.numeric(sigvectors[4,]))
-
-
