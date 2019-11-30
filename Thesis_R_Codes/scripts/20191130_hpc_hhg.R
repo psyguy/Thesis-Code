@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 Args <- commandArgs(TRUE)
-counter <- Args[1]
+counter <- as.numeric(as.character(Args[1]))
 
 
 # rm(list=ls())
@@ -33,9 +33,10 @@ j <- i.and.j[[counter]][2]
 
 hhg.results <- list(indices = c(i,j),
                     names = c(names(d[i]),names(d[j])),
-                    hhg.values = hhg.test(d[[i]], d[[j]])
+                    hhg.values = hhg.test(d[[i]], d[[j]], nr.perm = 20000)
                     )
 
 save_vars("hhg.results",
           prefix = paste("HHG", i, j, sep = "-")
           )
+
