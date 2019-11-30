@@ -5,11 +5,14 @@ counter <- Args[1]
 
 
 # rm(list=ls())
-source("./functions/functions_extract.R")
+#source("./functions/functions_extract.R")
 load("./data/StatusQuo_20191129_0425.RData")
 
 #### NetSimile #################
 
+library(tidyverse)
+library(dplyr)
+library(plyr)
 
 library(HHG)
 # writing nested for loop of HHG ------------------------------------------

@@ -2,7 +2,7 @@
 #PBS -l nodes=5:ppn=30
 #PBS -l walltime=00:59:59
 #PBS -l pmem=6gb
-#PBS -N November30_hhg
+#PBS -N November30_hhg2
 #PBS -m b -M mhscientist@gmail.com
  
 export OPENBLAS_NUM_THREADS=1
