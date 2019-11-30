@@ -100,10 +100,22 @@ system.time(
 
 # writing nested for loop of HHG ------------------------------------------
 
-d <- distances.connectivities
+i.and.j <- list()
+k <- 1
 for(i in 1:length(d)){
-  for(j in 1:(i)){
-    h.tmp <- list(i,j,names(d[i]))
-    k <- k+1
+  for(j in (i):length(d)){
+    i.and.j[[k]] <- c(i,j)
+    k <- k + 1
   }
 }
+
+i <- i.and.j[[counter]][1]
+j <- i.and.j[[counter]][2]
+
+d <- distances.connectivities
+
+hhg.results <- list(indices = c(i,j),
+                    names = c(names(d[i]),names(d[j])),
+                    hhg.values = hhg.test(dd[[i]],distances.connectivities[[j]])
+                    )
+save_vars("hhg.results", prefix = "HHG")
