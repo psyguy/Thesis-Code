@@ -35,5 +35,36 @@ for(i in 1:nrow(df.h)){
   h.mat[h$index.2, h$index.1] <- h$perm.pval.hhg.sl#%>% log()
   }
 # diag(h.mat) <- NaN
-(1-h.mat) %>% pimage
+(h <- 1-h.mat) %>% pimage
 
+
+colors = list(
+  bg = "white",
+  mino = "deepskyblue3", #"blue2"
+  majo = "orangered", #"brown3"
+  inter = "olivedrab2", #"green4"
+  whole = "azure4"
+)
+
+# plotting with heatmap ---------------------------------------------------
+
+# library(devtools)
+# install_github("jokergoo/ComplexHeatmap")
+library(ComplexHeatmap)
+diag(h) <- 1
+
+families <- df.hhg.act %>%
+  mutate(index = as.numeric(index.1)) %>% 
+  arrange(index) %>%
+  pull(name.1) %>%
+  unique() %>% 
+  gsub(" .*", "", .)
+
+Heatmap(h,
+  col = c("orangered", "white","deepskyblue3"),
+  na_col = "black",
+  cluster_rows = FALSE,
+  cluster_columns = FALSE,
+  row_split = families,
+  column_split = families,
+  row_gap = unit(0, "mm"), column_gap = unit(0, "mm"), border = TRUE)
