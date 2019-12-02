@@ -32,19 +32,19 @@ h.mat <- matrix(nrow = 50, ncol = 50)
 for(i in 1:nrow(df.h)){
   h <- df.h[i,]
   h.mat[h$index.1, h$index.2] <- df.hhg.act[i,]$perm.pval.hhg.ml %>% as.numeric() #1 - log(h$sum.chisq)/max(log(df.h$sum.chisq))
-  h.mat[h$index.2, h$index.1] <- h$perm.pval.hhg.sl#%>% log()
+  h.mat[h$index.2, h$index.1] <- h$perm.pval.hhg.ml#%>% log()
   }
 # diag(h.mat) <- NaN
-(h <- 1-h.mat) %>% pimage
+(h <- h.mat) %>% pimage
 
 
-colors = list(
-  bg = "white",
-  mino = "deepskyblue3", #"blue2"
-  majo = "orangered", #"brown3"
-  inter = "olivedrab2", #"green4"
-  whole = "azure4"
-)
+# colors = list(
+#   bg = "white",
+#   mino = "deepskyblue3", #"blue2"
+#   majo = "orangered", #"brown3"
+#   inter = "olivedrab2", #"green4"
+#   whole = "azure4"
+# )
 
 # plotting with heatmap ---------------------------------------------------
 
@@ -60,11 +60,46 @@ families <- df.hhg.act %>%
   unique() %>% 
   gsub(" .*", "", .)
 
-Heatmap(h,
-  col = c("orangered", "white","deepskyblue3"),
+library(circlize)
+Heatmap(s,
+  # col = colorRamp2(c(0, 0.05, 1),c("orangered", "azure4", "white")),
+  col = c("white", "deepskyblue3"),
   na_col = "black",
   cluster_rows = FALSE,
   cluster_columns = FALSE,
   row_split = families,
   column_split = families,
   row_gap = unit(0, "mm"), column_gap = unit(0, "mm"), border = TRUE)
+
+
+
+# doing similar things with NetSimile signature distances -----------------
+
+s.con <- signatures.connectivities[-1] %>%
+  dist(method = "canberra") %>% 
+  as.matrix()
+s.act <- signatures.activities[-1] %>%
+  dist(method = "canberra") %>% 
+  as.matrix()
+s.con[upper.tri(s.con)] <- 0
+s.act[lower.tri(s.act)] <- 0
+s.act[is.na(s.act)] <- 0
+
+
+s <- s.con/max(s.con) + s.act/max(s.act)
+s[is.na(s)] <- 0
+s[s>1] <- 1
+
+
+
+h.c <- h
+h.c[upper.tri(h.c)] <- 0
+h.c <- h.c + t(h.c)
+diag(h.c) <- NA
+mean.h.c <- matrix(nrow = 50, ncol = 50) 
+
+for(i in 1:5){
+  for(j in 1:5){
+    mean.h.c[(10*i-9):(i*10),(10*j-9):(j*10)] <- mean(h.c[(10*i-9):(i*10),(10*j-9):(j*10)], na.rm = TRUE)
+  }
+}
