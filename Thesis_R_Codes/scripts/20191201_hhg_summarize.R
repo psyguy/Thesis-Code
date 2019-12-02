@@ -75,6 +75,14 @@ Heatmap(s,
 
 # doing similar things with NetSimile signature distances -----------------
 
+# Euclidean distances
+s.euc.con <- signatures.connectivities[-1] %>%
+  dist() %>% 
+  as.matrix()
+s.euc.act <- signatures.activities[-1] %>%
+  dist() %>% 
+  as.matrix()
+# Canberra distances
 s.con <- signatures.connectivities[-1] %>%
   dist(method = "canberra") %>% 
   as.matrix()
@@ -103,3 +111,8 @@ for(i in 1:5){
     mean.h.c[(10*i-9):(i*10),(10*j-9):(j*10)] <- mean(h.c[(10*i-9):(i*10),(10*j-9):(j*10)], na.rm = TRUE)
   }
 }
+
+s.con <- signatures.connectivities
+s.act <- signatures.connectivities
+
+save_vars(c("s.con", "s.euc.con", "s.act", "s.euc.act", "df.hhg.act", "df.hhg.con"), prefix = "signature-and-HHG")
