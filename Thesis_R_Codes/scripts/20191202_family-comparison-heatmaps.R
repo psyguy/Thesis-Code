@@ -3,7 +3,7 @@ rm(list=ls())
 library(tidyverse)
 library(ComplexHeatmap)
 library(seriation)
-
+library("corrplot")
 
 load("./data/signature-and-HHG_20191202_1704.RData")
 
@@ -90,20 +90,44 @@ l.family.sim <- list(`Connectivity HHG test` = hhg.con,
                      `Activity NetSimile distances` = s.act
                      )
 
-# (l.family.halved <- list(`Connectivity` = make.hhg.s(hhg.con,s.con),
-#                         `Activity` = make.hhg.s(hhg.act,s.act)
-#                         )) %>% map(hm,"s")
+
+(l.family.halved <- list(`Connectivity` = make.hhg.s(hhg.con,s.con),
+                        `Activity` = make.hhg.s(hhg.act,s.act)
+                        )
+  )
+
+l.avg <- l.family.sim %>% map(~make.block.mean(make.halved.mats(.,.,TRUE), TRUE))
 
 
-l.avg <- list(`Connectivity HHG test` = make.halved.mats(hhg.con, hhg.con, TRUE) %>% make.block.mean(TRUE),
-              `Connectivity NetSimile distances` = make.halved.mats(s.con, s.con, TRUE) %>% make.block.mean(TRUE))
+# l.avg <- list(`Connectivity HHG test` = make.halved.mats(hhg.con, hhg.con, TRUE) %>% make.block.mean(TRUE),
+#               `Connectivity NetSimile distances` = make.halved.mats(s.con, s.con, TRUE) %>% make.block.mean(TRUE))
 
 
-l.family.sim %>% 
+# l.family.sim %>% 
+
+
+l <- l.avg[[3]]
+rownames(l) <- colnames(l) <- unique(families)
+
+l %>% corrplot(method = "square",
+              type = "upper",
+              is.corr = T,
+              addgrid.col = NA,
+              addCoefasPercent = F,
+              addCoef.col = "black",
+              tl.col = "black",
+              # tl.pos = "r",
+              number.cex = .9
+              )
 
 
 
-l.family.sim[[1]] %>% (hm)
+
+
+
+l[lower.tri(l, diag = T)]
+
+corrplot()
 ## trial here, do not run
 ## .euc. distances yield less significant distinctions, hence use canberra
 # 
