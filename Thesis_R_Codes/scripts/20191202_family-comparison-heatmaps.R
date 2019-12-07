@@ -110,15 +110,27 @@ l <- l.avg[[3]]
 rownames(l) <- colnames(l) <- unique(families)
 
 l %>% corrplot(method = "square",
-              type = "upper",
-              is.corr = T,
-              addgrid.col = NA,
-              addCoefasPercent = F,
-              addCoef.col = "black",
-              tl.col = "black",
-              # tl.pos = "r",
-              number.cex = .9
-              )
+               type = "lower",
+               is.corr = T,
+               # addgrid.col = NA,
+               # addCoefasPercent = T,
+               addCoef.col = "black",
+               tl.pos = "r",
+               tl.col = "black",
+               number.cex = .6
+               )
+
+# l %>% corrplot(method = "number",
+#                type = "upper",
+#                is.corr = T,
+#                # addgrid.col = NA,
+#                # addCoefasPercent = T,
+#                # addCoef.col = "black",
+#                tl.pos = "r",
+#                tl.col = "black",
+#                number.cex = .9,
+#                add = T
+#                )
 
 
 
