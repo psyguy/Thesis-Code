@@ -15,6 +15,9 @@ hm <- function(m, title = ""){
           na_col = "white",
           cluster_rows = FALSE,
           cluster_columns = FALSE,
+          cell_fun = function(j, i, x, y, width, height, fill) {
+            grid.text(sprintf("%.1f", small_mat[i, j]), x, y, gp = gpar(fontsize = 10))
+          }
           # column_names_rot = -45, column_names_side = "top", right_annotation = ha,
           row_split = factor(f, levels = unique(f)),
           column_split = factor(f, levels = unique(f)),
@@ -23,20 +26,31 @@ hm <- function(m, title = ""){
 }
 
 
-l.family.halved[[1]] %>% hm("ss")
+l.family.halved[[1]] %>% hm()
 
-l <- l.avg[[1]]
+l <- l.avg[[2]]
 rownames(l) <- colnames(l) <- unique(families)
 
+for(l in l.avg) rownames(l) <- colnames(l) <- unique(families)
 
-(l) %>% corrplot(method = "shade",
-                 type = "lower",
-                 # title = "\n Connectivity HHG test \n",
-                 is.corr = T,
-                 col = rep(inferno(10,1,0,1,-1),2),
-                 # addgrid.col = NA,
-                 # addCoefasPercent = T,
-                 addCoef.col = "black",
-                 # tl.pos = "r",
-                 tl.col = "black",
-                 number.cex = .6) %>% png()
+m <- l
+f.corrplot <- function(m, type = "lower") corrplot(m,
+                                                   method = "shade",
+                                                   type = type,
+                                                   # title = "\n Connectivity HHG test \n",
+                                                   is.corr = T,
+                                                   col = rep(inferno(10,1,0,1,-1),2),
+                                                   # addgrid.col = NA,
+                                                   # addCoefasPercent = T,
+                                                   addCoef.col = "black",
+                                                   diag = TRUE,
+                                                   # tl.pos = "ld",
+                                                   cl.pos = "n",
+                                                   tl.pos = "n",
+                                                   # tl.col = "white",
+                                                   number.cex = .6) #%>% png()
+
+l.avg$`Activity HHG test` %>% f.corrplot()
+
+
+
