@@ -1,5 +1,6 @@
 source("./scripts/20191202_family-comparison-heatmaps.R")
 
+library(plyr)
 library(viridis)
 
 hm <- function(m, title = ""){
@@ -52,5 +53,53 @@ f.corrplot <- function(m, type = "lower") corrplot(m,
 
 l.avg$`Activity HHG test` %>% f.corrplot()
 
+
+d <- l.family.sim$`Connectivity HHG test`
+d[1:10,11:50] %>% sum
+
+f <- families %>% unique()
+sm <- NULL
+
+
+for(i in 1:5){
+  x <- l.avg[[1]][i,]
+  sm[i] <- (1-x[i])/(sum(1-x[-i]))
+}
+names(sm) <- f
+
+group.differentiation <- l.avg %>% 
+  ldply(function(l){
+    for(i in 1:5){
+      x <- l[i,]
+      sm[i] <- (10-x[i])/(sum(50-x[-i]))
+    }
+    names(sm) <- f
+    sm %>% return()
+    }
+    )
+
+g.diff <- function(m, dis){
+  m[is.na(m)] <- 0
+  n <- max(m)-m
+  # n <- m
+  x <- NULL
+  for(i in 1:5){
+    n.tmp <- n[(10*i-9):(i*10),] %>% sum(na.rm = TRUE)
+    n.nume <- n[(10*i-9):(i*10),(10*i-9):(i*10)] %>% sum(na.rm = TRUE)
+    x[i] <- n.nume/(n.tmp-n.nume)
+  }
+  names(x) <- families %>% unique()
+  x %>% return()
+}
+
+group.differentiation <- l.family.sim %>% 
+  ldply(g.diff)
+
+g.d <- group.differentiation %>% gather("Family", "Differentiation", -.id)
+
+g.d$Family <- factor(g.d$Family, levels = unique(g.d$Family))
+
+g.d %>% ggplot(aes(x = .id, y = Differentiation, fill = Family)) +
+  geom_bar(position="dodge", stat="identity")
 
 
