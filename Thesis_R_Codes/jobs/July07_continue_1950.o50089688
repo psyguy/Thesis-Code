@@ -1,0 +1,79 @@
+time: 64799
+nodes: 5
+procs: 55
+account string: lp_pdl
+queue: q24h
+========================================================================
+========================================================================
+Epilogue args:
+Date: Tue Jul  9 02:22:30 CEST 2019
+Allocated nodes:
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n04
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n09
+r23i27n11
+r23i27n11
+r23i27n11
+r23i27n11
+r23i27n11
+r23i27n11
+r23i27n11
+r23i27n11
+r23i27n11
+r23i27n11
+r23i27n11
+Job ID: 50089688.tier2-p-moab-2.tier2.hpc.kuleuven.be
+User ID: vsc32736
+Group ID: vsc32736
+Job Name: July07_continue_1950
+Session ID: 12067
+Resource List: nodes=5:ppn=11,walltime=17:59:59,pmem=15gb,neednodes=5:ppn=11
+Resources Used: cput=00:03:01,vmem=0kb,walltime=00:00:10,mem=724kb,energy_used=0
+Queue Name: q24h
+Account String: lp_pdl
+-------------------------------------------------------------------------
+time: 10
+nodes: 5
+procs: 55
+account: lp_pdl

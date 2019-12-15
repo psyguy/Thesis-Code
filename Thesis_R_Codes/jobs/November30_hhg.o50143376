@@ -1,0 +1,174 @@
+time: 3599
+nodes: 5
+procs: 150
+account string: lp_pdl
+queue: q1h
+========================================================================
+========================================================================
+Epilogue args:
+Date: Sat Nov 30 15:29:47 CET 2019
+Allocated nodes:
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n11
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i13n13
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n01
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r23i27n06
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+r22i27n08
+Job ID: 50143376.tier2-p-moab-2.tier2.hpc.kuleuven.be
+User ID: vsc32736
+Group ID: vsc32736
+Job Name: November30_hhg
+Session ID: 5336
+Resource List: nodes=5:ppn=30,walltime=00:59:59,pmem=6gb,neednodes=5:ppn=30
+Resources Used: cput=01:55:07,vmem=108521044kb,walltime=00:12:21,mem=5352384kb,energy_used=0
+Queue Name: q1h
+Account String: lp_pdl
+-------------------------------------------------------------------------
+time: 741
+nodes: 5
+procs: 150
+account: lp_pdl
