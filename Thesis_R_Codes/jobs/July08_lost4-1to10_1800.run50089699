@@ -1,0 +1,3 @@
+#!/bin/bash -l
+
+/usr/bin/qsub -A 'lp_pdl' worker.pbs
