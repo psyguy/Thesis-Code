@@ -6,6 +6,7 @@ library(seriation)
 library("corrplot")
 
 load("./data/signature-and-HHG_20191202_1704.RData")
+load("./data/HHG-unscaled_20191216_1510.RData")
 
 families <<- df.hhg.act %>%
   mutate(index = as.numeric(index.1)) %>% 
@@ -81,83 +82,83 @@ make.hhg.s <- function(m.hhg, m.s) make.halved.mats(m.hhg, make.halved.mats(m.s,
 
 # making matrices ---------------------------------------------------------
 
-hhg.act <- df.hhg.act %>% make.hhg.mat()
-hhg.con <- df.hhg.con %>% make.hhg.mat()
-
-l.family.sim <- list(`Connectivity HHG test` = hhg.con,
-                     `Connectivity NetSimile distances` = s.con,
-                     `Activity HHG test` = hhg.act,
-                     `Activity NetSimile distances` = s.act
-                     )
-
-
-(l.family.halved <- list(`Connectivity` = make.hhg.s(hhg.con,s.con),
-                        `Activity` = make.hhg.s(hhg.act,s.act)
-                        )
-  )
-
-l.avg <- l.family.sim %>% map(~make.block.mean(make.halved.mats(.,.,TRUE), TRUE))
-
-
-# l.avg <- list(`Connectivity HHG test` = make.halved.mats(hhg.con, hhg.con, TRUE) %>% make.block.mean(TRUE),
-#               `Connectivity NetSimile distances` = make.halved.mats(s.con, s.con, TRUE) %>% make.block.mean(TRUE))
-
-
-# l.family.sim %>% 
-
-
-l <- l.avg[[3]]
-rownames(l) <- colnames(l) <- unique(families)
-
-l %>% corrplot(method = "square",
-               type = "lower",
-               is.corr = T,
-               # addgrid.col = NA,
-               # addCoefasPercent = T,
-               addCoef.col = "black",
-               tl.pos = "r",
-               tl.col = "black",
-               number.cex = .6
-               )
-
-# l %>% corrplot(method = "number",
-#                type = "upper",
+# hhg.act <- df.hhg.act %>% make.hhg.mat()
+# hhg.con <- df.hhg.con %>% make.hhg.mat()
+# 
+# l.family.sim <- list(`Connectivity HHG test` = hhg.con,
+#                      `Connectivity NetSimile distances` = s.con,
+#                      `Activity HHG test` = hhg.act,
+#                      `Activity NetSimile distances` = s.act
+#                      )
+# 
+# 
+# (l.family.halved <- list(`Connectivity` = make.hhg.s(hhg.con,s.con),
+#                         `Activity` = make.hhg.s(hhg.act,s.act)
+#                         )
+#   )
+# 
+# l.avg <- l.family.sim %>% map(~make.block.mean(make.halved.mats(.,.,TRUE), TRUE))
+# 
+# 
+# # l.avg <- list(`Connectivity HHG test` = make.halved.mats(hhg.con, hhg.con, TRUE) %>% make.block.mean(TRUE),
+# #               `Connectivity NetSimile distances` = make.halved.mats(s.con, s.con, TRUE) %>% make.block.mean(TRUE))
+# 
+# 
+# # l.family.sim %>% 
+# 
+# 
+# l <- l.avg[[3]]
+# rownames(l) <- colnames(l) <- unique(families)
+# 
+# l %>% corrplot(method = "square",
+#                type = "lower",
 #                is.corr = T,
 #                # addgrid.col = NA,
 #                # addCoefasPercent = T,
-#                # addCoef.col = "black",
+#                addCoef.col = "black",
 #                tl.pos = "r",
 #                tl.col = "black",
-#                number.cex = .9,
-#                add = T
+#                number.cex = .6
 #                )
-
-
-
-
-
-
-l[lower.tri(l, diag = T)]
-
-corrplot()
-## trial here, do not run
-## .euc. distances yield less significant distinctions, hence use canberra
 # 
-# hhg.act %>% make.together()
-# s.euc.act %>% make.together()
-# s.act %>% make.together()
-# 
-# hhg.con %>% make.together() 
-# s.euc.con %>% make.together()
-# s.con %>% make.together()
+# # l %>% corrplot(method = "number",
+# #                type = "upper",
+# #                is.corr = T,
+# #                # addgrid.col = NA,
+# #                # addCoefasPercent = T,
+# #                # addCoef.col = "black",
+# #                tl.pos = "r",
+# #                tl.col = "black",
+# #                number.cex = .9,
+# #                add = T
+# #                )
 # 
 # 
-# s.euc.act %>% make.halved.mats(s.act) %>%  pimage
-# s.euc.con %>% make.halved.mats(s.con) %>%  pimage
-# s.euc.act %>% make.block.mean() %>% make.halved.mats(make.block.mean(s.act)) %>% pimage
-# s.euc.con %>% make.block.mean() %>% make.halved.mats(make.block.mean(s.con)) %>% pimage
-# hhg.con %>% make.block.mean() %>% make.halved.mats((hhg.act)) %>% pimage
-
+# 
+# 
+# 
+# 
+# l[lower.tri(l, diag = T)]
+# 
+# corrplot()
+# ## trial here, do not run
+# ## .euc. distances yield less significant distinctions, hence use canberra
+# # 
+# # hhg.act %>% make.together()
+# # s.euc.act %>% make.together()
+# # s.act %>% make.together()
+# # 
+# # hhg.con %>% make.together() 
+# # s.euc.con %>% make.together()
+# # s.con %>% make.together()
+# # 
+# # 
+# # s.euc.act %>% make.halved.mats(s.act) %>%  pimage
+# # s.euc.con %>% make.halved.mats(s.con) %>%  pimage
+# # s.euc.act %>% make.block.mean() %>% make.halved.mats(make.block.mean(s.act)) %>% pimage
+# # s.euc.con %>% make.block.mean() %>% make.halved.mats(make.block.mean(s.con)) %>% pimage
+# # hhg.con %>% make.block.mean() %>% make.halved.mats((hhg.act)) %>% pimage
+# 
 
 
 

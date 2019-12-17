@@ -72,7 +72,7 @@ group.differentiation <- l.avg %>%
     for(i in 1:5){
       x <- l[i,]
       # sm[i] <- (10-x[i])/(sum(50-x[-i]))
-      sm[i] <- (x[i])/(mean(x[-i]))
+      sm[i] <- (1-x[i])/(mean(1-x[-i]))
     }
     names(sm) <- f
     sm %>% return()
@@ -93,15 +93,15 @@ g.diff <- function(m, dis){
   x %>% return()
 }
 
-group.differentiation <- l.family.sim %>% 
-  ldply(g.diff)
+# group.differentiation <- l.family.sim %>% 
+#   ldply(g.diff)
 
 g.d <- group.differentiation %>% gather("Family", "Differentiation", -.id)
 
 g.d$Family <- factor(g.d$Family, levels = unique(g.d$Family))
 
-colnames(g.d)[1] <- "Similarity measure"
-g.d %>% ggplot(aes(x = `Similarity measure`, y = Differentiation, fill = Family), title = "avg") +
+colnames(g.d)[1] <- "Resemblance measure"
+g.d %>% ggplot(aes(x = `Resemblance measure`, y = Differentiation, fill = Family), title = "avg") +
   geom_bar(position="dodge", stat="identity")
 
 
