@@ -18,7 +18,7 @@ hm <- function(m, title = ""){
           cluster_columns = FALSE,
           cell_fun = function(j, i, x, y, width, height, fill) {
             grid.text(sprintf("%.1f", small_mat[i, j]), x, y, gp = gpar(fontsize = 10))
-          }
+          },
           # column_names_rot = -45, column_names_side = "top", right_annotation = ha,
           row_split = factor(f, levels = unique(f)),
           column_split = factor(f, levels = unique(f)),
@@ -51,7 +51,7 @@ f.corrplot <- function(m, type = "lower") corrplot(m,
                                                    # tl.col = "white",
                                                    number.cex = .6) #%>% png()
 
-l.avg$`Activity HHG test` %>% f.corrplot()
+l.avg$`Connectivity HHG test` %>% f.corrplot()
 
 
 d <- l.family.sim$`Connectivity HHG test`
@@ -63,7 +63,7 @@ sm <- NULL
 
 for(i in 1:5){
   x <- l.avg[[1]][i,]
-  sm[i] <- (1-x[i])/(sum(1-x[-i]))
+  sm[i] <- (x[i])/(mean(x[-i]))
 }
 names(sm) <- f
 
@@ -71,7 +71,8 @@ group.differentiation <- l.avg %>%
   ldply(function(l){
     for(i in 1:5){
       x <- l[i,]
-      sm[i] <- (10-x[i])/(sum(50-x[-i]))
+      # sm[i] <- (10-x[i])/(sum(50-x[-i]))
+      sm[i] <- (x[i])/(mean(x[-i]))
     }
     names(sm) <- f
     sm %>% return()
@@ -99,7 +100,8 @@ g.d <- group.differentiation %>% gather("Family", "Differentiation", -.id)
 
 g.d$Family <- factor(g.d$Family, levels = unique(g.d$Family))
 
-g.d %>% ggplot(aes(x = .id, y = Differentiation, fill = Family)) +
+colnames(g.d)[1] <- "Similarity measure"
+g.d %>% ggplot(aes(x = `Similarity measure`, y = Differentiation, fill = Family), title = "avg") +
   geom_bar(position="dodge", stat="identity")
 
 

@@ -116,3 +116,4 @@ s.con <- signatures.connectivities
 s.act <- signatures.connectivities
 
 save_vars(c("s.con", "s.euc.con", "s.act", "s.euc.act", "df.hhg.act", "df.hhg.con"), prefix = "signature-and-HHG")
+# save_vars(c("df.hhg.act", "df.hhg.con"), prefix = "HHG-unscaled")
