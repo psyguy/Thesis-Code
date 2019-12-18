@@ -8,7 +8,8 @@ source("./scripts/20191202_family-comparison-heatmaps.R")
 
 library(plyr)
 library(viridis)
-col.pallett <- inferno(10,1,0,1,-1)
+library(igraph)
+col.pallett <- inferno(10,1,0,1,1)
 
 
 # functions used for plotting heatmaps ------------------------------------
@@ -80,6 +81,10 @@ g.d$Family <- factor(g.d$Family, levels = unique(g.d$Family))
 
 colnames(g.d)[1] <- "Resemblance measure"
 
+l.Resemblance$`Anatomical HHG similarity` %>% f.corrplot()
+l.Resemblance$`Anatomical NetSimile similarity` %>% f.corrplot(type = "upper")
+l.Resemblance$`Anatomical HHG similarity` %>% f.corrplot()
+l.Resemblance$`Anatomical HHG similarity` %>% f.corrplot()
 
 # Plotting Similarity/Resemblance/Differentiation -------------------------
 
@@ -93,7 +98,54 @@ g.d %>% ggplot(aes(x = `Resemblance measure`,
 
 # Plotting graphs ---------------------------------------------------------
 
+## Change the index in this line
+plot.name <- pull(Differentiation, .id)[4]
+
 differ <- Differentiation %>%
-  filter(.id == "Anatomical HHG similarity") %>% 
-  select(-.id)
+  filter(.id == plot.name) %>% 
+  select(-.id) %>% 
+  as.numeric()
+
+positive.differ <- rep("*", 5)
+positive.differ[differ<0] <- ""
+
 resemb <- l.Resemblance[[1]]
+colnames(resemb) <- families %>%
+  unique() %>% 
+  paste0(positive.differ,.)
+
+g <- resemb %>% graph_from_adjacency_matrix(mode = "undirected",
+                                            weighted = TRUE,
+                                            diag = FALSE)
+
+#Color scaling function
+c_scale <- colorRamp(col.pallett)
+
+#Applying the color scale to edge weights.
+#rgb method is to convert colors to a character vector.
+E(g)$width <- E(g)$weight
+E(g)$color <- apply(c_scale(E(g)$weight), 1, function(x) rgb(x[1]/255,x[2]/255,x[3]/255) )
+V(g)$color <- apply(c_scale(diag(resemb)), 1, function(x) rgb(x[1]/255,x[2]/255,x[3]/255) )
+# V(g)$size <- 100*abs(differ)
+
+v.frame.color <- rep("green", 5)
+v.frame.color[differ<0] <- "white"
+
+
+radian.rescale <- function(x, start=0, direction=1) {
+  c.rotate <- function(x) (x + start) %% (2 * pi) * direction
+  c.rotate(scales::rescale(x, c(0, 2 * pi), range(x)))
+}
+
+la <- layout.circle(g)
+
+par(mar=c(0,0,0,0)+1.7)
+g %>% plot(edge.width = 30*E(g)$weight,
+           main = gsub(" similarity", "", plot.name),
+           vertex.size = 300*abs(differ),
+           vertex.label.dist = 3.0,
+           # vertex.frame.color = v.frame.color,
+           vertex.frame.width = 100,
+           vertex.label.degree = radian.rescale(x=1:5, direction=-1, start=6),
+           layout=la
+           )
