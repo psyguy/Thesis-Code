@@ -47,9 +47,9 @@ f.corrplot <- function(m,
 hhg.act <- df.hhg.act %>% make.hhg.mat()
 hhg.con <- df.hhg.con %>% make.hhg.mat()
 l.Similarity <- list(`Anatomical HHG similarity` = 1 - hhg.con,
-                     `Anatomical NetSimile similarity` = 1 - s.con,
+                     `Anatomical NetSimile similarity` = 1 - make.halved.mats(s.con, s.con, TRUE),
                      `Functional HHG similarity` = 1 - hhg.act,
-                     `Functional NetSimile similarity` = 1 - s.act
+                     `Functional NetSimile similarity` = 1 - make.halved.mats(s.act, s.act, TRUE)
                      )
 
 l.Similarities.halved <- list(`Anatomical` = make.hhg.s(l.Similarity$`Anatomical HHG similarity`,
@@ -81,10 +81,13 @@ g.d$Family <- factor(g.d$Family, levels = unique(g.d$Family))
 
 colnames(g.d)[1] <- "Resemblance measure"
 
+l.Similarities.halved$Anatomical %>% sim.hm()
+l.Similarities.halved$Functional %>% sim.hm()
+
 l.Resemblance$`Anatomical HHG similarity` %>% f.corrplot()
 l.Resemblance$`Anatomical NetSimile similarity` %>% f.corrplot(type = "upper")
-l.Resemblance$`Anatomical HHG similarity` %>% f.corrplot()
-l.Resemblance$`Anatomical HHG similarity` %>% f.corrplot()
+l.Resemblance$`Functional HHG similarity` %>% f.corrplot()
+l.Resemblance$`Functional NetSimile similarity` %>% f.corrplot(type = "upper")
 
 # Plotting Similarity/Resemblance/Differentiation -------------------------
 
