@@ -60,7 +60,7 @@ featAggr <- function(FM){
   sig <- c()
   sig <- append(sig, apply(FM,2, median))    # Median of each feature
   sig <- append(sig, apply(FM,2, mean))      # Mean of each feature
-  sig <- append(sig, apply(FM,2, sd))        # Standard Deviation of each feature
+  sig <- append(sig, apply(FM,2, sd, na.rm=T))        # Standard Deviation of each feature
   sig <- append(sig, apply(FM,2, skewness, na.rm=T))  # Skewness of each feature
   sig <- append(sig, apply(FM,2, kurtosis, na.rm=T))  # Kurtosis of each feature
   sig
