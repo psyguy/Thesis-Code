@@ -13,7 +13,7 @@ list.of.packages <- c("tidyverse",
 		      "png",
                       "seriation",
                       "ggpubr",
-		      "HHHG",
+		      "HHG",
                       "magick",
                       "export",
                       "staplr",
@@ -26,7 +26,7 @@ list.of.packages <- c("tidyverse",
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
 if (length(new.packages)) {
-  install.packages(new.packages), repos='https://lib.ugent.be/CRAN/')
+  install.packages(new.packages)#, repos='https://lib.ugent.be/CRAN/')
 }
 tmp <- lapply(list.of.packages, require, character.only = TRUE)
 
