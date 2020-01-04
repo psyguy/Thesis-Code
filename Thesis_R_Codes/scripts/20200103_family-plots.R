@@ -144,22 +144,22 @@ g.d %>% ggplot(aes(x = `Network`,
 
 ## Change the index in this line
 index <- 2 # should be 1:4, for NetSimile/HHG of Anat/Func
-plot.name <- pull(Differentiation, .id)[index]
+plot.name <- pull(Differentiation, .id)[index] %>% gsub(" .*","",.)
 plot.name %>% paste("Graph -",.) %>% print()
-differ <- Differentiation %>%
-  filter(.id == plot.name) %>% 
+differ <- Differentiation[index,] %>%
   select(-.id) %>% 
   as.numeric()
 
 positive.differ <- rep("*", 5)
-positive.differ[differ<0] <- ""
+positive.differ[differ<1] <- ""
+# positive.differ <- ""
 
-resemb <- l.Contrast[[index]]
-colnames(resemb) <- families %>%
+contra <- l.Contrast[[index]]
+colnames(contra) <- families %>%
   unique() %>% 
   paste0(positive.differ,.)
 
-g <- resemb %>% graph_from_adjacency_matrix(mode = "undirected",
+g <- contra %>% graph_from_adjacency_matrix(mode = "undirected",
                                             weighted = TRUE,
                                             diag = FALSE)
 
@@ -170,11 +170,11 @@ c_scale <- colorRamp(col.pallett)
 #rgb method is to convert colors to a character vector.
 E(g)$width <- E(g)$weight
 E(g)$color <- apply(c_scale(E(g)$weight), 1, function(x) rgb(x[1]/255,x[2]/255,x[3]/255) )
-V(g)$color <- apply(c_scale(diag(resemb)), 1, function(x) rgb(x[1]/255,x[2]/255,x[3]/255) )
+V(g)$color <- apply(c_scale(diag(contra)), 1, function(x) rgb(x[1]/255,x[2]/255,x[3]/255) )
 # V(g)$size <- 100*abs(differ)
 
 v.frame.color <- rep("green", 5)
-v.frame.color[differ<0] <- "white"
+v.frame.color[differ<1] <- "white"
 
 
 radian.rescale <- function(x, start=0, direction=1) {
@@ -185,10 +185,10 @@ radian.rescale <- function(x, start=0, direction=1) {
 la <- layout.circle(g)
 
 par(mar=c(0,0,0,0)+1.7)
-g %>% plot(edge.width = 30*E(g)$weight,
+g %>% plot(edge.width = 40*E(g)$weight,
            main = gsub(" dissimilarity", "", plot.name),
-           vertex.size = 300*abs(differ),
-           vertex.label.dist = 4,
+           vertex.size = 40*abs(differ),
+           vertex.label.dist = 3.5,
            # vertex.frame.color = v.frame.color,
            vertex.frame.width = 100,
            vertex.label.degree = radian.rescale(x=1:5, direction=-1, start=6),

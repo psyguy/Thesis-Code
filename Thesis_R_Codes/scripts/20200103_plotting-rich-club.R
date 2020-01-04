@@ -1,6 +1,6 @@
 # rm(list=ls())
 
-load("C:/Users/r0607671/OneDrive - student.kuleuven.be/Master of Psychology/4. Always/Thesis_Codes/Thesis_R_Codes/data-pc/snp_only-1e+6_20190723_1404.RData")
+load("data-pc/snp_only-1e+6_20190723_1404.RData")
 source("functions/functions_my.R")
 
 make.df <- function(input.df, col){
@@ -82,22 +82,48 @@ rc.new <- function(x, N = 10){
 
 
 # rc <- NULL
-for(i in 4:46){
-  print(i)
-  rc.tmp <- snp.new$adj.mat.vect[[i]] %>% rc.new(200)
-  rc.name <- rep(snp.new$newcodes, nrow(rc.tmp))
-  rc <- rbind(rc, cbind(rc.name,rc.tmp))
-}
+# for(i in 1:46){
+#   print(i)
+#   rc.tmp <- snp.new$adj.mat.vect[[i]] %>% rc.new(200)
+#   rc.name <- rep(snp.new$newcodes, nrow(rc.tmp))
+#   rc <- rbind(rc, cbind(rc.name,rc.tmp))
+# }
+# save_vars(c("rc", "snp.new"), prefix = "NormalizedRC-onlyWhole")
+
+
+load("data/NormalizedRC-onlyWhole_20200103_2046.RData")
+rc <- rc %>%
+  as.data.frame
+
+rc$`Club Size` <- rc$`Club Size` %>% as.character() %>% as.numeric()
+rc$`Rich Club` <- rc$`Rich Club` %>% as.character() %>% as.numeric()
+rc$sig.level <- rc$sig.level %>% as.character() %>% as.numeric()
+
+tmp <- rc %>% 
+  mutate(n = gsub("_.*","", rc.name) %>% as.numeric) %>%
+  mutate(family.num = (x-1)%/%10 + 1) %>% 
+  filter(family.num == 1)
+tmp$family.num <- tmp$family.num %>% as.factor()
+tmp$n <- tmp$n %>% as.factor()
+
+
+p <- ggplot(data = tmp,
+            aes(x = `Club Size`,
+                y = `Rich Club`,
+                colour = n)) +
+  geom_line(size = 1.5, alpha = 0.8) +
+  # scale_colour_manual(values = c(colors$inter, colors$majo,
+  #                                colors$mino, colors$whole)) +
+  ggplot2::xlim(0,150)
 
 
 
-  Rich.Club.150 <- 
+
+Rich.Club.150 <- 
     tmp %>%
-    make.df("Rich Club") %>%
-    # filter(Partition=="whole") %>% 
     ggplot(aes(x = `Club Size`,
                y = `Rich Club`, 
-               colour = Partition)) +
+               colour = family.num)) +
     geom_line(size = 1.5, alpha = .8) +
     scale_colour_manual(values = c(colors$inter, colors$majo,
                                    colors$mino, colors$whole)) +
@@ -108,13 +134,12 @@ for(i in 4:46){
                size = 2.2,
                shape = 18)
   ggplot2::xlim(0, 150) 
-  
-  return(o)
-}
 
-save_vars(c("rc", "snp.new"), prefix = "NormalizedRC-onlyWhole")
+
+
 
 x <- m %>% rich_club_norm(N=10)
+
 
 
 # garbage -----------------------------------------------------------------
