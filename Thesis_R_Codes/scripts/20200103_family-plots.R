@@ -1,7 +1,10 @@
 # What has been so far used (dis)similarity with sloppiness. Here I am correcting the
 # definitions and cleaning the code. Moreover, I will plot resemblences/differentiations
 # as networks
-rm(list=ls())
+
+# *** NOTE *** th edissimilarities are being used in this file
+
+# rm(list=ls())
 load("./data/signature-and-HHG_20191202_1704.RData")
 load("./data/HHG-unscaled_20191216_1510.RData")
 source("./scripts/20191202_family-comparison-heatmaps.R")
@@ -9,7 +12,7 @@ source("./scripts/20191202_family-comparison-heatmaps.R")
 library(plyr)
 library(viridis)
 library(igraph)
-col.pallett <- inferno(10,1,0,1,1)
+col.pallett <- inferno(10,1,0,1,-1)
 
 families <<- c("OC", "OT", "BL", "UT", "UC") %>% rep(each = 10)
 # functions used for plotting heatmaps ------------------------------------
@@ -21,7 +24,7 @@ sim.hm <- function(m, title = "", col = col.pallett){
   Heatmap(m,
           col = col,
           column_title = title,
-          name = "Similarities",
+          name = "Dissimilarities",
           na_col = "black",
           cluster_rows = FALSE,
           cluster_columns = FALSE,
@@ -31,17 +34,23 @@ sim.hm <- function(m, title = "", col = col.pallett){
   }
 
 f.corrplot <- function(m,
-                       type = "lower",
-                       col = col.pallett) corrplot(m,
-                                                   method = "shade",
-                                                   type = type,
-                                                   is.corr = T,
-                                                   col = rep(col,2),
-                                                   addCoef.col = col.pallett[1],
-                                                   diag = TRUE,
-                                                   cl.pos = "n",
-                                                   tl.pos = "n",
-                                                   number.cex = .6)
+                       p,
+                       type = "upper",
+                       col = col.pallett){
+  colnames(m) <- rownames(m) <- families %>% unique()
+  corrplot(m,
+           p.mat = p,
+           method = "color",
+           sig.level = 1e-10,
+           type = type,
+           is.corr = T,
+           col = rep(col,2),
+           # addCoef.col = col.pallett[1],
+           diag = TRUE,
+           cl.pos = "n",
+           # tl.pos = "n",
+           insig = "p-value")
+  }
 
 # correcting indeces ------------------------------------------------------
 
@@ -69,62 +78,64 @@ df.hhg.con[,1:2] <- lapply(df.hhg.con[,1:2], function(x) look$new.index[match(x,
 # s.act <- s.act[rev(new.index),rev(new.index)]
 hhg.act <- df.hhg.act %>% make.hhg.mat()
 hhg.con <- df.hhg.con %>% make.hhg.mat()
-l.Similarity <- list(`Anatomical HHG similarity` = 1 - hhg.con,
-                     `Anatomical NetSimile similarity` = 1 - make.halved.mats(s.con, s.con, TRUE)[new.index,(new.index)],
-                     `Functional HHG similarity` = 1 - hhg.act,
-                     `Functional NetSimile similarity` = 1 - make.halved.mats(s.act, s.act, TRUE)[new.index,(new.index)]
+l.Dissimilarity <- list(`Anatomical HHG dissimilarity` = hhg.con,
+                     `Anatomical NetSimile dissimilarity` = make.halved.mats(s.con, s.con, TRUE)[new.index,(new.index)],
+                     `Functional HHG dissimilarity` = hhg.act,
+                     `Functional NetSimile dissimilarity` = make.halved.mats(s.act, s.act, TRUE)[new.index,(new.index)]
                      ) #%>%
   # map(function(x) x[new.index,new.index])
 
 
 
-l.Similarities.halved <- list(`Anatomical` = make.hhg.s(l.Similarity$`Anatomical HHG similarity`,
-                                                          l.Similarity$`Anatomical NetSimile similarity`),
-                              `Functional` = make.hhg.s(l.Similarity$`Functional HHG similarity`,
-                                                      l.Similarity$`Functional NetSimile similarity`)
+l.Dissimilarities.halved <- list(`Anatomical` = make.hhg.s(l.Dissimilarity$`Anatomical HHG dissimilarity`,
+                                                          l.Dissimilarity$`Anatomical NetSimile dissimilarity`),
+                              `Functional` = make.hhg.s(l.Dissimilarity$`Functional HHG dissimilarity`,
+                                                      l.Dissimilarity$`Functional NetSimile dissimilarity`)
                               )
-l.Resemblance <- l.Similarity %>%
+l.Contrast <- l.Dissimilarity %>%
   map(~make.block.mean(make.halved.mats(.,.,TRUE), TRUE))
 
-for(l in l.Resemblance) rownames(l) <- colnames(l) <- unique(families)
+for(l in l.Contrast) rownames(l) <- colnames(l) <- unique(families)
 
-Differentiation <- l.Resemblance %>% 
+Differentiation <- l.Contrast %>% 
   ldply(function(l){
     sm <- NULL
     for(i in 1:5){
       # sm <- 
       x <- l[i,]
-      sm[i] <- 1 - (x[i]/mean(x[-i]))
+      sm[i] <- (1-x[i])/(mean(1-x[-i]))
     }
     names(sm) <- families %>% unique()
     sm %>% return()
   }
   )
 
-g.d <- Differentiation %>% gather("Family", "Differentiation", -.id)
+g.d <- Differentiation[c(2,4),] %>%
+  mutate(.id = c("Anatomical", "Functional")) %>% 
+  gather("Family", "Differentiation", -.id)
 
 
-f <- families %>% unique() %>% rep(each = 4)
+f <- families %>% unique() %>% rep(each = 2)
 g.d$Family <- factor(f, levels = unique(f))
 
-l.Similarities.halved$Anatomical %>% sim.hm()
-l.Similarities.halved$Functional %>% sim.hm()
+l.Dissimilarities.halved$Anatomical %>% sim.hm()
+l.Dissimilarities.halved$Functional %>% sim.hm()
 
-colnames(g.d)[1] <- "Resemblance measure"
+colnames(g.d)[1] <- "Network"
 
-l.Resemblance$`Anatomical HHG similarity` %>% f.corrplot()
-l.Resemblance$`Anatomical NetSimile similarity` %>% f.corrplot(type = "upper")
-l.Resemblance$`Anatomical HHG similarity` %>% f.corrplot()
-l.Resemblance$`Anatomical HHG similarity` %>% f.corrplot()
+f.corrplot(l.Contrast$`Anatomical NetSimile dissimilarity`, l.Contrast$`Anatomical HHG dissimilarity`)
+f.corrplot(l.Contrast$`Functional NetSimile dissimilarity`, l.Contrast$`Functional HHG dissimilarity`)
 
-# Plotting Similarity/Resemblance/Differentiation -------------------------
 
-g.d %>% ggplot(aes(x = `Resemblance measure`,
+# Plotting Dissimilarity/Contrast/Differentiation -------------------------
+
+g.d %>% ggplot(aes(x = `Network`,
                    y = Differentiation,
                    fill = Family),
                title = "avg") +
-  ylim(-.42,.42) +
-  geom_bar(position = "dodge", size = 1, width = 0.5, stat="identity")
+  # ylim(-.42,.42) +
+  geom_bar(position = position_dodge(width=0.85), size = 2, width = 0.80, stat="identity") +
+  geom_hline(yintercept = 1,linetype="dashed")
 
 
 # Plotting graphs ---------------------------------------------------------
@@ -143,7 +154,7 @@ differ <- Differentiation %>%
 positive.differ <- rep("*", 5)
 positive.differ[differ<0] <- ""
 
-resemb <- l.Resemblance[[index]]
+resemb <- l.Contrast[[index]]
 colnames(resemb) <- families %>%
   unique() %>% 
   paste0(positive.differ,.)
@@ -175,7 +186,7 @@ la <- layout.circle(g)
 
 par(mar=c(0,0,0,0)+1.7)
 g %>% plot(edge.width = 30*E(g)$weight,
-           main = gsub(" similarity", "", plot.name),
+           main = gsub(" dissimilarity", "", plot.name),
            vertex.size = 300*abs(differ),
            vertex.label.dist = 4,
            # vertex.frame.color = v.frame.color,
