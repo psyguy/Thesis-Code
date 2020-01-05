@@ -114,3 +114,31 @@ rc.this %>%  ggplot(
              shape = 16) +
   geom_hline(yintercept = 1,linetype="dashed")
 
+
+
+# Redoing family evolution plots, this time without RC/efficiency ---------
+
+all.partitions <- snp$Partition %>% 
+  unique() %>% 
+  sort() %>% 
+  as.character() %>%
+  as.list()
+
+all.vd <- snp$Verbal.Description %>% 
+  unique() %>% 
+  sort() %>% 
+  as.character() %>%
+  as.list()
+
+
+system.time(
+  for(vd in all.vd){
+    for(part in all.partitions){
+      extract_plotcoefs.glued(this.Verbal.Description = vd,
+                              this.Partition = part, 
+                              snp=snp,
+                              coef.range = coefindex)
+    }
+  }
+)
+

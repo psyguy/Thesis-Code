@@ -326,8 +326,9 @@ extract_plotcoefs.glued <- function(name.this.owner = NULL,
                                     this.Verbal.Description = NULL,
                                     this.Partition = NULL,
                                     snp,
+                                    coef.range = c(9:16), # which coefficients to plot
                                     path.fig = "figures"){
-  coef.names <- names(snp)[9:16] %>% as.list()
+  coef.names <- names(snp)[coef.range] %>% as.list()
   list.of.plots <- coef.names %>% 
     llply(extract_plotcoefs.single,
           name.this.owner = name.this.owner,
@@ -336,7 +337,7 @@ extract_plotcoefs.glued <- function(name.this.owner = NULL,
           snp = snp)
   
   figure <- ggarrange(plotlist = list.of.plots,
-                      ncol = 2, nrow = 4,
+                      ncol = 2, nrow = 3,
                       common.legend = TRUE,
                       legend = ifelse(is.null(name.this.owner),
                                       "bottom", "bottom")#"none", "bottom")
