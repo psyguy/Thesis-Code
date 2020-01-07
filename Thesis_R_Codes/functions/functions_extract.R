@@ -219,7 +219,7 @@ extract_plotcon <- function(m,
   if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
   file.name <- paste0(path.fig, title)
   
-  s <- m %>% seriate()
+  s <- m %>% seriate(method="PCA_angle")
   m[1:50,1:50] <- m[1:50,1:50]*3
   m[1:50,51:300] <- m[1:50,51:300]*2
   m[51:300,1:50] <- m[51:300,1:50]*2

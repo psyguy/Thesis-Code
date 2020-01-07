@@ -195,3 +195,15 @@ g %>% plot(edge.width = 40*E(g)$weight,
            layout=la
            )
 
+
+
+# compareing Contrast_Anatomical and Contrast_Functional ------------------
+## Garbage!
+# c.an <- l.Contrast$`Anatomical NetSimile dissimilarity` %>% 
+#   make.halved.mats(.,.,T)
+# c.fu <- l.Contrast$`Functional NetSimile dissimilarity`
+
+
+
+
+
