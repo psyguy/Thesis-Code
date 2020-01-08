@@ -55,31 +55,6 @@ all.owners <- snp.new$famcode.num %>%
   as.list()
 
 
-all.owners %>%
-  map(function(v,snp){
-
-
-    
-    if(substr(pf, nchar(pf), nchar(pf))!="/") path.fig <- paste0(path.fig, "/")
-    file.name <- paste0(path.fig, title)
-    
-    panel.upper.l <- file.name %>% paste0("_unserialized.pdf") %>% image_read_pdf()
-    panel.upper.r <- file.name %>% paste0("_serialized.pdf") %>% image_read_pdf()
-    panel.lower <- file.name %>% paste0("_network.pdf") %>% image_read_pdf()
-    
-    whole <- c(panel.upper.l, panel.upper.r) %>% 
-      image_append() %>% 
-      c(panel.lower) %>% 
-      image_append(stack = TRUE)
-    
-    image_write(whole,"a.pdf")
-    
-    graph2pdf(whole,
-              height = 15, width = 10,
-              file = paste0("Profile of", title))
-  },
-                  snp = snp.new)
-
 
 for(i in 1:nrow(snp.new)){
   m <- snp.new$adj.mat.vect[[i]] %>% vec2mat()
@@ -91,12 +66,3 @@ for(i in 1:nrow(snp.new)){
   
 }
 
-
-extract_plotcon()
-
-
-extract_plotglue <- function(title = "Someone",
-                             path.fig = ){
-  
-  
-}

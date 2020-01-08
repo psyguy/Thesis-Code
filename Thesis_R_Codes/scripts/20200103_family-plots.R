@@ -76,6 +76,17 @@ df.hhg.con[,1:2] <- lapply(df.hhg.con[,1:2], function(x) look$new.index[match(x,
 # making Sim/Diff matrices ------------------------------------------------
 # s.con <- s.con[rev(new.index),rev(new.index)]
 # s.act <- s.act[rev(new.index),rev(new.index)]
+
+dead.folks <- c("Hyper-chaotic minority_David De Ridder",
+                "Hyper-chaotic minority_Daan Dubois",
+                "Hypo-coupled minority_Audrey Claeys",
+                "Hypo-coupled minority_Chiara Bosmans")
+
+df.hhg.act[df.hhg.act$name.1 %in% dead.folks,5:12] <- NA
+df.hhg.act[df.hhg.act$name.2 %in% dead.folks,5:12] <- NA
+df.hhg.con[df.hhg.con$name.1 %in% dead.folks,5:12] <- NA
+df.hhg.con[df.hhg.con$name.2 %in% dead.folks,5:12] <- NA
+
 hhg.act <- df.hhg.act %>% make.hhg.mat()
 hhg.con <- df.hhg.con %>% make.hhg.mat()
 l.Dissimilarity <- list(`Anatomical HHG dissimilarity` = hhg.con,
