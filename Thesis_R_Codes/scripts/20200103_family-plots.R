@@ -154,7 +154,7 @@ g.d %>% ggplot(aes(x = `Network`,
 
 
 ## Change the index in this line
-index <- 2 # should be 1:4, for NetSimile/HHG of Anat/Func
+index <- 4 # should be 1:4, for NetSimile/HHG of Anat/Func
 plot.name <- pull(Differentiation, .id)[index] %>% gsub(" .*","",.)
 plot.name %>% paste("Graph -",.) %>% print()
 differ <- Differentiation[index,] %>%
