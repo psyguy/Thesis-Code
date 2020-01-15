@@ -1,3 +1,0 @@
-options(internet.info = 0)
-http_proxy=http://185.209.240.12/
-http_proxy_user=manu:manu
